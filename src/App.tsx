@@ -1,13 +1,16 @@
-import '@client/App.scss';
+import React from 'react';
+import HeaderComponent from '../components/layout/Header';
+import CardWithTabs from '../components/layout/Card';
 
-function App() {
+const App: React.FC = () => {
+
+
   return (
-    <>
-      <div className="App">
-        <h1>Online flight booking system</h1>
-      </div>
-    </>
+    <div>
+      <HeaderComponent />
+      <CardWithTabs />
+    </div>
   );
-}
+};
 
 export default App;
