@@ -1,0 +1,40 @@
+.CardWrapper {
+  margin: 40px;
+  border-radius: 8px;
+  box-shadow: 0 15px 32px -10px rgb(108 117 125 / 10%), 0 4px 11px -3px rgb(0 0 0 / 25%);
+  background-color: #fff;
+  width: 1162px;
+  height: 325px;
+  border-radius: 15px;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.ant-tabs-nav {
+  background: linear-gradient(to left,rgba(128,28,79,1),rgba(82,12,48,1) 70%);
+  height: 50px;
+}
+
+.ant-tabs-tab {
+  color: #ffffff;
+  width: 222px;
+  font-size: 38px;
+  letter-spacing: 0.06em;
+  line-height: 22px;
+  font-weight: 700;
+  border-radius: 16px;
+  transition: all 0.3s ease-in-out;
+}
+.ant-tabs .ant-tabs-tab .ant-tabs-tab-btn {
+color: #ffffff ;
+padding-left: 29px !important;
+
+}
+
+.ant-card-body{
+  padding: 0px !important;
+}
+
+
+
+

@@ -1,14 +1,12 @@
 import React from 'react';
-import HeaderComponent from '../components/layout/Header';
-import CardWithTabs from '../components/layout/Card';
-
+import MainLayout from '../components/layout/MainLayout';
+import './App.scss'
 const App: React.FC = () => {
 
 
   return (
     <div>
-      <HeaderComponent />
-      <CardWithTabs />
+      <MainLayout/>
     </div>
   );
 };
