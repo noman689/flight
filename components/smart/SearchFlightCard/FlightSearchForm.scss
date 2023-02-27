@@ -1,21 +1,22 @@
+
 .ant-form{
-  border: none;
   display: flex;
   flex-direction: row;
   justify-content: space-around;
-margin: 50px 0px;
+  margin: 10px 0px;
+
   .form-group{
     display: flex;
     flex-direction: row;
-    gap: 20px
    }
-   .form-button{
-display: flex;
-align-self: center;
-   }
-  }
 
-  .ant-form-item-control-input-content{
-    display: flex;
-    justify-content: center;
+  @media screen and (max-width: 768px) {
+    flex-direction: column;
+    height: 40%;
   }
+}
+.search-button-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
