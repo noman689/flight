@@ -33,19 +33,20 @@
 
 .card-wrapper {
   margin: 50px auto;
-  box-shadow: 0 15px 32px -10px rgb(108 117 125 / 10%), 0 4px 11px -3px rgb(0 0 0 / 25%);
-  height: 35%;
+  height: 27%;
+  box-shadow: 0 15px 32px -10px rgb(108 117 125 / 10%),
+    0 4px 11px -3px rgb(0 0 0 / 25%);
+  // height: 100%;
   width: 65%;
-  border-radius: 20px;
-  
-  
+  border-radius: 9px;
+
   .ant-tabs-ink-bar {
     display: none;
   }
-  
-  .ant-tabs-nav{
+
+  .ant-tabs-nav {
     border-radius: 40px;
-    padding-left: 12px;
+    padding-left: 0px;
   }
 
   @media (max-width: 1200px) {
@@ -69,16 +70,64 @@
     width: 95%;
   }
 
+  @media screen and (max-width: 425px) and (min-width: 425px) {
+    .ant-tabs-tab {
+      // width: 99px !important;
+      // &:hover {
+      //   color: #420c28 !important;
+      // }
+    }
+  }
+
+  @media only screen and (min-width: 1024px) and (max-width: 1024px) {
+    /* Styles for screens with a width of 1024 pixels */
+  }
+
   .ant-tabs-nav {
-    background: linear-gradient(to left,rgba(128,28,79,1),rgba(82,12,48,1) 70%); 
-   }
+    // background: linear-gradient(to left,rgba(128,28,79,1),rgba(82,12,48,1) 70%);
+  }
 
   .ant-tabs-tab {
-    color: #ffffff;
-
-    &:hover {
-      color: #ffdd01;
-    }
-
+    color: white !important;
+    background-color: #701644 !important;
+    width: 100%;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    border-radius: 0px !important;
+    margin-left: 0px !important;
+    margin-top: 0px !important;
+    font-size: 18px;
+    // &:hover {
+    //   color: #420c28 !important;
+    // }
   }
+
+  .ant-tabs-tab-active {
+    background-color: white !important;
+    color: #701644 !important;
+  }
+  :where(.css-dev-only-do-not-override-1km3mtt).ant-tabs
+    .ant-tabs-tab.ant-tabs-tab-active
+    .ant-tabs-tab-btn {
+    color: #701644 !important;
+  }
+  .ant-card-body {
+    padding: 0px !important;
+  }
+}
+
+.child {
+  position: absolute;
+  bottom: 23%;
+  z-index: 1;
+  border-radius: 20px;
+}
+
+.ant-tabs-tab:first-child {
+  border-top-left-radius: 20px !important;
+}
+
+.ant-tabs-tab:last-child {
+  border-top-right-radius: 20px !important;
 }

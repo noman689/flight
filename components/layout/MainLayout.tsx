@@ -1,24 +1,40 @@
-import React from 'react'
-import { Layout} from 'antd';
+import React from 'react';
+import { Layout } from 'antd';
 import SearchFlightCard from '../smart/SearchFlightCard/BookingCard';
-import HeaderComponent from './Header';
+import FlightDetails from './FlightDetails';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+// import HeaderComponent from './Header';
 import TestFooter from './Footer';
-import './MainLayout.scss'
-const {Content} = Layout;
+import Banner from './Banner';
+import './MainLayout.scss';
+const { Content } = Layout;
 
 const MainLayout = () => {
-  return (  
+  return (
+    // <Layout>
+    //   {/* <HeaderComponent /> */}
 
+    //   <Banner />
+
+    //   <Content>
+    //     <SearchFlightCard />
+    //   </Content>
+    //   {/*
+    //   <TestFooter /> */}
+    // </Layout>
     <Layout>
-      <HeaderComponent/>
-      <Content>
-          <SearchFlightCard/>
-      </Content>
-      <TestFooter/>
+      <BrowserRouter>
+        <Banner />
+
+        <Content>
+          <Routes>
+            <Route path="/" element={<SearchFlightCard />} />
+            <Route path="/flight-details" element={<FlightDetails />} />
+          </Routes>
+        </Content>
+      </BrowserRouter>
     </Layout>
+  );
+};
 
-  )
-}
-
-
-export default MainLayout
+export default MainLayout;

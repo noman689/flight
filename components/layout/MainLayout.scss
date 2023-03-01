@@ -1,7 +1,10 @@
 .ant-layout-content{
     height: 86.2vh;
-    background-image: url('../../src/assets/bg.jpg');
+    // background-image: url('../../src/assets/bg.jpg');
+    background-color: #F2F3FA;
     background-position: center center;
     background-repeat: no-repeat;
     background-size: cover;
+    display: flex;
+    justify-content: center;
 }
