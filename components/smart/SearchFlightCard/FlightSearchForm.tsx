@@ -73,8 +73,19 @@
 // };
 
 // export default FlightSearchForm;
-import React from 'react';
-import { Card, Form, Input, Select, DatePicker, Button, Row, Col } from 'antd';
+import React, { useState } from 'react';
+import {
+  Card,
+  Form,
+  Input,
+  Select,
+  DatePicker,
+  Button,
+  Row,
+  Col,
+  Popover,
+  InputNumber,
+} from 'antd';
 import dayjs from 'dayjs';
 import './FlightSearchForm.scss';
 
@@ -84,6 +95,18 @@ const { RangePicker } = DatePicker;
 const FlightSearchForm: React.FC = () => {
   const onFinish = (values: any) => {
     console.log('Received values of form: ', values);
+  };
+  const [open, setOpen] = useState(false);
+
+  const hide = () => {
+    setOpen(false);
+  };
+  const onChange = (value: number) => {
+    console.log('changed', value);
+  };
+
+  const handleOpenChange = (newOpen: boolean) => {
+    setOpen(newOpen);
   };
 
   return (
@@ -123,7 +146,7 @@ const FlightSearchForm: React.FC = () => {
                 />
               </Form.Item>
             </Col>
-            <Col xs={24} sm={24} md={24} lg={3}>
+            <Col xs={24} sm={24} md={24} lg={4}>
               <Form.Item
                 name="Trip"
                 rules={[
@@ -131,7 +154,7 @@ const FlightSearchForm: React.FC = () => {
                 ]}
               >
                 <Select
-                  style={{ height: '55px' }}
+                  // style={{ height: '55px' }}
                   placeholder="Return"
                   className="form-input"
                 >
@@ -162,32 +185,71 @@ const FlightSearchForm: React.FC = () => {
             </Col>
             <Col xs={24} sm={24} md={24} lg={5}>
               <Form.Item
-                name="passengers"
+                name="passengers-class"
                 rules={[
                   {
                     required: true,
-                    message: 'Please select the number of passengers!',
+                    message: 'Please Enter passengers & class',
                   },
                 ]}
               >
-                <Select
-                  placeholder="Number of Passengers"
-                  className="form-input"
+                <Popover
+                  content={
+                    <div>
+                      <div>
+                        <span>Passengers</span>
+                      </div>
+
+                      <div>
+                        <span>Adult (12+ Years)</span>
+                        <InputNumber
+                          min={1}
+                          max={10}
+                          defaultValue={3}
+                          onChange={onChange}
+                        />
+                      </div>
+                      <div>
+                        <span>Child (2-11 Years)</span>
+                        <InputNumber
+                          min={1}
+                          max={10}
+                          defaultValue={3}
+                          onChange={onChange}
+                        />
+                      </div>
+                      <div>
+                        <span>Infant (Under 2 years)</span>
+                        <InputNumber
+                          min={1}
+                          max={10}
+                          defaultValue={3}
+                          onChange={onChange}
+                        />
+                      </div>
+                    </div>
+                  }
+                  trigger="click"
+                  open={open}
+                  onOpenChange={handleOpenChange}
                 >
-                  <Option value="1">1</Option>
-                  <Option value="2">2</Option>
-                  <Option value="3">3</Option>
-                  <Option value="4">4</Option>
-                </Select>
+                  <Input
+                    placeholder="Enter passengers & class"
+                    className="form-input"
+                    onClick={() => {
+                      setOpen(!open);
+                    }}
+                  />
+                </Popover>
               </Form.Item>
             </Col>
-            <Col xs={24} sm={24} md={24} lg={23} className="flexEnd">
+            <Col xs={24} sm={24} md={24} lg={23} className="flexEnd ">
               <Button
                 type="default"
                 htmlType="submit"
                 className="form-button btnSearchFlight"
               >
-                Search Flights
+                Show Flights
               </Button>
             </Col>
           </Row>

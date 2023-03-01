@@ -37,7 +37,7 @@ const item = [
   },
   {
     label: (
-      <span>
+      <span style={{ borderRadius: '20px' }}>
         <GitlabFilled />
         Flight Status
       </span>

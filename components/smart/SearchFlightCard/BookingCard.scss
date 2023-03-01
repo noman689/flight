@@ -90,7 +90,7 @@
   .ant-tabs-tab {
     color: white !important;
     background-color: #701644 !important;
-    width: 100%;
+    width: 200px;
     height: 50px;
     display: flex;
     justify-content: center;
@@ -131,3 +131,20 @@
 .ant-tabs-tab:last-child {
   border-top-right-radius: 20px !important;
 }
+@media (max-width: 768px) {
+  .child {
+    border-radius: 0px;
+  }
+}
+
+.tab-container {
+  position: relative;
+  z-index: 1;
+}
+
+.tab-container .ant-tabs-nav {
+  position: relative;
+  z-index: 2;
+}
+
+
