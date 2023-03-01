@@ -9,6 +9,7 @@ import {
 import { Button } from 'antd';
 import type { MenuProps } from 'antd';
 import { Dropdown, Space, Typography } from 'antd';
+import { Link } from 'react-router-dom';
 
 interface Props {}
 const items: MenuProps['items'] = [
@@ -29,7 +30,7 @@ const items: MenuProps['items'] = [
 
 const Banner: React.FC<Props> = () => {
   return (
-    <div className="bannerDiv parent">
+    <div className="bannerDiv parent main_page_width">
       <div className="hideOnLargeScreen">
         <div className="dFlexEnd">
           <Dropdown
@@ -67,7 +68,9 @@ const Banner: React.FC<Props> = () => {
         <div className="header">
           <div className="d-flex">
             <img src="https://cssgradient.io/images/logo-55c31c59.svg" />
-            <span className="headerTexts">Explore</span>
+            <Link to={'/'}>
+              <span className="headerTexts">Explore</span>
+            </Link>
             <span className="headerTexts">Book</span>
             <span className="headerTexts">Experience</span>
             <span className="headerTexts">Privilege Club</span>

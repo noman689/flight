@@ -56,7 +56,7 @@ const item = [
 
 const SearchFlightCard: React.FC = () => {
   return (
-    <Card className="card-wrapper child">
+    <Card className="card-wrapper child main_page_width">
       <Tabs
         type="card"
         defaultActiveKey="book"

@@ -1,7 +1,7 @@
 {
   "name": "client",
   "version": "1.0.0",
-  "description": "The Abid Project",
+  "description": "The Flight Booking Project",
   "engines": {
     "npm": ">=8.19.0",
     "node": ">=18.0.0"

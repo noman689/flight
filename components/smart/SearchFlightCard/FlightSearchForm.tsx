@@ -92,6 +92,7 @@ import dayjs from 'dayjs';
 import './FlightSearchForm.scss';
 import type { RadioChangeEvent } from 'antd';
 import { Space } from 'antd';
+import { Link } from 'react-router-dom';
 
 const FlightSearchForm: React.FC = () => {
   const [value, setValue] = useState(1);
@@ -209,7 +210,7 @@ const FlightSearchForm: React.FC = () => {
                             min={1}
                             max={10}
                             defaultValue={3}
-                          // onChange={onChange}
+                            // onChange={onChange}
                           />
                         </div>
                         <div className="dflex">
@@ -218,7 +219,7 @@ const FlightSearchForm: React.FC = () => {
                             min={1}
                             max={10}
                             defaultValue={3}
-                          // onChange={onChange}
+                            // onChange={onChange}
                           />
                         </div>
                         <div className="dflex">
@@ -227,7 +228,7 @@ const FlightSearchForm: React.FC = () => {
                             min={1}
                             max={10}
                             defaultValue={3}
-                          // onChange={onChange}
+                            // onChange={onChange}
                           />
                         </div>
                       </div>
@@ -264,7 +265,7 @@ const FlightSearchForm: React.FC = () => {
               </Form.Item>
             </Col>
             <Col xs={24} sm={24} md={24} lg={23} className="flexEnd ">
-              <a href='/flight-details'>
+              <Link to="/flight-details">
                 <Button
                   type="default"
                   // htmlType="submit"
@@ -272,7 +273,7 @@ const FlightSearchForm: React.FC = () => {
                 >
                   Show Flights
                 </Button>
-              </a>
+              </Link>
             </Col>
           </Row>
         </Form>
