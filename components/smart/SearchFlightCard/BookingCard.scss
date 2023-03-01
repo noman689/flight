@@ -147,4 +147,9 @@
   z-index: 2;
 }
 
-
+@media only screen and (width: 1024px) {
+  .child {
+    bottom: 15%;
+    height: 228px;
+  }
+}

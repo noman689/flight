@@ -1,6 +1,13 @@
 import React from 'react';
 import { Card, Tabs } from 'antd';
-import { GitlabFilled } from '@ant-design/icons';
+import {
+  GitlabFilled,
+  BookOutlined,
+  BranchesOutlined,
+  PushpinOutlined,
+  NotificationOutlined,
+} from '@ant-design/icons';
+
 import './BookingCard.scss';
 import FlightSearchForm from './FlightSearchForm';
 
@@ -8,7 +15,7 @@ const item = [
   {
     label: (
       <span>
-        <GitlabFilled />
+        <BookOutlined />
         Book
       </span>
     ),
@@ -18,7 +25,7 @@ const item = [
   {
     label: (
       <span>
-        <GitlabFilled />
+        <BranchesOutlined />
         My Trip
       </span>
     ),
@@ -28,7 +35,7 @@ const item = [
   {
     label: (
       <span>
-        <GitlabFilled />
+        <PushpinOutlined />
         Check In
       </span>
     ),
@@ -38,7 +45,7 @@ const item = [
   {
     label: (
       <span style={{ borderRadius: '20px' }}>
-        <GitlabFilled />
+        <NotificationOutlined />
         Flight Status
       </span>
     ),

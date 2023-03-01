@@ -85,14 +85,19 @@ import {
   Col,
   Popover,
   InputNumber,
+  Divider,
+  Radio,
 } from 'antd';
 import dayjs from 'dayjs';
 import './FlightSearchForm.scss';
-
-const { Option } = Select;
-const { RangePicker } = DatePicker;
+import type { RadioChangeEvent } from 'antd';
+import { Space } from 'antd';
 
 const FlightSearchForm: React.FC = () => {
+  const [value, setValue] = useState(1);
+
+  const { Option } = Select;
+  const { RangePicker } = DatePicker;
   const onFinish = (values: any) => {
     console.log('Received values of form: ', values);
   };
@@ -100,9 +105,6 @@ const FlightSearchForm: React.FC = () => {
 
   const hide = () => {
     setOpen(false);
-  };
-  const onChange = (value: number) => {
-    console.log('changed', value);
   };
 
   const handleOpenChange = (newOpen: boolean) => {
@@ -197,35 +199,53 @@ const FlightSearchForm: React.FC = () => {
                   content={
                     <div>
                       <div>
-                        <span>Passengers</span>
+                        <span className="fontSize20">Passengers</span>
                       </div>
+                      <div style={{ marginTop: '10px' }}>
+                        <div className="dflex">
+                          <span>Adult (12+ Years)</span>
 
+                          <InputNumber
+                            min={1}
+                            max={10}
+                            defaultValue={3}
+                            // onChange={onChange}
+                          />
+                        </div>
+                        <div className="dflex">
+                          <span>Child (2-11 Years)</span>
+                          <InputNumber
+                            min={1}
+                            max={10}
+                            defaultValue={3}
+                            // onChange={onChange}
+                          />
+                        </div>
+                        <div className="dflex">
+                          <span>Infant (Under 2 years)</span>
+                          <InputNumber
+                            min={1}
+                            max={10}
+                            defaultValue={3}
+                            // onChange={onChange}
+                          />
+                        </div>
+                      </div>
+                      <Divider />
                       <div>
-                        <span>Adult (12+ Years)</span>
-                        <InputNumber
-                          min={1}
-                          max={10}
-                          defaultValue={3}
-                          onChange={onChange}
-                        />
+                        <span className="fontSize20 ">Class</span>
                       </div>
                       <div>
-                        <span>Child (2-11 Years)</span>
-                        <InputNumber
-                          min={1}
-                          max={10}
-                          defaultValue={3}
-                          onChange={onChange}
-                        />
-                      </div>
-                      <div>
-                        <span>Infant (Under 2 years)</span>
-                        <InputNumber
-                          min={1}
-                          max={10}
-                          defaultValue={3}
-                          onChange={onChange}
-                        />
+                        <Radio.Group value={value}>
+                          <Space direction="vertical">
+                            <Radio className="classColor" value={1}>
+                              Economy
+                            </Radio>
+                            <Radio className="classColor" value={2}>
+                              Premium(Busniess/First)
+                            </Radio>
+                          </Space>
+                        </Radio.Group>
                       </div>
                     </div>
                   }
