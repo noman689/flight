@@ -1,7 +1,7 @@
 import React from 'react';
 import { Layout } from 'antd';
 import SearchFlightCard from '../smart/SearchFlightCard/BookingCard';
-import FlightDetails from './FlightDetails';
+import ParentFlightDetail from './ParentFlightDetail'
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 // import HeaderComponent from './Header';
 import TestFooter from './Footer';
@@ -29,7 +29,7 @@ const MainLayout = () => {
         <Content>
           <Routes>
             <Route path="/" element={<SearchFlightCard />} />
-            <Route path="/flight-details" element={<FlightDetails />} />
+            <Route path="/flight-details" element={<ParentFlightDetail />} />
           </Routes>
         </Content>
       </BrowserRouter>
