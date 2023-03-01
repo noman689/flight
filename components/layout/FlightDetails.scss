@@ -1,0 +1,20 @@
+.flightDetails {
+    display: flex;
+    width: 80vw;
+    background: white;
+    height: 220px;
+    border-radius: 10px;
+    margin-top: 20px;
+
+    .imageCover {
+        object-fit: cover
+    }
+
+    .departureCard {
+        margin-bottom: 30px;
+        border-bottom: 1px solid grey;
+        padding-bottom: 10px
+    }
+
+
+}
