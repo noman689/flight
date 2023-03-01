@@ -10,7 +10,7 @@ import {
 } from '@ant-design/icons';
 
 const FlightDetails = ({ fromDate = "02-02-2021", toDate = "03-02-2021", departure = "Karachi", departureSub = "KTC", destination = "Lahore", destinationSub = "Lhr", plan = "1 passenger", type = "Return" }) => {
-  return (<Row style={{ display: 'flex', width: '80vw', background: 'white', height: '20wh', borderRadius: '10px', marginTop: '20px' }} justify="space-between">
+  return (<Row style={{ display: 'flex', width: '80vw', background: 'white', height: '220px', borderRadius: '10px', marginTop: '20px' }} justify="space-between">
     <Col xs={24} sm={24} md={3} lg={3}>
       <img height={'100%'} width='100%' src="https://cssgradient.io/images/logo-55c31c59.svg" />
     </Col>
