@@ -14,7 +14,7 @@ const FlightDetails = ({ fromDate = "02-02-2021", toDate = "03-02-2021", departu
   return (
 
     <Row className="flightDetails" justify="space-between">
-      <Col xs={24} sm={24} md={3} lg={3}>
+      <Col xs={24} sm={24} md={24} lg={3}>
         <img height={'100%'} width='100%' src={departureImg} className="imageCover" />
       </Col>
       <Col xs={24} sm={24} md={21} lg={21} style={{ padding: '20px' }}>
@@ -33,9 +33,9 @@ const FlightDetails = ({ fromDate = "02-02-2021", toDate = "03-02-2021", departu
             <Col xs={24} sm={24} md={20} lg={20} style={{ fontSize: '30px', fontWeight: '500' }}>{destinationSub}</Col>
             <Col xs={24} sm={24} md={24} lg={24}>{destination}</Col>
           </Col>
-          <Row xs={24} sm={12} md={5} lg={8} style={{ flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
-            <span xs={24} sm={24} md={20} lg={20} >{type}</span>
-            <span xs={24} sm={24} md={24} lg={24} style={{ fontSize: '15px' }}>{plan}</span>
+          <Row xs={24} sm={24} md={5} lg={8} className="planStyling" style={{ flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
+            <span xs={10} sm={10} md={20} lg={20} >{type}</span>
+            <span xs={12} sm={12} md={24} lg={24} style={{ fontSize: '15px' }}>{plan}</span>
           </Row>
           <Col xs={24} sm={24} md={6} lg={8} style={{ display: 'flex', justifyContent: 'end' }}>
             <Button

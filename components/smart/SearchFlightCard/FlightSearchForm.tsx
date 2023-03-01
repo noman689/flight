@@ -209,7 +209,7 @@ const FlightSearchForm: React.FC = () => {
                             min={1}
                             max={10}
                             defaultValue={3}
-                            // onChange={onChange}
+                          // onChange={onChange}
                           />
                         </div>
                         <div className="dflex">
@@ -218,7 +218,7 @@ const FlightSearchForm: React.FC = () => {
                             min={1}
                             max={10}
                             defaultValue={3}
-                            // onChange={onChange}
+                          // onChange={onChange}
                           />
                         </div>
                         <div className="dflex">
@@ -227,7 +227,7 @@ const FlightSearchForm: React.FC = () => {
                             min={1}
                             max={10}
                             defaultValue={3}
-                            // onChange={onChange}
+                          // onChange={onChange}
                           />
                         </div>
                       </div>
@@ -264,13 +264,15 @@ const FlightSearchForm: React.FC = () => {
               </Form.Item>
             </Col>
             <Col xs={24} sm={24} md={24} lg={23} className="flexEnd ">
-              <Button
-                type="default"
-                htmlType="submit"
-                className="form-button btnSearchFlight"
-              >
-                Show Flights
-              </Button>
+              <a href='/flight-details'>
+                <Button
+                  type="default"
+                  // htmlType="submit"
+                  className="form-button btnSearchFlight"
+                >
+                  Show Flights
+                </Button>
+              </a>
             </Col>
           </Row>
         </Form>
