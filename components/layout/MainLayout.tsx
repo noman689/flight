@@ -3,6 +3,7 @@ import { Layout } from 'antd';
 import SearchFlightCard from '../smart/SearchFlightCard/BookingCard';
 import ParentFlightDetail from './ParentFlightDetail';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+
 // import HeaderComponent from './Header';
 import Banner from './Banner';
 import './MainLayout.scss';
@@ -21,7 +22,7 @@ const MainLayout = () => {
           </Routes>
         </Content>
       </BrowserRouter>
-      <Footer />
+      {/* <Footer /> */}
     </Layout>
   );
 };
