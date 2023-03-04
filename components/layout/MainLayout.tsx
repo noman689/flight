@@ -3,10 +3,11 @@ import { Layout } from 'antd';
 import SearchFlightCard from '../smart/SearchFlightCard/BookingCard';
 import ParentFlightDetail from './ParentFlightDetail';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+
 // import HeaderComponent from './Header';
-import TestFooter from './Footer';
 import Banner from './Banner';
 import './MainLayout.scss';
+import Footer from './Footer';
 const { Content } = Layout;
 
 const MainLayout = () => {
@@ -347,6 +348,7 @@ const MainLayout = () => {
           </Routes>
         </Content>
       </BrowserRouter>
+      {/* <Footer /> */}
     </Layout>
   );
 };
