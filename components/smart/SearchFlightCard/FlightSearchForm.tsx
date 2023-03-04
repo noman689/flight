@@ -21,7 +21,7 @@ import { Space } from 'antd';
 import { Link } from 'react-router-dom';
 import { debug } from 'webpack';
 
-const FlightSearchForm: React.FC = () => {
+const FlightSearchForm: React.FC = ({ apiData, setApiData }) => {
   const [value, setValue] = useState("economy");
 
   const { Option } = Select;

@@ -11,58 +11,54 @@ import {
 import './BookingCard.scss';
 import FlightSearchForm from './FlightSearchForm';
 
-const item = [
-  {
-    label: (
-      <span>
-        <BookOutlined />
-        Book
-      </span>
-    ),
-    key: 'book',
-    children: <FlightSearchForm />,
-  },
-  {
-    label: (
-      <span>
-        <BranchesOutlined />
-        My Trip
-      </span>
-    ),
-    key: 'trip',
-    children: <> Comming Soon..!</>,
-  },
-  {
-    label: (
-      <span>
-        <PushpinOutlined />
-        Check In
-      </span>
-    ),
-    key: 'checkIn',
-    children: <>Comming Soon..!</>,
-  },
-  {
-    label: (
-      <span style={{ borderRadius: '20px' }}>
-        <NotificationOutlined />
-        Flight Status
-      </span>
-    ),
-    key: 'flightStatus',
-    children: <>Comming Soon..!</>,
-  },
-];
 
-const SearchFlightCard: React.FC = () => {
+
+const SearchFlightCard = ({ apiData, setApiData }) => {
+  const item = [
+    {
+      label: (
+        <span>
+          <BookOutlined />
+          Book
+        </span>
+      ),
+      key: 'book',
+      children: <FlightSearchForm apiData={apiData} setApiData={setApiData} />,
+    },
+    {
+      label: (
+        <span>
+          <BranchesOutlined />
+          My Trip
+        </span>
+      ),
+      key: 'trip',
+      children: <> Comming Soon..!</>,
+    },
+    {
+      label: (
+        <span>
+          <PushpinOutlined />
+          Check In
+        </span>
+      ),
+      key: 'checkIn',
+      children: <>Comming Soon..!</>,
+    },
+    {
+      label: (
+        <span style={{ borderRadius: '20px' }}>
+          <NotificationOutlined />
+          Flight Status
+        </span>
+      ),
+      key: 'flightStatus',
+      children: <>Comming Soon..!</>,
+    },
+  ];
   return (
     <Card className="card-wrapper child main_page_width">
-      <Tabs
-        type="card"
-        defaultActiveKey="book"
-        items={item}
-        className="tab-container"
-      />
+      <Tabs type="card" defaultActiveKey="book" items={item} className="tab-container" />
     </Card>
   );
 };
