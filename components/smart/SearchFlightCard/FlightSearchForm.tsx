@@ -79,7 +79,7 @@ const FlightSearchForm: React.FC = ({ apiData, setApiData }) => {
     };
     axios.post(url, { slices }, { headers })
       .then(response => {
-        console.log(response.data);
+        setApiData(response)
       })
       .catch(error => {
         console.error(error);
