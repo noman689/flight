@@ -4,24 +4,13 @@ import SearchFlightCard from '../smart/SearchFlightCard/BookingCard';
 import ParentFlightDetail from './ParentFlightDetail';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 // import HeaderComponent from './Header';
-import TestFooter from './Footer';
 import Banner from './Banner';
 import './MainLayout.scss';
+import Footer from './Footer';
 const { Content } = Layout;
 
 const MainLayout = () => {
   return (
-    // <Layout>
-    //   {/* <HeaderComponent /> */}
-
-    //   <Banner />
-
-    //   <Content>
-    //     <SearchFlightCard />
-    //   </Content>
-    //   {/*
-    //   <TestFooter /> */}
-    // </Layout>
     <Layout>
       <BrowserRouter>
         <Banner />
@@ -32,6 +21,7 @@ const MainLayout = () => {
           </Routes>
         </Content>
       </BrowserRouter>
+      <Footer />
     </Layout>
   );
 };
