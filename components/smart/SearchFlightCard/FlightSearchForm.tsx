@@ -13,6 +13,7 @@ import {
   InputNumber,
   Divider,
   Radio,
+  Spin
 } from 'antd';
 import dayjs from 'dayjs';
 import './FlightSearchForm.scss';
@@ -26,6 +27,7 @@ const FlightSearchForm: React.FC = ({ apiData, setApiData }) => {
 
   const { Option } = Select;
   const { RangePicker } = DatePicker;
+  const [isLoading, setIsLoading] = useState(false)
   const [dataObj, setDataObj] = useState({
     departure: '',
     destination: '',
@@ -77,12 +79,17 @@ const FlightSearchForm: React.FC = ({ apiData, setApiData }) => {
       passengers: passengers,
       cabin_class: cabinClassValue,
     };
+    setIsLoading(true)
     axios.post(url, { slices }, { headers })
       .then(response => {
         setApiData(response)
+        setIsLoading(false)
+        window.location.href = "/flight-details"
       })
       .catch(error => {
         console.error(error);
+        setIsLoading(false)
+        window.location.href = "/flight-details"
       });
     console.log(data, "data");
   };
@@ -359,7 +366,8 @@ const FlightSearchForm: React.FC = ({ apiData, setApiData }) => {
                 htmlType="submit"
                 className="form-button btnSearchFlight"
               >
-                Show Flights
+                <span style={{ marginRight: '10px' }}>Show Flights</span>
+                <Spin spinning={isLoading} />
               </Button>
               {/* </Link> */}
             </Col>
