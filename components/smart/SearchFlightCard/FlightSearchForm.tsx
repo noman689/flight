@@ -1,79 +1,5 @@
-// import React from "react";
-// import { Card, Form, Input, Select, DatePicker, Button } from "antd";
-// import dayjs from "dayjs";
-
-// const { Option } = Select;
-// const { RangePicker } = DatePicker;
-// import "./FlightSearchForm.scss";
-
-// const FlightSearchForm: React.FC = () => {
-//   const onFinish = (values: any) => {
-//     console.log("Received values of form: ", values);
-//   };
-
-//   return (
-//     <div className="flight-search-form">
-//       <Form onFinish={onFinish}>
-//         <Form.Item
-//           name="from"
-//           rules={[{ required: true, message: "Please input the departure city!" }]}
-//         >
-//           <Input placeholder=" Enter Departure City" className="form-input" />
-//         </Form.Item>
-//         <Form.Item
-//           name="to"
-//           rules={[{ required: true, message: "Please input the destination city!" }]}
-//         >
-//           <Input placeholder="Enter Destination City" className="form-input" />
-//         </Form.Item>
-//         <Form.Item
-//           name="Trip"
-//           rules={[{ required: true, message: "Please select the desired Trip" }]}
-//         >
-//           <Select placeholder="Return">
-//             <Option value="1">Return</Option>
-//             <Option value="2">One-Way</Option>
-//             <Option value="3">Multi-City</Option>
-//           </Select>
-//         </Form.Item>
-//         <Form.Item
-//           name="dates"
-//           rules={[{ required: true, message: "Please select the travel dates!" }]}
-//         >
-//           <RangePicker
-//             disabledDate={(current: dayjs.Dayjs) =>
-//               current && current < dayjs().startOf("day")
-//             }
-//             format="DD/MM/YYYY"
-//           />
-//         </Form.Item>
-//         <Form.Item
-//           name="passengers"
-//           rules={[
-//             { required: true, message: "Please select the number of passengers!" },
-//           ]}
-//         >
-//           <Select placeholder="Number of Passengers">
-//             <Option value="1">1</Option>
-//             <Option value="2">2</Option>
-//             <Option value="3">3</Option>
-//             <Option value="4">4</Option>
-//           </Select>
-//         </Form.Item>
-//         <div className="search-button-wrapper">
-//           <Form.Item>
-//             <Button type="default" htmlType="submit" className="form-button">
-//               Search Flights
-//             </Button>
-//           </Form.Item>
-//         </div>
-//       </Form>
-//     </div>
-//   );
-// };
-
-// export default FlightSearchForm;
 import React, { useState } from 'react';
+import axios from 'axios';
 import {
   Card,
   Form,
@@ -93,15 +19,74 @@ import './FlightSearchForm.scss';
 import type { RadioChangeEvent } from 'antd';
 import { Space } from 'antd';
 import { Link } from 'react-router-dom';
+import { debug } from 'webpack';
 
 const FlightSearchForm: React.FC = () => {
-  const [value, setValue] = useState(1);
+  const [value, setValue] = useState("economy");
 
   const { Option } = Select;
   const { RangePicker } = DatePicker;
-  const onFinish = (values: any) => {
-    console.log('Received values of form: ', values);
+  const [dataObj, setDataObj] = useState({
+    departure: '',
+    destination: '',
+    date: ''
+  })
+  const [returnDate, setReturnDate] = useState<any>()
+  const [passengersObj, setPassengersObj] = useState({
+    adult: 1,
+    child: 0,
+    infant: 0
+  })
+  const [cabinClassValue, setCabinClassValue] = useState<any>('economy')
+  const url = 'https://api.duffel.com/air/offer_requests?return_offers=false';
+  const token = 'duffel_test_Uh48ncnbR0dwmqAIODjC3aYC9Em-LxgqAsMB98u9kPD';
+
+  const headers = {
+    "Authorization": `Bearer ${token}`,
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+    "Accept-Encoding": "gzip",
+    "Duffel-Version": "v1"
   };
+
+  const onFinish = (values: any) => {
+    const { departure, destination, date } = dataObj;
+    const { adult, child, infant } = passengersObj;
+
+    const slices = [
+      {
+        origin: departure,
+        destination: destination,
+        departure_date: date,
+      },
+      {
+        origin: destination,
+        destination: departure,
+        departure_date: date,
+      },
+    ];
+
+    const passengers = [
+      ...Array(adult).fill({ type: 'adult' }),
+      ...Array(child).fill({ type: 'child' }),
+      ...Array(infant).fill({ age: 1 }),
+    ];
+
+    const data = {
+      slices: slices,
+      passengers: passengers,
+      cabin_class: cabinClassValue,
+    };
+    axios.post(url, { slices }, { headers })
+      .then(response => {
+        console.log(response.data);
+      })
+      .catch(error => {
+        console.error(error);
+      });
+    console.log(data, "data");
+  };
+
   const [open, setOpen] = useState(false);
 
   const hide = () => {
@@ -111,49 +96,135 @@ const FlightSearchForm: React.FC = () => {
   const handleOpenChange = (newOpen: boolean) => {
     setOpen(newOpen);
   };
+  const destinationCities = [
+    {
+      sub: "BKK",
+      city: "Bangkok"
+    },
+    {
+      sub: "HKG",
+      city: "Hong Kong"
+    },
+    {
+      sub: "LAX",
+      city: "Los Angeles"
+    },
+    {
+      sub: "SYD",
+      city: "Sydney"
+    },
+    {
+      sub: "LHR",
+      city: "London"
+    }
+  ];
 
+  const departureCities = [
+    {
+      sub: "NYC",
+      city: "New York"
+    },
+    {
+      sub: "LAX",
+      city: "Los Angeles"
+    },
+    {
+      sub: "SFO",
+      city: "San Francisco"
+    },
+    {
+      sub: "ORD",
+      city: "Chicago"
+    },
+    {
+      sub: "MIA",
+      city: "Miami"
+    }
+  ];
+  const cabinClass = [
+    { label: 'Economy', value: 'economy' },
+    { label: 'Premium(Business/First)', value: 'business' },
+
+  ];
+  const handleDepartureObj = (name, value) => {
+    if (name == "date") {
+      const [start, end] = value;
+      setReturnDate(end.format('YYYY-MM-DD'));
+      setDataObj(prevState => ({
+        ...prevState,
+        [name]: start.format('YYYY-MM-DD')
+      }));
+    }
+    else {
+      setDataObj(prevState => ({
+        ...prevState,
+        [name]: value
+      }));
+    }
+  };
+
+  const handlePassengersObj = (name, value) => {
+    setPassengersObj[name] = value
+  }
   return (
     <div className="flight-search-form">
       <div className="paddingLR">
         <Form onFinish={onFinish}>
           <Row justify={'center'}>
             <Col xs={24} sm={24} md={24} lg={5}>
+
               <Form.Item
-                name="from"
+                name="departure"
                 rules={[
-                  {
-                    required: true,
-                    message: 'Please input the departure city!',
-                  },
+                  { required: true, message: 'Select the departure city' },
                 ]}
               >
-                <Input
-                  placeholder="Enter Departure City"
-                  className="form-input"
-                />
+                <Select
+                  showArrow={false}
+                  showSearch
+                  // style={{ height: '55px' }}
+                  placeholder="Select departure city"
+                  // className="form-input"
+                  onChange={(value) => handleDepartureObj("departure", value)}
+                >
+                  {departureCities.map((e) => {
+                    return (
+                      <Option value={e.sub}>{e.city}</Option>
+                    );
+                  })}
+
+                </Select>
               </Form.Item>
             </Col>
             <Col xs={24} sm={24} md={24} lg={5}>
               <Form.Item
-                name="to"
+                name="destination"
                 rules={[
-                  {
-                    required: true,
-                    message: 'Please input the destination city!',
-                  },
+                  { required: true, message: 'select the destination city' },
                 ]}
               >
-                <Input
-                  placeholder="Enter Destination City"
-                  className="form-input"
-                />
+                <Select
+                  onChange={(value) => handleDepartureObj("destination", value)}
+                  showArrow={false}
+                  showSearch
+                  // style={{ height: '55px' }}
+                  placeholder="Select the destination city"
+                // className="form-input"
+                >
+                  {destinationCities.map((e) => {
+                    return (
+                      <Option value={e.sub}>{e.city}</Option>
+                    );
+                  })}
+
+                </Select>
               </Form.Item>
             </Col>
             <Col xs={24} sm={24} md={24} lg={4}>
               <Form.Item
                 name="Trip"
                 rules={[
-                  { required: true, message: 'Please select the desired Trip' },
+                  { required: true, message: 'select the desired Trip' },
                 ]}
               >
                 <Select
@@ -161,7 +232,7 @@ const FlightSearchForm: React.FC = () => {
                   placeholder="Return"
                   className="form-input"
                 >
-                  <Option value="1">Return</Option>
+                  <Option selected value="1">Return</Option>
                   <Option value="2">One-Way</Option>
                   <Option value="3">Multi-City</Option>
                 </Select>
@@ -173,11 +244,12 @@ const FlightSearchForm: React.FC = () => {
                 rules={[
                   {
                     required: true,
-                    message: 'Please select the travel dates!',
+                    message: 'Select travel dates',
                   },
                 ]}
               >
                 <RangePicker
+                  onChange={(value) => handleDepartureObj("date", value)}
                   disabledDate={(current: dayjs.Dayjs) =>
                     current && current < dayjs().startOf('day')
                   }
@@ -191,7 +263,7 @@ const FlightSearchForm: React.FC = () => {
                 name="passengers-class"
                 rules={[
                   {
-                    required: true,
+                    required: false,
                     message: 'Please Enter passengers & class',
                   },
                 ]}
@@ -207,28 +279,42 @@ const FlightSearchForm: React.FC = () => {
                           <span>Adult (12+ Years)</span>
 
                           <InputNumber
-                            min={1}
+                            min={0}
                             max={10}
-                            defaultValue={3}
-                            // onChange={onChange}
+                            defaultValue={1}
+                            value={passengersObj.adult}
+                            onChange={(value) => handlePassengersObj("adult", value)}
+
                           />
                         </div>
                         <div className="dflex">
                           <span>Child (2-11 Years)</span>
-                          <InputNumber
-                            min={1}
-                            max={10}
-                            defaultValue={3}
-                            // onChange={onChange}
-                          />
+                          <Form.Item
+                            name="passengers-class"
+                            rules={[
+                              {
+                                required: false,
+                                message: 'Please Enter passengers & class',
+                              },
+                            ]}
+                          >
+                            <InputNumber
+                              min={0}
+                              max={10}
+                              defaultValue={0}
+                              value={passengersObj.child}
+                              onChange={(value) => handlePassengersObj("child", value)}
+                            />
+                          </Form.Item>
                         </div>
                         <div className="dflex">
                           <span>Infant (Under 2 years)</span>
                           <InputNumber
-                            min={1}
+                            min={0}
                             max={10}
-                            defaultValue={3}
-                            // onChange={onChange}
+                            defaultValue={0}
+                            onChange={(value) => handlePassengersObj("infant", value)}
+                            value={passengersObj.infant}
                           />
                         </div>
                       </div>
@@ -237,14 +323,16 @@ const FlightSearchForm: React.FC = () => {
                         <span className="fontSize20 ">Class</span>
                       </div>
                       <div>
-                        <Radio.Group value={value}>
+                        <Radio.Group
+                          value={cabinClassValue}
+                          onChange={(event) => setCabinClassValue(event.target.value)}
+                        >
                           <Space direction="vertical">
-                            <Radio className="classColor" value={1}>
-                              Economy
-                            </Radio>
-                            <Radio className="classColor" value={2}>
-                              Premium(Busniess/First)
-                            </Radio>
+                            {cabinClass.map((e) => (
+                              <Radio className="classColor" value={e.value}>
+                                {e.label}
+                              </Radio>
+                            ))}
                           </Space>
                         </Radio.Group>
                       </div>
@@ -265,15 +353,15 @@ const FlightSearchForm: React.FC = () => {
               </Form.Item>
             </Col>
             <Col xs={24} sm={24} md={24} lg={23} className="flexEnd ">
-              <Link to="/flight-details">
-                <Button
-                  type="default"
-                  // htmlType="submit"
-                  className="form-button btnSearchFlight"
-                >
-                  Show Flights
-                </Button>
-              </Link>
+              {/* <Link to="/flight-details"> */}
+              <Button
+                type="default"
+                htmlType="submit"
+                className="form-button btnSearchFlight"
+              >
+                Show Flights
+              </Button>
+              {/* </Link> */}
             </Col>
           </Row>
         </Form>
