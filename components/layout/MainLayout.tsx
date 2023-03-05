@@ -2,9 +2,8 @@ import React from 'react';
 import { Layout } from 'antd';
 import SearchFlightCard from '../smart/SearchFlightCard/BookingCard';
 import ParentFlightDetail from './ParentFlightDetail';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-
-// import HeaderComponent from './Header';
+import { BrowserRouter, Routes, Route, useSubmit } from 'react-router-dom';
+import PassengerDetailsForm from './PassengerDetailsForm';
 import Banner from './Banner';
 import './MainLayout.scss';
 import Footer from './Footer';
@@ -19,10 +18,15 @@ const MainLayout = () => {
           <Routes>
             <Route path="/" element={<SearchFlightCard />} />
             <Route path="/flight-details" element={<ParentFlightDetail />} />
+            <Route
+              path="/passenger-details"
+              element={<PassengerDetailsForm />}
+            />
           </Routes>
         </Content>
       </BrowserRouter>
-      {/* <Footer /> */}
+
+      <Footer />
     </Layout>
   );
 };

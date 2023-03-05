@@ -3,7 +3,7 @@ import { Typography, Divider, Drawer, List, Row, Timeline, Space } from 'antd';
 
 const { Text } = Typography;
 import './CustomDrawer.scss';
-const CustomDrawer: React.FC = () => {
+const RightDrawer: React.FC = () => {
   const [open, setOpen] = useState(false);
 
   const showDrawer = () => {
@@ -133,4 +133,4 @@ const CustomDrawer: React.FC = () => {
   );
 };
 
-export default CustomDrawer;
+export default RightDrawer;

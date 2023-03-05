@@ -6,11 +6,11 @@ import {
   MobileOutlined,
   MinusCircleOutlined,
   DiffOutlined,
-  ArrowDownOutlined,
 } from '@ant-design/icons';
-import CustomDrawer from './CustomDrawer';
-import './FlightDetails.scss';
+import { Link } from 'react-router-dom';
 
+import './FlightDetails.scss';
+import RightDrawer from './RightDrawer';
 const FlightDetails = ({
   fromDate = '02-02-2021',
   toDate = '03-02-2021',
@@ -74,8 +74,7 @@ const FlightDetails = ({
               alignItems: 'center',
             }}
           >
-            {' '}
-            <ArrowRightOutlined />{' '}
+            <ArrowRightOutlined />
           </Col>
           <Col xs={8} sm={12} md={5} lg={2}>
             <Col
@@ -117,13 +116,11 @@ const FlightDetails = ({
             lg={8}
             style={{ display: 'flex', justifyContent: 'end' }}
           >
-            <Button
-              type="default"
-              htmlType="submit"
-              className="form-button btnCompleteBooking"
-            >
-              Complete my Booking
-            </Button>
+            <Link to="/passenger-details">
+              <Button type="default" className="form-button btnCompleteBooking">
+                Complete my Booking
+              </Button>
+            </Link>
           </Col>
         </Row>
         <Row justify={'space-evenly'}>
@@ -136,7 +133,6 @@ const FlightDetails = ({
                   color: '#652954',
                 }}
               >
-                {' '}
                 <MobileOutlined />
               </span>
               <span>Voucher with 10% more</span>
@@ -174,7 +170,7 @@ const FlightDetails = ({
           <Col xs={0} sm={12} md={7} lg={6}>
             <div style={{ display: 'flex', alignItems: 'center' }}>
               <span>
-                <CustomDrawer />
+                <RightDrawer />
               </span>
             </div>
           </Col>

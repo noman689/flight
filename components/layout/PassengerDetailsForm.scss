@@ -1,0 +1,54 @@
+.ant-form {
+  flex-direction: column !important;
+}
+.passenger-details-form {
+  .ant-row {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .ant-col {
+    margin-bottom: 1rem;
+  }
+
+  .ant-form-item {
+    margin-bottom: 0.5rem;
+  }
+
+  .ant-form-item-label {
+    padding: 0;
+  }
+
+  .radio-group {
+    display: flex;
+  }
+  .radio-box {
+    border: 1px solid #d9d9d9;
+    padding: 8px 16px;
+    border-radius: 4px;
+    display: inline-block;
+    margin-right: 8px;
+    background-color: rgba(0, 0, 0, 0);
+  }
+
+  .radio-box:last-child {
+    margin-right: 0;
+  }
+
+  .ant-select {
+    width: 100%;
+    margin-bottom: 0.5rem;
+  }
+
+  .ant-select-selector {
+    height: auto !important;
+  }
+  .ant-picker {
+    width: 100%;
+    margin-bottom: 0.5rem;
+  }
+
+  .ant-input {
+    width: 100%;
+  }
+}
