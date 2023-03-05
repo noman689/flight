@@ -1,5 +1,5 @@
 import React from 'react';
-import '../layout/CommonStyles.scss';
+import './CommonStyles.scss';
 import {
   UserOutlined,
   SearchOutlined,

@@ -11,9 +11,7 @@ import {
 import './BookingCard.scss';
 import FlightSearchForm from './FlightSearchForm';
 
-
-
-const SearchFlightCard = ({ apiData, setApiData }) => {
+const SearchFlightCard = () => {
   const item = [
     {
       label: (
@@ -23,7 +21,7 @@ const SearchFlightCard = ({ apiData, setApiData }) => {
         </span>
       ),
       key: 'book',
-      children: <FlightSearchForm apiData={apiData} setApiData={setApiData} />,
+      children: <FlightSearchForm />,
     },
     {
       label: (
@@ -58,7 +56,12 @@ const SearchFlightCard = ({ apiData, setApiData }) => {
   ];
   return (
     <Card className="card-wrapper child main_page_width">
-      <Tabs type="card" defaultActiveKey="book" items={item} className="tab-container" />
+      <Tabs
+        type="card"
+        defaultActiveKey="book"
+        items={item}
+        className="tab-container"
+      />
     </Card>
   );
 };

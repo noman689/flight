@@ -13,45 +13,37 @@ import {
   InputNumber,
   Divider,
   Radio,
-  Spin
+  Spin,
 } from 'antd';
 import dayjs from 'dayjs';
 import './FlightSearchForm.scss';
 import type { RadioChangeEvent } from 'antd';
 import { Space } from 'antd';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { debug } from 'webpack';
+import { searchFlightAPI } from '@client/services/searchFlightService';
 
-const FlightSearchForm: React.FC = ({ apiData, setApiData }) => {
-  const [value, setValue] = useState("economy");
+const FlightSearchForm: React.FC = () => {
+  const [value, setValue] = useState('economy');
+  const navigate = useNavigate();
 
   const { Option } = Select;
   const { RangePicker } = DatePicker;
-  const [isLoading, setIsLoading] = useState(false)
+  const [isLoading, setIsLoading] = useState(false);
   const [dataObj, setDataObj] = useState({
     departure: '',
     destination: '',
-    date: ''
-  })
-  const [returnDate, setReturnDate] = useState<any>()
+    date: '',
+  });
+  const [returnDate, setReturnDate] = useState<any>();
   const [passengersObj, setPassengersObj] = useState({
     adult: 1,
     child: 0,
-    infant: 0
-  })
-  const [cabinClassValue, setCabinClassValue] = useState<any>('economy')
-  const url = 'https://api.duffel.com/air/offer_requests?return_offers=false';
-  const token = 'duffel_test_Uh48ncnbR0dwmqAIODjC3aYC9Em-LxgqAsMB98u9kPD';
+    infant: 0,
+  });
+  const [cabinClassValue, setCabinClassValue] = useState<any>('economy');
 
-  const headers = {
-    "Authorization": `Bearer ${token}`,
-    "Content-Type": "application/json",
-    "Accept": "application/json",
-    "Accept-Encoding": "gzip",
-    "Duffel-Version": "v1"
-  };
-
-  const onFinish = (values: any) => {
+  const onFinish = async (values: any) => {
     const { departure, destination, date } = dataObj;
     const { adult, child, infant } = passengersObj;
 
@@ -79,19 +71,13 @@ const FlightSearchForm: React.FC = ({ apiData, setApiData }) => {
       passengers: passengers,
       cabin_class: cabinClassValue,
     };
-    setIsLoading(true)
-    axios.post(url, { slices }, { headers })
-      .then(response => {
-        setApiData(response)
-        setIsLoading(false)
-        window.location.href = "/flight-details"
-      })
-      .catch(error => {
-        console.error(error);
-        setIsLoading(false)
-        window.location.href = "/flight-details"
-      });
-    console.log(data, "data");
+    try {
+      setIsLoading(true);
+      await searchFlightAPI(data);
+      navigate('/flight-details');
+    } catch (error) {
+      setIsLoading(false);
+    }
   };
 
   const [open, setOpen] = useState(false);
@@ -105,81 +91,78 @@ const FlightSearchForm: React.FC = ({ apiData, setApiData }) => {
   };
   const destinationCities = [
     {
-      sub: "BKK",
-      city: "Bangkok"
+      sub: 'BKK',
+      city: 'Bangkok',
     },
     {
-      sub: "HKG",
-      city: "Hong Kong"
+      sub: 'HKG',
+      city: 'Hong Kong',
     },
     {
-      sub: "LAX",
-      city: "Los Angeles"
+      sub: 'LAX',
+      city: 'Los Angeles',
     },
     {
-      sub: "SYD",
-      city: "Sydney"
+      sub: 'SYD',
+      city: 'Sydney',
     },
     {
-      sub: "LHR",
-      city: "London"
-    }
+      sub: 'LHR',
+      city: 'London',
+    },
   ];
 
   const departureCities = [
     {
-      sub: "NYC",
-      city: "New York"
+      sub: 'NYC',
+      city: 'New York',
     },
     {
-      sub: "LAX",
-      city: "Los Angeles"
+      sub: 'LAX',
+      city: 'Los Angeles',
     },
     {
-      sub: "SFO",
-      city: "San Francisco"
+      sub: 'SFO',
+      city: 'San Francisco',
     },
     {
-      sub: "ORD",
-      city: "Chicago"
+      sub: 'ORD',
+      city: 'Chicago',
     },
     {
-      sub: "MIA",
-      city: "Miami"
-    }
+      sub: 'MIA',
+      city: 'Miami',
+    },
   ];
   const cabinClass = [
     { label: 'Economy', value: 'economy' },
     { label: 'Premium(Business/First)', value: 'business' },
-
   ];
   const handleDepartureObj = (name, value) => {
-    if (name == "date") {
+    if (name == 'date') {
       const [start, end] = value;
       setReturnDate(end.format('YYYY-MM-DD'));
-      setDataObj(prevState => ({
+      setDataObj((prevState) => ({
         ...prevState,
-        [name]: start.format('YYYY-MM-DD')
+        [name]: start.format('YYYY-MM-DD'),
       }));
-    }
-    else {
-      setDataObj(prevState => ({
+    } else {
+      setDataObj((prevState) => ({
         ...prevState,
-        [name]: value
+        [name]: value,
       }));
     }
   };
 
   const handlePassengersObj = (name, value) => {
-    setPassengersObj[name] = value
-  }
+    setPassengersObj[name] = value;
+  };
   return (
     <div className="flight-search-form">
       <div className="paddingLR">
         <Form onFinish={onFinish}>
           <Row justify={'center'}>
             <Col xs={24} sm={24} md={24} lg={5}>
-
               <Form.Item
                 name="departure"
                 rules={[
@@ -192,14 +175,11 @@ const FlightSearchForm: React.FC = ({ apiData, setApiData }) => {
                   // style={{ height: '55px' }}
                   placeholder="Select departure city"
                   // className="form-input"
-                  onChange={(value) => handleDepartureObj("departure", value)}
+                  onChange={(value) => handleDepartureObj('departure', value)}
                 >
                   {departureCities.map((e) => {
-                    return (
-                      <Option value={e.sub}>{e.city}</Option>
-                    );
+                    return <Option value={e.sub}>{e.city}</Option>;
                   })}
-
                 </Select>
               </Form.Item>
             </Col>
@@ -211,35 +191,32 @@ const FlightSearchForm: React.FC = ({ apiData, setApiData }) => {
                 ]}
               >
                 <Select
-                  onChange={(value) => handleDepartureObj("destination", value)}
+                  onChange={(value) => handleDepartureObj('destination', value)}
                   showArrow={false}
                   showSearch
                   // style={{ height: '55px' }}
                   placeholder="Select the destination city"
-                // className="form-input"
+                  // className="form-input"
                 >
                   {destinationCities.map((e) => {
-                    return (
-                      <Option value={e.sub}>{e.city}</Option>
-                    );
+                    return <Option value={e.sub}>{e.city}</Option>;
                   })}
-
                 </Select>
               </Form.Item>
             </Col>
             <Col xs={24} sm={24} md={24} lg={4}>
               <Form.Item
                 name="Trip"
-                rules={[
-                  { required: true, message: 'select the desired Trip' },
-                ]}
+                rules={[{ required: true, message: 'select the desired Trip' }]}
               >
                 <Select
                   // style={{ height: '55px' }}
                   placeholder="Return"
                   className="form-input"
                 >
-                  <Option selected value="1">Return</Option>
+                  <Option selected value="1">
+                    Return
+                  </Option>
                   <Option value="2">One-Way</Option>
                   <Option value="3">Multi-City</Option>
                 </Select>
@@ -256,7 +233,7 @@ const FlightSearchForm: React.FC = ({ apiData, setApiData }) => {
                 ]}
               >
                 <RangePicker
-                  onChange={(value) => handleDepartureObj("date", value)}
+                  onChange={(value) => handleDepartureObj('date', value)}
                   disabledDate={(current: dayjs.Dayjs) =>
                     current && current < dayjs().startOf('day')
                   }
@@ -290,8 +267,9 @@ const FlightSearchForm: React.FC = ({ apiData, setApiData }) => {
                             max={10}
                             defaultValue={1}
                             value={passengersObj.adult}
-                            onChange={(value) => handlePassengersObj("adult", value)}
-
+                            onChange={(value) =>
+                              handlePassengersObj('adult', value)
+                            }
                           />
                         </div>
                         <div className="dflex">
@@ -310,7 +288,9 @@ const FlightSearchForm: React.FC = ({ apiData, setApiData }) => {
                               max={10}
                               defaultValue={0}
                               value={passengersObj.child}
-                              onChange={(value) => handlePassengersObj("child", value)}
+                              onChange={(value) =>
+                                handlePassengersObj('child', value)
+                              }
                             />
                           </Form.Item>
                         </div>
@@ -320,7 +300,9 @@ const FlightSearchForm: React.FC = ({ apiData, setApiData }) => {
                             min={0}
                             max={10}
                             defaultValue={0}
-                            onChange={(value) => handlePassengersObj("infant", value)}
+                            onChange={(value) =>
+                              handlePassengersObj('infant', value)
+                            }
                             value={passengersObj.infant}
                           />
                         </div>
@@ -332,7 +314,9 @@ const FlightSearchForm: React.FC = ({ apiData, setApiData }) => {
                       <div>
                         <Radio.Group
                           value={cabinClassValue}
-                          onChange={(event) => setCabinClassValue(event.target.value)}
+                          onChange={(event) =>
+                            setCabinClassValue(event.target.value)
+                          }
                         >
                           <Space direction="vertical">
                             {cabinClass.map((e) => (
