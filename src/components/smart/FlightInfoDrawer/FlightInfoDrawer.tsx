@@ -1,39 +1,23 @@
 import React, { useState } from 'react';
 import { Typography, Divider, Drawer, List, Row, Timeline, Space } from 'antd';
-
 const { Text } = Typography;
-import './CustomDrawer.scss';
-const CustomDrawer: React.FC = () => {
-  const [open, setOpen] = useState(false);
+import './FlightInfoDrawer.scss';
 
-  const showDrawer = () => {
-    setOpen(true);
-  };
+interface FlightInfoDrawerProps {
+  open: boolean;
+  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
+}
 
+const FlightInfoDrawer = ({
+  open,
+  setOpen,
+}: FlightInfoDrawerProps) => {
   const onClose = () => {
     setOpen(false);
   };
 
   return (
     <>
-      <List
-        dataSource={[
-          {
-            id: 1,
-            name: 'Flights',
-          },
-        ]}
-        renderItem={(item) => (
-          <List.Item
-            key={item.id}
-            actions={[
-              <a onClick={showDrawer} key={`a-${item.id}`}>
-                View Flight Details
-              </a>,
-            ]}
-          ></List.Item>
-        )}
-      />
       <Drawer
         width={500}
         placement="right"
@@ -133,4 +117,4 @@ const CustomDrawer: React.FC = () => {
   );
 };
 
-export default CustomDrawer;
+export default FlightInfoDrawer;

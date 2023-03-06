@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 import {
-  Card,
   Form,
   Input,
   Select,
@@ -13,15 +11,13 @@ import {
   InputNumber,
   Divider,
   Radio,
-  Spin,
 } from 'antd';
 import dayjs from 'dayjs';
 import './FlightSearchForm.scss';
-import type { RadioChangeEvent } from 'antd';
 import { Space } from 'antd';
-import { Link, useNavigate } from 'react-router-dom';
-import { debug } from 'webpack';
+import { useNavigate } from 'react-router-dom';
 import { searchFlightAPI } from '@client/services/searchFlightService';
+import Spin from '@client/components/presentational/Spin';
 
 const FlightSearchForm: React.FC = () => {
   const [value, setValue] = useState('economy');
@@ -73,7 +69,7 @@ const FlightSearchForm: React.FC = () => {
     };
     try {
       setIsLoading(true);
-      await searchFlightAPI(data);
+      // await searchFlightAPI(data);
       navigate('/flight-details');
     } catch (error) {
       setIsLoading(false);
@@ -350,8 +346,11 @@ const FlightSearchForm: React.FC = () => {
                 htmlType="submit"
                 className="form-button btnSearchFlight"
               >
-                <span style={{ marginRight: '10px' }}>Show Flights</span>
-                <Spin spinning={isLoading} />
+                {isLoading ? (
+                  <Spin />
+                ) : (
+                  <span style={{ marginRight: '10px' }}>Show Flights</span>
+                )}
               </Button>
               {/* </Link> */}
             </Col>

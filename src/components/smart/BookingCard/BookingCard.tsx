@@ -9,7 +9,7 @@ import {
 } from '@ant-design/icons';
 
 import './BookingCard.scss';
-import FlightSearchForm from './FlightSearchForm';
+import FlightSearchForm from '../FlightSearchForm/FlightSearchForm';
 
 const SearchFlightCard = () => {
   const item = [
@@ -55,7 +55,7 @@ const SearchFlightCard = () => {
     },
   ];
   return (
-    <Card className="card-wrapper child main_page_width">
+    <Card className="card-wrapper child">
       <Tabs
         type="card"
         defaultActiveKey="book"

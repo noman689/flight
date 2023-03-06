@@ -1,15 +1,13 @@
 import { Col, Row } from 'antd';
 import React from 'react';
-import FlightDetails from './FlightDetails';
-const { isEmpty } = require('lodash');
+import FlightDetailCard from '../FlightDetailCard/FlightDetailCard';
 
-const ParentFlightDetail = ({ apiData }) => {
-
+const FlightDetail = ({ apiData }) => {
   return (
     <div className="main_page_width">
       <Row justify="center">
         {apiData.map((value, index) => (
-          <FlightDetails
+          <FlightDetailCard
             fromDate={value.data.slices[0].departure_date}
             toDate={value.data.slices[1].departure_date}
             departure={value.data.slices[0].origin.name}
@@ -19,11 +17,11 @@ const ParentFlightDetail = ({ apiData }) => {
             plan={value.data.passengers}
             type={value.cabin_class}
             departureImg={`https://source.unsplash.com/1600x900/?${value.data.slices[0].origin.name}`}
-          ></FlightDetails>
+          ></FlightDetailCard>
         ))}
       </Row>
-    </div >
+    </div>
   );
 };
 
-export default ParentFlightDetail;
+export default FlightDetail;

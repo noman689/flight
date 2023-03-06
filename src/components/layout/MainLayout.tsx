@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { Layout } from 'antd';
-import SearchFlightCard from '../smart/SearchFlightCard/BookingCard';
-import ParentFlightDetail from './ParentFlightDetail';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import './MainLayout.scss';
-import Footer from './Footer';
-import Banner from './Banner';
+import SearchFlightCard from '../smart/BookingCard/BookingCard';
+import HeaderComponent from './AppHeader/Header';
+import Footer from './AppFooter/Footer';
+import FlightDetail from '../smart/FlightDetails/FlightDetail';
 const { Content } = Layout;
 
 const MainLayout = () => {
@@ -338,13 +338,13 @@ const MainLayout = () => {
   return (
     <Layout>
       <BrowserRouter>
-        <Banner />
+        <HeaderComponent />
         <Content>
           <Routes>
             <Route path="/" element={<SearchFlightCard />} />
             <Route
               path="/flight-details"
-              element={<ParentFlightDetail apiData={apiData} />}
+              element={<FlightDetail apiData={apiData} />}
             />
           </Routes>
         </Content>

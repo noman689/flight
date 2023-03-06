@@ -1,5 +1,4 @@
 import React from 'react';
-import './CommonStyles.scss';
 import {
   UserOutlined,
   SearchOutlined,
@@ -10,8 +9,8 @@ import { Button } from 'antd';
 import type { MenuProps } from 'antd';
 import { Dropdown, Space, Typography } from 'antd';
 import { Link } from 'react-router-dom';
+import './Header.scss';
 
-interface Props {}
 const items: MenuProps['items'] = [
   {
     key: '1',
@@ -28,9 +27,9 @@ const items: MenuProps['items'] = [
   { key: '4', label: 'Privilege Club' },
 ];
 
-const Banner: React.FC<Props> = () => {
+const HeaderComponent: React.FC<any> = () => {
   return (
-    <div className="bannerDiv parent main_page_width">
+    <div className="bannerDiv parent">
       <div className="hideOnLargeScreen">
         <div className="dFlexEnd">
           <Dropdown
@@ -52,7 +51,7 @@ const Banner: React.FC<Props> = () => {
             <UserOutlined /> login | Sign Up
           </span>
         </div>
-        <div className="container">
+        <div className="img-shadow">
           <span className="HeadingBanner">
             Discover Amazing
             <br /> Online Offers
@@ -64,7 +63,7 @@ const Banner: React.FC<Props> = () => {
           </div>
         </div>
       </div>
-      <div className="navLinks hideOnSmallScreen">
+      <div className="navLinks hideOnSmallScreen main_page_width">
         <div className="header">
           <div className="d-flex">
             <img src="https://cssgradient.io/images/logo-55c31c59.svg" />
@@ -87,15 +86,16 @@ const Banner: React.FC<Props> = () => {
           </div>
         </div>
 
-        <div className="container">
-          <span className="HeadingBanner">
-            Discover Amazing
-            <br /> Online Offers
-          </span>
-          <br />
-          <span className="saveupto">Save Upto 20%</span>
-          <div className="padding10">
-            <Button className="btnBookNow">Book Now</Button>
+        <div className="img-shadow main_page_width">
+          <div className="banner-text">
+            <div className="HeadingBanner">
+              Discover Amazing
+              <br /> Online Offers
+            </div>
+            <span className="saveupto">Save Upto 20%</span>
+            <div className="padding10">
+              <Button className="btnBookNow">Book Now</Button>
+            </div>
           </div>
         </div>
       </div>
@@ -103,4 +103,4 @@ const Banner: React.FC<Props> = () => {
   );
 };
 
-export default Banner;
+export default HeaderComponent;

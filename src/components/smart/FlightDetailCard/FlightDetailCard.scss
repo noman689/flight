@@ -1,0 +1,38 @@
+.flight-detail-card-item {
+  .flightDetails {
+    display: flex;
+    width: 80vw;
+    background: white;
+    height: fit-content;
+    border-radius: 10px;
+    margin-top: 20px;
+
+    .imageCover {
+      object-fit: cover;
+    }
+
+    .departureCard {
+      margin-bottom: 30px;
+      border-bottom: 1px solid grey;
+      padding-bottom: 10px;
+    }
+
+    @media only screen and (max-width: 550px) {
+      .btnCompleteBooking {
+        margin-top: 20px !important;
+      }
+
+      .planStyling {
+        margin-top: 20px;
+        justify-content: space-between !important;
+        flex-direction: row !important;
+        width: 100% !important;
+      }
+    }
+    .view-detail-btn {
+      text-decoration: underline;
+      color: rgb(107, 107, 210);
+      cursor: pointer;
+    }
+  }
+}
