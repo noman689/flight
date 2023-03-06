@@ -9,13 +9,18 @@ import {
   Col,
   RadioChangeEvent,
   Card,
+  Button,
 } from 'antd';
 import './PassengerDetailsForm.scss';
 
 const { RangePicker } = DatePicker;
 const { TextArea } = Input;
-
-const PassengerDetailsForm: React.FC = () => {
+interface PassengerDetailsFormProps {
+  onSubmit: (data: any) => void;
+}
+const PassengerDetailsForm: React.FC<PassengerDetailsFormProps> = ({
+  onSubmit,
+}) => {
   const [value, setValue] = useState(1);
 
   const onChange = (e: RadioChangeEvent) => {
@@ -23,12 +28,13 @@ const PassengerDetailsForm: React.FC = () => {
   };
 
   return (
-    <Card title="Passenger Details">
+    <Card title="Passenger Details" style={{ marginLeft: '12px' }}>
       <Form
         labelCol={{ span: 0 }}
         wrapperCol={{ span: 24 }}
         layout="vertical"
         className="passenger-details-form"
+        onFinish={onSubmit}
       >
         <Row gutter={[16, 16]}>
           <Col span={12}>
@@ -117,6 +123,16 @@ const PassengerDetailsForm: React.FC = () => {
                 <Select.Option value="france">France</Select.Option>
               </Select>
             </Form.Item>
+          </Col>
+        </Row>
+        <Row justify="center">
+          <Col>
+            <Button type="primary" htmlType="submit">
+              Add other Passanger data
+            </Button>
+          </Col>
+          <Col style={{ marginLeft: '12px' }}>
+            <Button type="default">Submit</Button>
           </Col>
         </Row>
       </Form>
