@@ -6,7 +6,12 @@
     flex-direction: row;
     justify-content: space-around;
     margin: 10px 0px;
-
+    :where(.css-dev-only-do-not-override-1km3mtt).ant-select-single
+      .ant-select-selector
+      .ant-select-selection-search {
+      display: flex;
+      align-items: center;
+    }
     .form-group {
       display: flex;
       flex-direction: row;
