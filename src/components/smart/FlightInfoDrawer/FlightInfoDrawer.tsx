@@ -1,23 +1,14 @@
 import React, { useState } from 'react';
 import { Typography, Divider, Drawer, List, Row, Timeline, Space } from 'antd';
 const { Text } = Typography;
-<<<<<<<< HEAD:components/layout/RightDrawer.tsx
-import './CustomDrawer.scss';
-const RightDrawer: React.FC = () => {
-  const [open, setOpen] = useState(false);
-========
 import './FlightInfoDrawer.scss';
->>>>>>>> b71391b9689127824e6994cae072d33c460e0c8b:src/components/smart/FlightInfoDrawer/FlightInfoDrawer.tsx
 
 interface FlightInfoDrawerProps {
   open: boolean;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const FlightInfoDrawer = ({
-  open,
-  setOpen,
-}: FlightInfoDrawerProps) => {
+const FlightInfoDrawer = ({ open, setOpen }: FlightInfoDrawerProps) => {
   const onClose = () => {
     setOpen(false);
   };
@@ -123,8 +114,4 @@ const FlightInfoDrawer = ({
   );
 };
 
-<<<<<<<< HEAD:components/layout/RightDrawer.tsx
-export default RightDrawer;
-========
 export default FlightInfoDrawer;
->>>>>>>> b71391b9689127824e6994cae072d33c460e0c8b:src/components/smart/FlightInfoDrawer/FlightInfoDrawer.tsx
