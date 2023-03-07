@@ -1,6 +1,7 @@
 import React from 'react';
 import { Layout, Row, Col } from 'antd';
 import './Footer.scss';
+// @ts-ignore
 import WavyFooter from '../../../assets/wavyFooter.png';
 
 const { Footer } = Layout;
