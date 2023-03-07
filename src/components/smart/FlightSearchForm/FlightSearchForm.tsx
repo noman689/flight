@@ -11,6 +11,7 @@ import {
   InputNumber,
   Divider,
   Radio,
+  AutoComplete,
 } from 'antd';
 import dayjs from 'dayjs';
 import './FlightSearchForm.scss';
@@ -85,51 +86,28 @@ const FlightSearchForm: React.FC = () => {
   const handleOpenChange = (newOpen: boolean) => {
     setOpen(newOpen);
   };
+
   const destinationCities = [
-    {
-      sub: 'BKK',
-      city: 'Bangkok',
-    },
-    {
-      sub: 'HKG',
-      city: 'Hong Kong',
-    },
-    {
-      sub: 'LAX',
-      city: 'Los Angeles',
-    },
-    {
-      sub: 'SYD',
-      city: 'Sydney',
-    },
-    {
-      sub: 'LHR',
-      city: 'London',
-    },
+    { value: 'Bangkok' },
+    { value: 'Hong Kong' },
+    { value: 'Los Angeles' },
+    { value: 'Sydney' },
+    { value: 'London' },
   ];
 
   const departureCities = [
-    {
-      sub: 'NYC',
-      city: 'New York',
-    },
-    {
-      sub: 'LAX',
-      city: 'Los Angeles',
-    },
-    {
-      sub: 'SFO',
-      city: 'San Francisco',
-    },
-    {
-      sub: 'ORD',
-      city: 'Chicago',
-    },
-    {
-      sub: 'MIA',
-      city: 'Miami',
-    },
+    { value: 'New York' },
+    { value: 'Los Angeles' },
+    { value: 'San Francisco' },
+    { value: 'Miami' },
+    { value: 'Chicago' },
   ];
+  const ticketType = [
+    { value: 'Return' },
+    { value: 'One Way' },
+    { value: 'Multi City' },
+  ];
+
   const cabinClass = [
     { label: 'Economy', value: 'economy' },
     { label: 'Premium(Business/First)', value: 'business' },
@@ -159,64 +137,40 @@ const FlightSearchForm: React.FC = () => {
         <Form onFinish={onFinish}>
           <Row justify={'center'}>
             <Col xs={24} sm={24} md={24} lg={5}>
-              <Form.Item
-                name="departure"
-                rules={[
-                  { required: true, message: 'Select the departure city' },
-                ]}
-              >
-                <Select
-                  showArrow={false}
-                  showSearch
-                  // style={{ height: '55px' }}
-                  placeholder="Select departure city"
-                  // className="form-input"
-                  onChange={(value) => handleDepartureObj('departure', value)}
-                >
-                  {departureCities.map((e) => {
-                    return <Option value={e.sub}>{e.city}</Option>;
-                  })}
-                </Select>
-              </Form.Item>
+              <AutoComplete
+                style={{ width: 200 }}
+                options={departureCities}
+                placeholder="Select Departure City"
+                filterOption={(inputValue, option) =>
+                  option!.value
+                    .toUpperCase()
+                    .indexOf(inputValue.toUpperCase()) !== -1
+                }
+              />
             </Col>
             <Col xs={24} sm={24} md={24} lg={5}>
-              <Form.Item
-                name="destination"
-                rules={[
-                  { required: true, message: 'select the destination city' },
-                ]}
-              >
-                <Select
-                  onChange={(value) => handleDepartureObj('destination', value)}
-                  showArrow={false}
-                  showSearch
-                  // style={{ height: '55px' }}
-                  placeholder="Select the destination city"
-                  // className="form-input"
-                >
-                  {destinationCities.map((e) => {
-                    return <Option value={e.sub}>{e.city}</Option>;
-                  })}
-                </Select>
-              </Form.Item>
+              <AutoComplete
+                style={{ width: 200 }}
+                options={destinationCities}
+                placeholder="Select Arrival City"
+                filterOption={(inputValue, option) =>
+                  option!.value
+                    .toUpperCase()
+                    .indexOf(inputValue.toUpperCase()) !== -1
+                }
+              />
             </Col>
             <Col xs={24} sm={24} md={24} lg={4}>
-              <Form.Item
-                name="Trip"
-                rules={[{ required: true, message: 'select the desired Trip' }]}
-              >
-                <Select
-                  // style={{ height: '55px' }}
-                  placeholder="Return"
-                  className="form-input"
-                >
-                  <Option selected value="1">
-                    Return
-                  </Option>
-                  <Option value="2">One-Way</Option>
-                  <Option value="3">Multi-City</Option>
-                </Select>
-              </Form.Item>
+              <AutoComplete
+                style={{ width: 200 }}
+                options={ticketType}
+                placeholder="Select the Desired Trip"
+                filterOption={(inputValue, option) =>
+                  option!.value
+                    .toUpperCase()
+                    .indexOf(inputValue.toUpperCase()) !== -1
+                }
+              />
             </Col>
             <Col xs={24} sm={24} md={24} lg={5}>
               <Form.Item
