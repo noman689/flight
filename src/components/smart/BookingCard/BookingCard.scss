@@ -21,19 +21,19 @@
   }
 
   @media (max-width: 992px) {
-    height: auto;
+    height: max-content;
     width: 90%;
   }
 
   @media (max-width: 768px) {
     margin: 30px auto;
-    height: auto;
+    height: max-content;
     width: 90%;
   }
 
   @media (max-width: 576px) {
     margin: 20px auto;
-    height: auto;
+    height: max-content;
     width: 95%;
   }
 

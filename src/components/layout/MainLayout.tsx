@@ -336,7 +336,7 @@ const MainLayout = () => {
   ];
   const [apiData, setApiData] = useState<any>(sampleObj);
   return (
-    <Layout>
+    <Layout className="bg-cloud">
       <BrowserRouter>
         <HeaderComponent />
         <Content>
@@ -348,8 +348,8 @@ const MainLayout = () => {
             />
           </Routes>
         </Content>
+        <Footer />
       </BrowserRouter>
-      <Footer />
     </Layout>
   );
 };
