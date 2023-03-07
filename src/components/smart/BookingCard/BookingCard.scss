@@ -1,43 +1,9 @@
-// .card-wrapper {
-//   margin: 50px auto;
-//   background-color: #ffffff;
-//   box-shadow: 0 15px 32px -10px rgb(108 117 125 / 10%), 0 4px 11px -3px rgb(0 0 0 / 25%);
-//   height: 35%;
-//   width: 65%;
-
-//   @media (max-width: 1200px) {
-//     width: 80%;
-//   }
-
-//   @media (max-width: 992px) {
-//     height: auto;
-//     width: 90%;
-//   }
-
-//   @media (max-width: 768px) {
-//     margin: 30px auto;
-//     height: auto;
-//     width: 90%;
-//   }
-
-//   @media (max-width: 576px) {
-//     margin: 20px auto;
-//     height: auto;
-//     width: 95%;
-//   }
-
-//   .tab-container {
-//     overflow-x: auto;
-//   }
-// }
-
 .card-wrapper {
   margin: 50px auto;
-  top: 35%;
+  top: 310px;
   height: 240px;
   box-shadow: 0 15px 32px -10px rgb(108 117 125 / 10%),
     0 4px 11px -3px rgb(0 0 0 / 25%);
-  // height: 100%;
   width: 900px;
   border-radius: 9px;
 
@@ -55,43 +21,26 @@
   }
 
   @media (max-width: 992px) {
-    height: auto;
+    height: max-content;
     width: 90%;
   }
 
   @media (max-width: 768px) {
     margin: 30px auto;
-    height: auto;
+    height: max-content;
     width: 90%;
   }
 
   @media (max-width: 576px) {
     margin: 20px auto;
-    height: auto;
+    height: max-content;
     width: 95%;
-  }
-
-  @media screen and (max-width: 425px) and (min-width: 425px) {
-    .ant-tabs-tab {
-      // width: 99px !important;
-      // &:hover {
-      //   color: #420c28 !important;
-      // }
-    }
-  }
-
-  @media only screen and (min-width: 1024px) and (max-width: 1024px) {
-    /* Styles for screens with a width of 1024 pixels */
-  }
-
-  .ant-tabs-nav {
-    // background: linear-gradient(to left,rgba(128,28,79,1),rgba(82,12,48,1) 70%);
   }
 
   .ant-tabs-tab {
     color: white !important;
     background-color: #701644 !important;
-    width: 200px;
+    width: 224px;
     height: 50px;
     display: flex;
     justify-content: center;
@@ -99,9 +48,6 @@
     margin-left: 0px !important;
     margin-top: 0px !important;
     font-size: 18px;
-    // &:hover {
-    //   color: #420c28 !important;
-    // }
   }
 
   .ant-tabs-tab-active {
@@ -129,7 +75,7 @@
   border-top-left-radius: 20px !important;
 }
 
-.ant-tabs-tab:last-child {
+.ant-tabs-tab:nth-child(4) {
   border-top-right-radius: 20px !important;
 }
 @media (max-width: 768px) {

@@ -1,0 +1,102 @@
+.flight-search-form {
+  padding-left: 20px;
+  padding-right: 20px;
+  .ant-form {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    margin: 10px 0px;
+    :where(.css-dev-only-do-not-override-1km3mtt).ant-select-single
+      .ant-select-selector
+      .ant-select-selection-search {
+      display: flex;
+      align-items: center;
+    }
+    .form-group {
+      display: flex;
+      flex-direction: row;
+    }
+
+    @media screen and (max-width: 768px) {
+      flex-direction: column;
+      height: 40%;
+    }
+  }
+  .center-on-mobile {
+    @media screen and (max-width: 768px) {
+      justify-content: center !important;
+    }
+  }
+
+  .search-button-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .paddingLR {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
+  .form-input {
+    height: 55px !important;
+    border-radius: 0px !important;
+  }
+  .ant-select-selector {
+    height: 55px !important;
+    border-radius: 0px !important;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .btnSearchFlight {
+    background-color: #ffa903;
+    color: black;
+    width: 245px;
+    height: 62px;
+    font-size: 18px;
+  }
+
+  .btnCompleteBooking {
+    background-color: #ffa903;
+    color: black;
+    width: 250px;
+    height: 60px;
+    font-size: 18px;
+  }
+
+  .flexEnd {
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  @media (max-width: 768px) {
+    .child {
+      bottom: -13%;
+    }
+  }
+  @media (max-width: 425px) {
+  }
+
+  .ant-popover-inner {
+    width: 300px;
+  }
+  .fontSize20 {
+    font-size: 20px;
+  }
+
+  .dflex {
+    display: flex;
+    justify-content: space-between;
+    padding: 5px;
+    color: #585858;
+    font-size: 14px;
+  }
+  .classColor {
+    padding: 5px;
+    color: #585858;
+    font-size: 14px;
+  }
+}
