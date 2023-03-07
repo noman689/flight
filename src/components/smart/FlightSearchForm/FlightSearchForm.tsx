@@ -339,8 +339,7 @@ const FlightSearchForm: React.FC = () => {
                 </Popover>
               </Form.Item>
             </Col>
-            <Col xs={24} sm={24} md={24} lg={23} className="flexEnd ">
-              {/* <Link to="/flight-details"> */}
+            <Col xs={24} sm={24} md={24} lg={23} className="flexEnd center-on-mobile ">
               <Button
                 type="default"
                 htmlType="submit"
@@ -352,12 +351,10 @@ const FlightSearchForm: React.FC = () => {
                   <span style={{ marginRight: '10px' }}>Show Flights</span>
                 )}
               </Button>
-              {/* </Link> */}
             </Col>
           </Row>
         </Form>
       </div>
-      {/* <div className="search-button-wrapper"></div> */}
     </div>
   );
 };

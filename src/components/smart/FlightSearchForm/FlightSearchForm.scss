@@ -17,6 +17,11 @@
       height: 40%;
     }
   }
+  .center-on-mobile {
+    @media screen and (max-width: 768px) {
+      justify-content: center !important;
+    }
+  }
 
   .search-button-wrapper {
     display: flex;
