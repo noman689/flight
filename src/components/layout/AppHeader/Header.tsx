@@ -5,7 +5,7 @@ import {
   DownOutlined,
   MenuOutlined,
 } from '@ant-design/icons';
-import { Button } from 'antd';
+import { Button, Row, Col } from 'antd';
 import type { MenuProps } from 'antd';
 import { Dropdown, Space, Typography } from 'antd';
 import { Link } from 'react-router-dom';
@@ -51,17 +51,19 @@ const HeaderComponent: React.FC<any> = () => {
             <UserOutlined /> login | Sign Up
           </span>
         </div>
-        <div className="img-shadow">
-          <span className="HeadingBanner">
-            Discover Amazing
-            <br /> Online Offers
-          </span>
-          <br />
-          <span className="saveupto">Save Upto 20%</span>
-          <div className="padding10">
-            <Button className="btnBookNow">Book Now</Button>
-          </div>
-        </div>
+        
+            <div className="img-shadow">
+              <span className="HeadingBanner">
+                Discover Amazing
+                <br /> Online Offers
+              </span>
+              <br />
+              <span className="saveupto">Save Upto 20%</span>
+              <div className="padding10">
+                <Button className="btnBookNow">Book Now</Button>
+              </div>
+            </div>
+          
       </div>
       <div className="navLinks hideOnSmallScreen main_page_width">
         <div className="header">
@@ -85,7 +87,8 @@ const HeaderComponent: React.FC<any> = () => {
             </span>
           </div>
         </div>
-
+<Row justify={'center'}>
+          <Col xs={15} sm={15} md={15} lg={15}>
         <div className="img-shadow main_page_width">
           <div className="banner-text">
             <div className="HeadingBanner">
@@ -98,6 +101,8 @@ const HeaderComponent: React.FC<any> = () => {
             </div>
           </div>
         </div>
+        </Col>
+        </Row>
       </div>
     </div>
   );

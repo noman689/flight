@@ -6,6 +6,7 @@ import SearchFlightCard from '../smart/BookingCard/BookingCard';
 import HeaderComponent from './AppHeader/Header';
 import Footer from './AppFooter/Footer';
 import FlightDetail from '../smart/FlightDetails/FlightDetail';
+import StickyNavBar from './StickyNavBar/StickyNavBar';
 const { Content } = Layout;
 
 const MainLayout = () => {
@@ -339,6 +340,7 @@ const MainLayout = () => {
     <Layout className="bg-cloud">
       <BrowserRouter>
         <HeaderComponent />
+        <StickyNavBar/>
         <Content>
           <Routes>
             <Route path="/" element={<SearchFlightCard />} />

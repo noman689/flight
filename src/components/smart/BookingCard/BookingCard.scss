@@ -1,10 +1,10 @@
 .card-wrapper {
-  margin: 50px auto;
+  margin: 120px auto;
   top: 310px;
   height: 240px;
   box-shadow: 0 15px 32px -10px rgb(108 117 125 / 10%),
     0 4px 11px -3px rgb(0 0 0 / 25%);
-  width: 900px;
+  width: 60%;
   border-radius: 9px;
 
   .ant-tabs-ink-bar {
@@ -40,7 +40,7 @@
   .ant-tabs-tab {
     color: white !important;
     background-color: #701644 !important;
-    width: 224px;
+    width: 276px;
     height: 50px;
     display: flex;
     justify-content: center;

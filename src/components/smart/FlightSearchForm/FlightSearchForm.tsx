@@ -19,6 +19,7 @@ import { Space } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import { searchFlightAPI } from '@client/services/searchFlightService';
 import Spin from '@client/components/presentational/Spin';
+import swap from '../../../assets/swap.png';
 
 const FlightSearchForm: React.FC = () => {
   const [value, setValue] = useState('economy');
@@ -135,10 +136,16 @@ const FlightSearchForm: React.FC = () => {
     <div className="flight-search-form">
       <div className="paddingLR">
         <Form onFinish={onFinish}>
-          <Row justify={'center'}>
-            <Col xs={24} sm={24} md={24} lg={5}>
+          <Row>
+            <Col
+              xs={24}
+              sm={24}
+              md={24}
+              lg={5}
+              className="first-child position-relative"
+            >
               <AutoComplete
-                style={{ width: 200 }}
+                style={{ width: '100%', borderRadius: '6px 0 0 6px' }}
                 options={departureCities}
                 placeholder="Select Departure City"
                 filterOption={(inputValue, option) =>
@@ -147,10 +154,23 @@ const FlightSearchForm: React.FC = () => {
                     .indexOf(inputValue.toUpperCase()) !== -1
                 }
               />
+
+              <img
+                className="position-absolute top-0 start-100 translate-middle"
+                style={{
+                  width: '30px',
+                  zIndex: 1,
+                  marginTop: '29px',
+                  border: '1px solid #6c1542',
+                  borderRadius: '100%',
+                }}
+                src={swap}
+              />
             </Col>
-            <Col xs={24} sm={24} md={24} lg={5}>
+
+            <Col xs={24} sm={24} md={24} lg={5} className="place-holder">
               <AutoComplete
-                style={{ width: 200 }}
+                style={{ width: '100%' }}
                 options={destinationCities}
                 placeholder="Select Arrival City"
                 filterOption={(inputValue, option) =>
@@ -162,7 +182,7 @@ const FlightSearchForm: React.FC = () => {
             </Col>
             <Col xs={24} sm={24} md={24} lg={4}>
               <AutoComplete
-                style={{ width: 200 }}
+                style={{ width: '100%' }}
                 options={ticketType}
                 placeholder="Select the Desired Trip"
                 filterOption={(inputValue, option) =>
@@ -192,7 +212,7 @@ const FlightSearchForm: React.FC = () => {
                 />
               </Form.Item>
             </Col>
-            <Col xs={24} sm={24} md={24} lg={5}>
+            <Col xs={24} sm={24} md={24} lg={5} className="last-child">
               <Form.Item
                 name="passengers-class"
                 rules={[
@@ -284,6 +304,7 @@ const FlightSearchForm: React.FC = () => {
                   onOpenChange={handleOpenChange}
                 >
                   <Input
+                    style={{ borderRadius: '0px 6px 6px 0px' }}
                     placeholder="Enter passengers & class"
                     className="form-input"
                     onClick={() => {
@@ -293,7 +314,13 @@ const FlightSearchForm: React.FC = () => {
                 </Popover>
               </Form.Item>
             </Col>
-            <Col xs={24} sm={24} md={24} lg={23} className="flexEnd center-on-mobile ">
+            <Col
+              xs={24}
+              sm={24}
+              md={24}
+              lg={24}
+              className="flexEnd center-on-mobile "
+            >
               <Button
                 type="default"
                 htmlType="submit"
@@ -302,7 +329,13 @@ const FlightSearchForm: React.FC = () => {
                 {isLoading ? (
                   <Spin />
                 ) : (
-                  <span style={{ marginRight: '10px' }}>Show Flights</span>
+                  <span className="showFlightBtn">
+                    <span style={{ fontSize: '20px' }}>Show Flights</span>
+                    <img
+                      className="flighiconsize"
+                      src="https://www.svgrepo.com/show/346908/flight-takeoff.svg"
+                    />
+                  </span>
                 )}
               </Button>
             </Col>

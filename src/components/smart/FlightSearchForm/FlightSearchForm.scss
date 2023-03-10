@@ -1,6 +1,6 @@
 .flight-search-form {
-  padding-left: 20px;
-  padding-right: 20px;
+  padding-left: 5px;
+  padding-right: 5px;
   .ant-form {
     display: flex;
     flex-direction: row;
@@ -99,4 +99,50 @@
     color: #585858;
     font-size: 14px;
   }
+  .ant-select-auto-complete .ant-select-selection-item {
+    width: 100%;
+  }
+
+  .first-child {
+    .ant-select-auto-complete .ant-select-selector {
+      border-radius: 6px 0px 0px 6px !important;
+    }
+  }
+  .last-child {
+    .ant-input {
+      border-radius: 0px 6px 6px 0px !important;
+    }
+  }
 }
+
+.ant-select
+  .ant-select-auto-complete
+  .css-dev-only-do-not-override-1km3mtt
+  .ant-select-single
+  .ant-select-show-search {
+  width: 100% !important;
+}
+
+.showFlightBtn {
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+}
+
+.flighiconsize {
+  width: 33px;
+  padding-right: 5px;
+  padding-left: 5px;
+}
+
+.place-holder {
+  .ant-select-selection-placeholder {
+    padding-inline: 10px !important;
+  }
+}
+
+// .ant-select-selection-placeholder
+// {
+//   display: flex !important;
+//   justify-content: center !important;
+// }
