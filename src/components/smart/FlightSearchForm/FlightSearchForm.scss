@@ -2,7 +2,7 @@
   padding-left: 5px;
   padding-right: 5px;
   .ant-form {
-    display: flex;
+    // display: flex;
     flex-direction: row;
     justify-content: space-around;
     margin: 10px 0px;
@@ -40,7 +40,7 @@
   }
 
   .form-input {
-    height: 55px !important;
+    // height: 55px !important;
     border-radius: 0px !important;
   }
   .ant-select-selector {
@@ -57,6 +57,7 @@
     width: 245px;
     height: 62px;
     font-size: 18px;
+    margin-left: 20px;
   }
 
   .btnCompleteBooking {
@@ -146,3 +147,25 @@
 //   display: flex !important;
 //   justify-content: center !important;
 // }
+
+.ant-select-dropdown {
+  z-index: 99999 !important;
+}
+
+.ant-picker-panels {
+  z-index: 99900099 !important;
+}
+
+.autoCompleteHeight {
+  .ant-select-selector {
+    height: 62px !important;
+  }
+  .ant-picker .ant-picker-range {
+    height: 62px !important;
+
+  }
+  .form-input
+  {
+    height: 62px !important;
+  }
+}

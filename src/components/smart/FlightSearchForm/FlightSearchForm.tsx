@@ -21,7 +21,11 @@ import { searchFlightAPI } from '@client/services/searchFlightService';
 import Spin from '@client/components/presentational/Spin';
 import swap from '../../../assets/swap.png';
 
-const FlightSearchForm: React.FC = () => {
+interface FlightSearchFormProps {
+  isStickyNav: boolean;
+}
+
+const FlightSearchForm: React.FC = (props: FlightSearchFormProps) => {
   const [value, setValue] = useState('economy');
   const navigate = useNavigate();
 
@@ -136,16 +140,24 @@ const FlightSearchForm: React.FC = () => {
     <div className="flight-search-form">
       <div className="paddingLR">
         <Form onFinish={onFinish}>
-          <Row>
+          <Row
+            justify={'center'}
+            style={{ alignItems: 'baseline', display: 'flex' }}
+            className="autoCompleteHeight"
+          >
             <Col
               xs={24}
               sm={24}
               md={24}
-              lg={5}
+              lg={props.isStickyNav ? 3 : 5}
               className="first-child position-relative"
             >
               <AutoComplete
-                style={{ width: '100%', borderRadius: '6px 0 0 6px' }}
+                style={{
+                  width: '100%',
+                  borderRadius: '6px 0 0 6px',
+                  height: '40px',
+                }}
                 options={departureCities}
                 placeholder="Select Departure City"
                 filterOption={(inputValue, option) =>
@@ -168,7 +180,13 @@ const FlightSearchForm: React.FC = () => {
               />
             </Col>
 
-            <Col xs={24} sm={24} md={24} lg={5} className="place-holder">
+            <Col
+              xs={24}
+              sm={24}
+              md={24}
+              lg={props.isStickyNav ? 3 : 5}
+              className="place-holder"
+            >
               <AutoComplete
                 style={{ width: '100%' }}
                 options={destinationCities}
@@ -192,7 +210,7 @@ const FlightSearchForm: React.FC = () => {
                 }
               />
             </Col>
-            <Col xs={24} sm={24} md={24} lg={5}>
+            <Col xs={24} sm={24} md={24} lg={props.isStickyNav ? 3 : 5}>
               <Form.Item
                 name="dates"
                 rules={[
@@ -203,6 +221,7 @@ const FlightSearchForm: React.FC = () => {
                 ]}
               >
                 <RangePicker
+                  style={{ width: '100%' }}
                   onChange={(value) => handleDepartureObj('date', value)}
                   disabledDate={(current: dayjs.Dayjs) =>
                     current && current < dayjs().startOf('day')
@@ -212,7 +231,13 @@ const FlightSearchForm: React.FC = () => {
                 />
               </Form.Item>
             </Col>
-            <Col xs={24} sm={24} md={24} lg={5} className="last-child">
+            <Col
+              xs={24}
+              sm={24}
+              md={24}
+              lg={props.isStickyNav ? 3 : 5}
+              className="last-child"
+            >
               <Form.Item
                 name="passengers-class"
                 rules={[
@@ -223,6 +248,7 @@ const FlightSearchForm: React.FC = () => {
                 ]}
               >
                 <Popover
+                  placement={props.isStickyNav ? 'bottom' : 'top'}
                   content={
                     <div>
                       <div>
@@ -318,7 +344,7 @@ const FlightSearchForm: React.FC = () => {
               xs={24}
               sm={24}
               md={24}
-              lg={24}
+              lg={props.isStickyNav ? 3 : 24}
               className="flexEnd center-on-mobile "
             >
               <Button
