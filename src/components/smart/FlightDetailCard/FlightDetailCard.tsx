@@ -210,7 +210,7 @@ const FlightDetailCard = ({
           </Row> */}
 
           <Row justify={'space-between'}>
-            <Col xs={24} sm={24} md={10} lg={10}>
+            <Col xs={24} sm={24} md={24} lg={10}>
               <div className="cardFirstPart">
                 <span>16:55</span>
                 <Divider>
@@ -224,11 +224,18 @@ const FlightDetailCard = ({
                 <span>LHR</span>
               </div>
 
-              <div style={{ marginTop: '50px', fontSize: '17px' }}>
-                <span className="flightDetails2">Flight Details</span>
+              <div className="lower-div mt-none mt-50">
+                <span className="flightDetails2 font-size">Flight Details</span>
+                <span className="hideAbove768">XOF 1,137,300</span>
               </div>
             </Col>
-            <Col xs={24} sm={24} md={12} lg={12} className="thirdPart">
+            <Col
+              xs={24}
+              sm={24}
+              md={24}
+              lg={12}
+              className="thirdPart hide-card-part"
+            >
               <div className="card">
                 <div>
                   <span className="cardhead">Economy</span>

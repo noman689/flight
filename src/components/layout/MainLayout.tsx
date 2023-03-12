@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Layout } from 'antd';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import './MainLayout.scss';
@@ -336,11 +336,13 @@ const MainLayout = () => {
     },
   ];
   const [apiData, setApiData] = useState<any>(sampleObj);
+
   return (
     <Layout className="bg-cloud">
       <BrowserRouter>
         <HeaderComponent />
-        <StickyNavBar/>
+        <StickyNavBar />
+
         <Content>
           <Routes>
             <Route path="/" element={<SearchFlightCard />} />

@@ -71,9 +71,64 @@
   color: #b3b3b3;
 }
 .flightDetails2 {
-  margin-top: 50px;
   font-size: 17px;
   font-weight: 600;
   color: #b3b3b3;
   text-decoration: underline;
+}
+
+.lower-div {
+  margin-top: 50px;
+}
+
+@media (max-width: 768px) {
+  .hide-card-part {
+    display: none;
+  }
+  .lower-div {
+    display: flex;
+    justify-content: space-between;
+  }
+  .mt-none {
+    margin-top: 0px;
+  }
+  .cardFirstPart {
+    font-size: 20px;
+  }
+  .ant-divider-horizontal {
+    min-width: 57% !important;
+  }
+  .dullWhite {
+    font-size: 13px;
+  }
+  .lower-div {
+    margin-top: 15px;
+    font-size: 13px !important;
+  }
+  .font-size {
+    // margin-top: 15px;
+    font-size: 13px !important;
+  }
+}
+
+@media (min-width: 768px) {
+  .mt-50 {
+    margin-top: 50px;
+  }
+}
+
+@media (min-width: 769px) {
+  .hideAbove768 {
+    display: none;
+  }
+}
+
+@media only screen and (width: 1024px) {
+  .ant-divider-horizontal {
+    min-width: 60% !important;
+  }
+}
+
+.lower-div {
+  font-size: 17px;
 }
