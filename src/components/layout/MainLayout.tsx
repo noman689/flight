@@ -342,7 +342,6 @@ const MainLayout = () => {
       <BrowserRouter>
         <HeaderComponent />
         <StickyNavBar />
-
         <Content>
           <Routes>
             <Route path="/" element={<SearchFlightCard />} />

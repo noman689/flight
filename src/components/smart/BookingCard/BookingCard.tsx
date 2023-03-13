@@ -21,7 +21,7 @@ const SearchFlightCard = () => {
         </span>
       ),
       key: 'book',
-      children: <FlightSearchForm />,
+      children: <FlightSearchForm  />,
     },
     {
       label: (

@@ -23,10 +23,10 @@ import swap from '../../../assets/swap.png';
 import { Drawer } from 'antd';
 
 interface FlightSearchFormProps {
-  isStickyNav: boolean;
+  isStickyNav?: boolean;
 }
 
-const FlightSearchForm: React.FC = (props: FlightSearchFormProps) => {
+const FlightSearchForm = ({ isStickyNav = false }: FlightSearchFormProps) => {
   const [value, setValue] = useState('economy');
   const navigate = useNavigate();
 
@@ -212,7 +212,7 @@ const FlightSearchForm: React.FC = (props: FlightSearchFormProps) => {
                 xs={24}
                 sm={24}
                 md={24}
-                lg={props.isStickyNav ? 3 : 5}
+                lg={isStickyNav ? 3 : 5}
                 className="first-child position-relative"
               >
                 <AutoComplete
@@ -247,7 +247,7 @@ const FlightSearchForm: React.FC = (props: FlightSearchFormProps) => {
                 xs={24}
                 sm={24}
                 md={24}
-                lg={props.isStickyNav ? 3 : 5}
+                lg={isStickyNav ? 3 : 5}
                 className="place-holder"
               >
                 <AutoComplete
@@ -277,7 +277,7 @@ const FlightSearchForm: React.FC = (props: FlightSearchFormProps) => {
                 xs={24}
                 sm={24}
                 md={24}
-                lg={props.isStickyNav ? 3 : 5}
+                lg={isStickyNav ? 3 : 5}
                 className="date-range"
               >
                 <Form.Item
@@ -307,7 +307,7 @@ const FlightSearchForm: React.FC = (props: FlightSearchFormProps) => {
                 xs={24}
                 sm={24}
                 md={24}
-                lg={props.isStickyNav ? 3 : 5}
+                lg={isStickyNav ? 3 : 5}
                 className="last-child"
               >
                 <Form.Item
@@ -320,7 +320,7 @@ const FlightSearchForm: React.FC = (props: FlightSearchFormProps) => {
                   ]}
                 >
                   <Popover
-                    placement={props.isStickyNav ? 'bottom' : 'right'}
+                    placement={isStickyNav ? 'bottom' : 'right'}
                     trigger="click"
                     content={
                       <div>
@@ -417,9 +417,9 @@ const FlightSearchForm: React.FC = (props: FlightSearchFormProps) => {
                 sm={24}
                 md={24}
                 lg={
-                  props.isStickyNav && screenSize.width === 1024
+                  isStickyNav && screenSize.width === 1024
                     ? 5
-                    : props.isStickyNav
+                    : isStickyNav
                     ? 3
                     : 24
                 }
