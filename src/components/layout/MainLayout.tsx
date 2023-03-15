@@ -6,6 +6,8 @@ import SearchFlightCard from '../smart/BookingCard/BookingCard';
 import HeaderComponent from './AppHeader/Header';
 import Footer from './AppFooter/Footer';
 import FlightDetail from '../smart/FlightDetails/FlightDetail';
+import PassengerDetailsForm from '../smart/PassengerDetails/PassengerDetailsForm';
+import PassengerDetailsPage from '../smart/PassengerDetails/PassengerDetailsPage';
 const { Content } = Layout;
 
 const MainLayout = () => {
@@ -335,16 +337,28 @@ const MainLayout = () => {
     },
   ];
   const [apiData, setApiData] = useState<any>(sampleObj);
+  const handleFinish = () => {};
   return (
     <Layout className="bg-cloud">
       <BrowserRouter>
-        <HeaderComponent />
+        {/* <HeaderComponent /> */}
         <Content>
           <Routes>
             <Route path="/" element={<SearchFlightCard />} />
             <Route
               path="/flight-details"
               element={<FlightDetail apiData={apiData} />}
+            />
+            <Route
+              path="/passanger-details"
+              element={
+                // <PassengerDetailsForm
+                //   numAdults={1}
+                //   numChildren={1}
+                //   onFinish={handleFinish}
+                // />
+                <PassengerDetailsPage />
+              }
             />
           </Routes>
         </Content>

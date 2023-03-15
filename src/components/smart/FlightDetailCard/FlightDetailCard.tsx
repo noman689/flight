@@ -10,6 +10,7 @@ import {
 } from '@ant-design/icons';
 import './FlightDetailCard.scss';
 import FlightInfoDrawer from '../FlightInfoDrawer/FlightInfoDrawer';
+import { Link } from 'react-router-dom';
 
 const FlightDetailCard = ({
   fromDate = '02-02-2021',
@@ -151,13 +152,15 @@ const FlightDetailCard = ({
               lg={8}
               style={{ display: 'flex', justifyContent: 'end' }}
             >
-              <Button
-                type="default"
-                htmlType="submit"
-                className="form-button btnCompleteBooking"
-              >
-                Complete my Booking
-              </Button>
+              <Link to={'/passanger-details'}>
+                <Button
+                  type="default"
+                  htmlType="submit"
+                  className="form-button btnCompleteBooking"
+                >
+                  Complete my Booking
+                </Button>
+              </Link>
             </Col>
           </Row>
           <Row justify={'space-evenly'}>
@@ -207,12 +210,12 @@ const FlightDetailCard = ({
             </Col>
             <Col xs={0} sm={12} md={7} lg={6}>
               <div style={{ display: 'flex', alignItems: 'center' }}>
-                <span
+                <div
                   onClick={() => setShowDrawer(true)}
                   className="view-detail-btn"
                 >
                   View Flight Details
-                </span>
+                </div>
               </div>
             </Col>
           </Row>

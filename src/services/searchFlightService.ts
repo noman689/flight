@@ -9,7 +9,6 @@ export const searchFlightAPI = async (payload) => {
     headers: {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${API_TOKEN}`,
-      _id: localStorage.getItem('oecd-id'),
       'Access-Control-Allow-Origin': `${window.location.origin}/`,
       'Access-Control-Allow-Headers':
         'Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers,X-Access-Token,XKey,Authorization',
