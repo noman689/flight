@@ -10,6 +10,7 @@ import StickyNavBar from './StickyNavBar/StickyNavBar';
 const { Content } = Layout;
 
 const MainLayout = () => {
+
   const sampleObj = [
     {
       data: {
@@ -344,7 +345,14 @@ const MainLayout = () => {
         <StickyNavBar />
         <Content>
           <Routes>
-            <Route path="/" element={<SearchFlightCard />} />
+            <Route
+              path="/"
+              element={
+                <>
+                  <SearchFlightCard />
+                </>
+              }
+            />
             <Route
               path="/flight-details"
               element={<FlightDetail apiData={apiData} />}
