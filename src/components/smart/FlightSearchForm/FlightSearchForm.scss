@@ -114,6 +114,28 @@
       border-radius: 0px 6px 6px 0px !important;
     }
   }
+
+  @media (max-width: 768px) {
+    .first-child {
+      .ant-select-auto-complete .ant-select-selector {
+        border-radius: 6px 6px 0px 0px !important;
+      }
+    }
+    .place-holder {
+      .ant-select-selection-placeholder {
+        padding-inline: 0px !important;
+      }
+      .ant-select-selection-search-input {
+        padding-inline: 0px !important;
+      }
+      .ant-select-selector {
+        border-radius: 0px 0px 6px 6px !important;
+      }
+      .mb {
+        margin-bottom: 30px !important;
+      }
+    }
+  }
 }
 
 .dflex {
@@ -189,4 +211,14 @@
   //     display: none !important;
   //   }
   // }
+}
+
+.autoCompletegeneral {
+  width: 100%;
+  height: 60px;
+}
+@media (min-width: 768px) {
+  .mt-50 {
+    margin-top: 50px;
+  }
 }

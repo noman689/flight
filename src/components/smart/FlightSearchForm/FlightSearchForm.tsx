@@ -216,11 +216,7 @@ const FlightSearchForm = ({ isStickyNav = false }: FlightSearchFormProps) => {
                 className="first-child position-relative"
               >
                 <AutoComplete
-                  style={{
-                    width: '100%',
-                    borderRadius: '6px 0 0 6px',
-                    height: '40px',
-                  }}
+                  className="autoCompletegeneral"
                   options={departureCities}
                   placeholder="Select Departure City"
                   filterOption={(inputValue, option) =>
@@ -261,7 +257,12 @@ const FlightSearchForm = ({ isStickyNav = false }: FlightSearchFormProps) => {
                   }
                 />
               </Col>
-              <Col xs={24} sm={24} md={24} lg={4}>
+              <Col
+                xs={screenSize.width <= 768 ? 12 : 24}
+                sm={screenSize.width <= 768 ? 12 : 24}
+                md={screenSize.width <= 768 ? 12 : 24}
+                lg={4}
+              >
                 <AutoComplete
                   style={{ width: '100%' }}
                   options={ticketType}
@@ -273,6 +274,117 @@ const FlightSearchForm = ({ isStickyNav = false }: FlightSearchFormProps) => {
                   }
                 />
               </Col>
+              {screenSize.width <= 768 && (
+                <Col
+                  xs={12}
+                  sm={12}
+                  md={12}
+                  lg={isStickyNav ? 3 : 5}
+                  className="last-child"
+                >
+                  <Form.Item
+                    name="passengers-class"
+                    rules={[
+                      {
+                        required: false,
+                        message: 'Please Enter passengers & class',
+                      },
+                    ]}
+                  >
+                    <Popover
+                      placement={isStickyNav ? 'bottom' : 'right'}
+                      trigger="click"
+                      content={
+                        <div>
+                          <div>
+                            <span className="fontSize20">Passengers</span>
+                          </div>
+                          <div style={{ marginTop: '10px' }}>
+                            <div className="dflex">
+                              <span>Adult (12+ Years)</span>
+
+                              <InputNumber
+                                min={0}
+                                max={10}
+                                defaultValue={1}
+                                value={passengersObj.adult}
+                                onChange={(value) =>
+                                  handlePassengersObj('adult', value)
+                                }
+                              />
+                            </div>
+                            <div className="dflex form">
+                              <span>Child (2-11 Years)</span>
+                              <Form.Item
+                                name="passengers-class"
+                                rules={[
+                                  {
+                                    required: false,
+                                    message: 'Please Enter passengers & class',
+                                  },
+                                ]}
+                              >
+                                <InputNumber
+                                  min={0}
+                                  max={10}
+                                  defaultValue={0}
+                                  value={passengersObj.child}
+                                  onChange={(value) =>
+                                    handlePassengersObj('child', value)
+                                  }
+                                />
+                              </Form.Item>
+                            </div>
+                            <div className="dflex">
+                              <span>Infant (Under 2 years)</span>
+                              <InputNumber
+                                min={0}
+                                max={10}
+                                defaultValue={0}
+                                onChange={(value) =>
+                                  handlePassengersObj('infant', value)
+                                }
+                                value={passengersObj.infant}
+                              />
+                            </div>
+                          </div>
+                          <Divider />
+                          <div>
+                            <span className="fontSize20 ">Class</span>
+                          </div>
+                          <div>
+                            <Radio.Group
+                              value={cabinClassValue}
+                              onChange={(event) =>
+                                setCabinClassValue(event.target.value)
+                              }
+                            >
+                              <Space direction="vertical">
+                                {cabinClass.map((e) => (
+                                  <Radio className="classColor" value={e.value}>
+                                    {e.label}
+                                  </Radio>
+                                ))}
+                              </Space>
+                            </Radio.Group>
+                          </div>
+                        </div>
+                      }
+                      // open={open}
+                      onOpenChange={handleOpenChange}
+                    >
+                      <Input
+                        style={{ borderRadius: '0px 6px 6px 0px' }}
+                        placeholder="Enter passengers & class"
+                        className="form-input"
+                        onClick={() => {
+                          setOpen(!open);
+                        }}
+                      />
+                    </Popover>
+                  </Form.Item>
+                </Col>
+              )}
               <Col
                 xs={24}
                 sm={24}
@@ -303,115 +415,119 @@ const FlightSearchForm = ({ isStickyNav = false }: FlightSearchFormProps) => {
                   />
                 </Form.Item>
               </Col>
-              <Col
-                xs={24}
-                sm={24}
-                md={24}
-                lg={isStickyNav ? 3 : 5}
-                className="last-child"
-              >
-                <Form.Item
-                  name="passengers-class"
-                  rules={[
-                    {
-                      required: false,
-                      message: 'Please Enter passengers & class',
-                    },
-                  ]}
-                >
-                  <Popover
-                    placement={isStickyNav ? 'bottom' : 'right'}
-                    trigger="click"
-                    content={
-                      <div>
-                        <div>
-                          <span className="fontSize20">Passengers</span>
-                        </div>
-                        <div style={{ marginTop: '10px' }}>
-                          <div className="dflex">
-                            <span>Adult (12+ Years)</span>
 
-                            <InputNumber
-                              min={0}
-                              max={10}
-                              defaultValue={1}
-                              value={passengersObj.adult}
-                              onChange={(value) =>
-                                handlePassengersObj('adult', value)
-                              }
-                            />
+              {screenSize.width > 768 && (
+                <Col
+                  xs={24}
+                  sm={24}
+                  md={24}
+                  lg={isStickyNav ? 3 : 5}
+                  className="last-child"
+                >
+                  <Form.Item
+                    name="passengers-class"
+                    rules={[
+                      {
+                        required: false,
+                        message: 'Please Enter passengers & class',
+                      },
+                    ]}
+                  >
+                    <Popover
+                      placement={isStickyNav ? 'bottom' : 'right'}
+                      trigger="click"
+                      content={
+                        <div>
+                          <div>
+                            <span className="fontSize20">Passengers</span>
                           </div>
-                          <div className="dflex form">
-                            <span>Child (2-11 Years)</span>
-                            <Form.Item
-                              name="passengers-class"
-                              rules={[
-                                {
-                                  required: false,
-                                  message: 'Please Enter passengers & class',
-                                },
-                              ]}
-                            >
+                          <div style={{ marginTop: '10px' }}>
+                            <div className="dflex">
+                              <span>Adult (12+ Years)</span>
+
+                              <InputNumber
+                                min={0}
+                                max={10}
+                                defaultValue={1}
+                                value={passengersObj.adult}
+                                onChange={(value) =>
+                                  handlePassengersObj('adult', value)
+                                }
+                              />
+                            </div>
+                            <div className="dflex form">
+                              <span>Child (2-11 Years)</span>
+                              <Form.Item
+                                name="passengers-class"
+                                rules={[
+                                  {
+                                    required: false,
+                                    message: 'Please Enter passengers & class',
+                                  },
+                                ]}
+                              >
+                                <InputNumber
+                                  min={0}
+                                  max={10}
+                                  defaultValue={0}
+                                  value={passengersObj.child}
+                                  onChange={(value) =>
+                                    handlePassengersObj('child', value)
+                                  }
+                                />
+                              </Form.Item>
+                            </div>
+                            <div className="dflex">
+                              <span>Infant (Under 2 years)</span>
                               <InputNumber
                                 min={0}
                                 max={10}
                                 defaultValue={0}
-                                value={passengersObj.child}
                                 onChange={(value) =>
-                                  handlePassengersObj('child', value)
+                                  handlePassengersObj('infant', value)
                                 }
+                                value={passengersObj.infant}
                               />
-                            </Form.Item>
+                            </div>
                           </div>
-                          <div className="dflex">
-                            <span>Infant (Under 2 years)</span>
-                            <InputNumber
-                              min={0}
-                              max={10}
-                              defaultValue={0}
-                              onChange={(value) =>
-                                handlePassengersObj('infant', value)
+                          <Divider />
+                          <div>
+                            <span className="fontSize20 ">Class</span>
+                          </div>
+                          <div>
+                            <Radio.Group
+                              value={cabinClassValue}
+                              onChange={(event) =>
+                                setCabinClassValue(event.target.value)
                               }
-                              value={passengersObj.infant}
-                            />
+                            >
+                              <Space direction="vertical">
+                                {cabinClass.map((e) => (
+                                  <Radio className="classColor" value={e.value}>
+                                    {e.label}
+                                  </Radio>
+                                ))}
+                              </Space>
+                            </Radio.Group>
                           </div>
                         </div>
-                        <Divider />
-                        <div>
-                          <span className="fontSize20 ">Class</span>
-                        </div>
-                        <div>
-                          <Radio.Group
-                            value={cabinClassValue}
-                            onChange={(event) =>
-                              setCabinClassValue(event.target.value)
-                            }
-                          >
-                            <Space direction="vertical">
-                              {cabinClass.map((e) => (
-                                <Radio className="classColor" value={e.value}>
-                                  {e.label}
-                                </Radio>
-                              ))}
-                            </Space>
-                          </Radio.Group>
-                        </div>
-                      </div>
-                    }
-                    // open={open}
-                    onOpenChange={handleOpenChange}
-                  >
-                    <Input
-                      style={{ borderRadius: '0px 6px 6px 0px' }}
-                      placeholder="Enter passengers & class"
-                      className="form-input"
-                      onClick={() => {
-                        setOpen(!open);
-                      }}
-                    />
-                  </Popover>
-                </Form.Item>
-              </Col>
+                      }
+                      // open={open}
+                      onOpenChange={handleOpenChange}
+                    >
+                      <Input
+                        style={{ borderRadius: '0px 6px 6px 0px' }}
+                        placeholder="Enter passengers & class"
+                        className="form-input"
+                        onClick={() => {
+                          setOpen(!open);
+                        }}
+                      />
+                    </Popover>
+                  </Form.Item>
+                </Col>
+              )}
+
               <Col
                 xs={24}
                 sm={24}
