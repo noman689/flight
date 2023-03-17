@@ -20,6 +20,12 @@
     @media screen and (max-width: 768px) {
       flex-direction: column;
       height: 40%;
+      .marginTop10 {
+        margin-top: 10px;
+      }
+      .btnSearchFlight {
+        margin-left: 0px;
+      }
     }
   }
   .center-on-mobile {
@@ -77,7 +83,11 @@
     .child {
       bottom: -13%;
     }
+    .hide {
+      display: none;
+    }
   }
+
   @media (max-width: 425px) {
   }
 
@@ -106,12 +116,13 @@
 
   .first-child {
     .ant-select-auto-complete .ant-select-selector {
-      border-radius: 6px 0px 0px 6px !important;
+      // border-radius: 6px 0px 0px 6px !important;
     }
   }
   .last-child {
     .ant-input {
       border-radius: 0px 6px 6px 0px !important;
+      padding-top: 0px !important;
     }
   }
 
@@ -134,6 +145,14 @@
       .mb {
         margin-bottom: 30px !important;
       }
+    }
+    .on768Screen {
+      .ant-select-selector {
+        border-radius: 6px 0px 0px 6px !important;
+      }
+    }
+    .mTop {
+      margin-top: 30px;
     }
   }
 }
@@ -187,7 +206,7 @@
   .ant-select-selector {
     height: 62px !important;
   }
-  .ant-picker .ant-picker-range {
+  .ant-picker-range {
     height: 62px !important;
   }
   .form-input {
@@ -205,14 +224,6 @@
   }
 }
 
-@media (max-width: 425px) {
-  // .date-range {
-  //   .ant-picker-panel-container {
-  //     display: none !important;
-  //   }
-  // }
-}
-
 .autoCompletegeneral {
   width: 100%;
   height: 60px;
@@ -220,5 +231,72 @@
 @media (min-width: 768px) {
   .mt-50 {
     margin-top: 50px;
+  }
+  .autoCompletegeneral {
+    .ant-select-selector {
+      border-radius: 6px 0px 0px 6px !important;
+    }
+  }
+}
+
+.sectionDates {
+  display: flex;
+  justify-content: space-around;
+  .route {
+    font-size: 15px;
+    color: #7c7c7c;
+  }
+  .dates {
+    font-size: 19px;
+    font-weight: 500;
+  }
+  .datesDiv {
+    width: 100%;
+    border: 1px solid #cfcfcf;
+    padding: 10px;
+  }
+  .datesBorder1 {
+    border-radius: 6px 0px 0px 6px;
+  }
+  .datesBorder2 {
+    border-radius: 0px 6px 6px 0px;
+  }
+}
+.drawer {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.my-datepicker .ant-picker-dropdown {
+  top: auto !important;
+  bottom: 0 !important;
+}
+
+.DatePickerSmallScreen {
+  display: flex;
+  .ant-picker {
+    height: 60px !important;
+    width: 100% !important;
+  }
+  .start-date {
+    width: 100%;
+    .ant-picker {
+      // border-right: 1px solid white !important;
+      border-top-right-radius: 6px !important;
+      border-bottom-right-radius: 6px !important;
+      border-top-right-radius: 0px !important;
+      border-bottom-right-radius: 0px !important;
+    }
+  }
+  .end-date {
+    width: 100%;
+    .ant-picker {
+      // border-left: 1px solid white !important;
+      border-top-left-radius: 6px !important;
+      border-bottom-left-radius: 6px !important;
+      border-top-left-radius: 0px !important;
+      border-bottom-left-radius: 0px !important;
+    }
   }
 }

@@ -12,6 +12,8 @@ import {
   Divider,
   Radio,
   AutoComplete,
+  Tooltip,
+  Modal,
 } from 'antd';
 import dayjs from 'dayjs';
 import './FlightSearchForm.scss';
@@ -20,6 +22,7 @@ import { useNavigate } from 'react-router-dom';
 import { searchFlightAPI } from '@client/services/searchFlightService';
 import Spin from '@client/components/presentational/Spin';
 import swap from '../../../assets/swap.png';
+import moment from 'moment';
 import { Drawer } from 'antd';
 
 interface FlightSearchFormProps {
@@ -31,6 +34,7 @@ const FlightSearchForm = ({ isStickyNav = false }: FlightSearchFormProps) => {
   const navigate = useNavigate();
 
   const { Option } = Select;
+  const [form] = Form.useForm();
   const { RangePicker } = DatePicker;
   const [isLoading, setIsLoading] = useState(false);
   const [screenSize, setScreenSize] = useState({ width: 0, height: 0 });
@@ -41,6 +45,7 @@ const FlightSearchForm = ({ isStickyNav = false }: FlightSearchFormProps) => {
     departure: '',
     destination: '',
     date: '',
+    trip: '',
   });
   const [returnDate, setReturnDate] = useState<any>();
   const [passengersObj, setPassengersObj] = useState({
@@ -51,7 +56,7 @@ const FlightSearchForm = ({ isStickyNav = false }: FlightSearchFormProps) => {
   const [cabinClassValue, setCabinClassValue] = useState<any>('economy');
 
   const onFinish = async (values: any) => {
-    const { departure, destination, date } = dataObj;
+    const { departure, destination, date, trip } = dataObj;
     const { adult, child, infant } = passengersObj;
 
     const slices = [
@@ -67,17 +72,36 @@ const FlightSearchForm = ({ isStickyNav = false }: FlightSearchFormProps) => {
       },
     ];
 
-    const passengers = [
-      ...Array(adult).fill({ type: 'adult' }),
-      ...Array(child).fill({ type: 'child' }),
-      ...Array(infant).fill({ age: 1 }),
+    const oneWay = [
+      {
+        origin: departure,
+        destination: destination,
+        departure_date: date,
+      },
     ];
 
+    const route = [
+      {
+        origin: departure,
+        destination: destination,
+        departure_date: date,
+      },
+    ];
+
+    // const passengers = [
+    //   ...Array(adult).fill({ type: 'adult' }),
+    //   ...Array(child).fill({ type: 'child' }),
+    //   ...Array(infant).fill({ age: 1 }),
+    // ];
+
+    const passengers = [{ adult: adult }, { child: child }, { infant: infant }];
+
     const data = {
-      slices: slices,
+      ...(trip === 'return' ? { slices } : { oneWay }),
       passengers: passengers,
       cabin_class: cabinClassValue,
     };
+    console.log(data);
     try {
       setIsLoading(true);
       // await searchFlightAPI(data);
@@ -118,24 +142,71 @@ const FlightSearchForm = ({ isStickyNav = false }: FlightSearchFormProps) => {
     { label: 'Economy', value: 'economy' },
     { label: 'Premium(Business/First)', value: 'business' },
   ];
+  // const handleDepartureObj = (name, value) => {
+  //   if (name === 'date') {
+  //     const startDate = value[0] ? moment(value[0]).format('MMMM Do YYYY') : '';
+  //     const endDate = value[1] ? moment(value[1]).format('MMMM Do YYYY') : '';
+  //     setReturnDate(endDate);
+  //     setDataObj((prevState) => ({
+  //       ...prevState,
+  //       [name]: startDate,
+  //     }));
+  //   } else if (name === 'startDate' || name === 'endDate') {
+  //     const formattedDate = value ? moment(value).format('MMMM Do YYYY') : '';
+  //     setReturnDate(formattedDate);
+
+  //     if (name === 'endDate') {
+  //       setReturnDate(formattedDate);
+  //     } else {
+  //       setDataObj((prevState) => ({
+  //         ...prevState,
+  //         [name]: formattedDate,
+  //       }));
+  //     }
+  //   } else {
+  //     setDataObj((prevState) => ({
+  //       ...prevState,
+  //       [name]: value,
+  //     }));
+  //   }
+  // };
   const handleDepartureObj = (name, value) => {
-    if (name == 'date') {
-      const [start, end] = value;
-      setReturnDate(end.format('YYYY-MM-DD'));
-      setDataObj((prevState) => ({
-        ...prevState,
-        [name]: start.format('YYYY-MM-DD'),
-      }));
-    } else {
-      setDataObj((prevState) => ({
-        ...prevState,
-        [name]: value,
-      }));
+    switch (name) {
+      case 'date':
+        const startDate = value[0]
+          ? moment(value[0]).format('MMMM Do YYYY')
+          : '';
+        const endDate = value[1] ? moment(value[1]).format('MMMM Do YYYY') : '';
+        setReturnDate(endDate);
+        setDataObj((prevState) => ({
+          ...prevState,
+          [name]: startDate,
+        }));
+        break;
+      case 'startDate':
+      case 'endDate':
+        const formattedDate = value ? moment(value).format('MMMM Do YYYY') : '';
+        setReturnDate(formattedDate);
+        if (name === 'endDate') {
+          setReturnDate(formattedDate);
+        } else {
+          setDataObj((prevState) => ({
+            ...prevState,
+            ['date']: formattedDate,
+          }));
+        }
+        break;
+      default:
+        setDataObj((prevState) => ({
+          ...prevState,
+          [name]: value,
+        }));
+        break;
     }
   };
 
   const handlePassengersObj = (name, value) => {
-    setPassengersObj[name] = value;
+    setPassengersObj((prevState) => ({ ...prevState, [name]: value }));
   };
 
   useEffect(() => {
@@ -162,47 +233,54 @@ const FlightSearchForm = ({ isStickyNav = false }: FlightSearchFormProps) => {
   const closeDrawer = () => {
     setDrawerOpen(false);
   };
-
+  // console.log(returnDate, 'returnDate');
+  // console.log(dataObj, 'dataObj');
   return (
     <>
       {screenSize.width < 768 && (
-        <Drawer
-          title="Select Date"
-          placement={'left'}
+        <Modal
+          // title="Select Date"
+          // placement={'left'}
           width={screenSize.width}
           onClose={closeDrawer}
           open={drawerOpen}
-          extra={
-            <Space>
-              <Button onClick={closeDrawer}>Cancel</Button>
-              <Button type="primary" onClick={closeDrawer}>
-                OK
-              </Button>
-            </Space>
-          }
+          // extra={
+          //   <Space>
+          //     <Button onClick={closeDrawer}>Cancel</Button>
+          //     <Button type="primary" onClick={closeDrawer}>
+          //       OK
+          //     </Button>
+          //   </Space>
+          // }
         >
-          <>
+          <div>
             <div>
-              <span style={{ marginRight: '10px' }}>Start Date</span>
+              <Form>
+                <Form.Item>
+                  <span>Start Date</span>
 
-              <DatePicker
-              // onChange={onChange}
-              />
+                  <RangePicker
+                    getPopupContainer={() => document.body}
+
+                    // onChange={onChange}
+                  />
+                </Form.Item>
+              </Form>
             </div>
             <br />
             <div>
-              <span style={{ marginRight: '10px' }}>End Date</span>
+              <span>End Date</span>
 
               <DatePicker
               // onChange={onChange}
               />
             </div>
-          </>
-        </Drawer>
+          </div>
+        </Modal>
       )}
       <div className="flight-search-form">
         <div className="paddingLR">
-          <Form onFinish={onFinish}>
+          <Form onFinish={onFinish} form={form}>
             <Row
               justify={'center'}
               style={{ alignItems: 'baseline', display: 'flex' }}
@@ -216,6 +294,7 @@ const FlightSearchForm = ({ isStickyNav = false }: FlightSearchFormProps) => {
                 className="first-child position-relative"
               >
                 <AutoComplete
+                  onChange={(value) => handleDepartureObj('departure', value)}
                   className="autoCompletegeneral"
                   options={departureCities}
                   placeholder="Select Departure City"
@@ -227,7 +306,7 @@ const FlightSearchForm = ({ isStickyNav = false }: FlightSearchFormProps) => {
                 />
 
                 <img
-                  className="position-absolute top-0 start-100 translate-middle"
+                  className="position-absolute top-0 start-100 translate-middle hide"
                   style={{
                     width: '30px',
                     zIndex: 1,
@@ -244,9 +323,10 @@ const FlightSearchForm = ({ isStickyNav = false }: FlightSearchFormProps) => {
                 sm={24}
                 md={24}
                 lg={isStickyNav ? 3 : 5}
-                className="place-holder"
+                className="place-holder "
               >
                 <AutoComplete
+                  onChange={(value) => handleDepartureObj('destination', value)}
                   style={{ width: '100%' }}
                   options={destinationCities}
                   placeholder="Select Arrival City"
@@ -262,9 +342,13 @@ const FlightSearchForm = ({ isStickyNav = false }: FlightSearchFormProps) => {
                 sm={screenSize.width <= 768 ? 12 : 24}
                 md={screenSize.width <= 768 ? 12 : 24}
                 lg={4}
+                className="on768Screen mTop"
               >
                 <AutoComplete
-                  style={{ width: '100%' }}
+                  onChange={(value) => handleDepartureObj('trip', value)}
+                  style={{
+                    width: '100%',
+                  }}
                   options={ticketType}
                   placeholder="Select the Desired Trip"
                   filterOption={(inputValue, option) =>
@@ -373,14 +457,19 @@ const FlightSearchForm = ({ isStickyNav = false }: FlightSearchFormProps) => {
                       // open={open}
                       onOpenChange={handleOpenChange}
                     >
-                      <Input
-                        style={{ borderRadius: '0px 6px 6px 0px' }}
-                        placeholder="Enter passengers & class"
-                        className="form-input"
-                        onClick={() => {
-                          setOpen(!open);
-                        }}
-                      />
+                      <Tooltip
+                        title={` Adult: ${passengersObj.adult}, Child:${passengersObj.child}, Infant:${passengersObj.infant}, Class:${cabinClassValue}`}
+                      >
+                        <Input
+                          value={` Adult: ${passengersObj.adult}, Child:${passengersObj.child}, Infant:${passengersObj.infant}, Class:${cabinClassValue}`}
+                          style={{ borderRadius: '0px 6px 6px 0px' }}
+                          placeholder="Enter passengers & class"
+                          className="form-input"
+                          onClick={() => {
+                            setOpen(!open);
+                          }}
+                        />
+                      </Tooltip>
                     </Popover>
                   </Form.Item>
                 </Col>
@@ -392,28 +481,60 @@ const FlightSearchForm = ({ isStickyNav = false }: FlightSearchFormProps) => {
                 lg={isStickyNav ? 3 : 5}
                 className="date-range"
               >
-                <Form.Item
-                  name="dates"
-                  rules={[
-                    {
-                      required: true,
-                      message: 'Select travel dates',
-                    },
-                  ]}
-                >
-                  <RangePicker
-                    disabled={screenSize.width < 768}
-                    // open={datePickerOpen}
-                    onClick={showDrawer}
-                    style={{ width: '100%' }}
-                    onChange={(value) => handleDepartureObj('date', value)}
-                    disabledDate={(current: dayjs.Dayjs) =>
-                      current && current < dayjs().startOf('day')
-                    }
-                    format="DD/MM/YYYY"
-                    className="form-input"
-                  />
-                </Form.Item>
+                {!(screenSize.width < 768) ? (
+                  <Form.Item
+                    name="dates"
+                    rules={[
+                      {
+                        required: true,
+                        message: 'Select travel dates',
+                      },
+                    ]}
+                  >
+                    <RangePicker
+                      disabled={screenSize.width < 768}
+                      // open={datePickerOpen}
+                      // onClick={showDrawer}
+                      style={{ width: '100%' }}
+                      onChange={(value) => handleDepartureObj('date', value)}
+                      disabledDate={(current: dayjs.Dayjs) =>
+                        current && current < dayjs().startOf('day')
+                      }
+                      format="DD/MM/YYYY"
+                      className="form-input"
+                    />
+                  </Form.Item>
+                ) : (
+                  // <div onClick={showDrawer} className="sectionDates">
+                  //   <div className="datesDiv datesBorder1">
+                  //     <span className="route">Depart</span>
+                  //     <span className="dates">31 Dec 2023</span>
+                  //   </div>
+
+                  //   <div className="datesDiv datesBorder2">
+                  //     <span className="route">Return</span>
+                  //     <span className="dates">02 Jan 2024</span>
+                  //   </div>
+                  // </div>
+                  <div className="DatePickerSmallScreen">
+                    <div className="start-date">
+                      <DatePicker
+                        onChange={(value) =>
+                          handleDepartureObj('startDate', value)
+                        }
+                        placeholder="Start Date"
+                      />
+                    </div>
+                    <div className="end-date">
+                      <DatePicker
+                        onChange={(value) =>
+                          handleDepartureObj('endDate', value)
+                        }
+                        placeholder="End Date"
+                      />
+                    </div>
+                  </div>
+                )}
               </Col>
 
               {screenSize.width > 768 && (
@@ -515,14 +636,23 @@ const FlightSearchForm = ({ isStickyNav = false }: FlightSearchFormProps) => {
                       // open={open}
                       onOpenChange={handleOpenChange}
                     >
-                      <Input
-                        style={{ borderRadius: '0px 6px 6px 0px' }}
-                        placeholder="Enter passengers & class"
-                        className="form-input"
-                        onClick={() => {
-                          setOpen(!open);
-                        }}
-                      />
+                      <Tooltip
+                        placement="right"
+                        title={` Adult: ${passengersObj.adult}, Child:${passengersObj.child}, Infant:${passengersObj.infant}, Class:${cabinClassValue}`}
+                      >
+                        <Input
+                          name="passenger"
+                          key={`passenger:${passengersObj}`}
+                          readOnly
+                          value={` Adult: ${passengersObj.adult}, Child:${passengersObj.child}, Infant:${passengersObj.infant}, Class:${cabinClassValue}`}
+                          style={{ borderRadius: '0px 6px 6px 0px' }}
+                          placeholder="Enter passengers & class"
+                          className="form-input"
+                          onClick={() => {
+                            setOpen(!open);
+                          }}
+                        />
+                      </Tooltip>
                     </Popover>
                   </Form.Item>
                 </Col>
@@ -539,7 +669,7 @@ const FlightSearchForm = ({ isStickyNav = false }: FlightSearchFormProps) => {
                     ? 3
                     : 24
                 }
-                className="flexEnd center-on-mobile "
+                className="flexEnd center-on-mobile marginTop10"
               >
                 <Button
                   type="default"
