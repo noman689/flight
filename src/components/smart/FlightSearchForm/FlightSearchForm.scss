@@ -90,6 +90,10 @@
 
   @media (max-width: 425px) {
   }
+  .ant-picker-dropdown .ant-picker-panel-container .ant-picker-panels {
+    display: flex !important;
+    flex-direction: column !important;
+  }
 
   .ant-popover-inner {
     width: 300px;

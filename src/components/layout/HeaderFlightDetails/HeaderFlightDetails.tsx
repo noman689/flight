@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useState, useEffect } from 'react';
 import './HeaderFlightDetails.scss';
+import { useNavigate } from 'react-router-dom';
 import { Divider } from 'antd';
 import back from '../../../assets/backbutton.svg';
 import swap from '../../../assets/swap2.svg';
@@ -9,11 +10,16 @@ import persons from '../../../assets/persons.svg';
 import search from '../../../assets/search.svg';
 import avatar from '../../../assets/avatar.svg';
 const HeaderFlightDetails: React.FC<any> = () => {
+  const navigate = useNavigate();
+
+  const handleGoBack = () => {
+    navigate(-1);
+  };
   return (
     <>
       <div className="mainDiv headerTextSize">
         <div>
-          <img className="backButtonSize" src={back} />
+          <img onClick={handleGoBack} className="backButtonSize" src={back} />
           <img
             className="logoSize hideOn768"
             src="https://cssgradient.io/images/logo-55c31c59.svg"
@@ -25,17 +31,23 @@ const HeaderFlightDetails: React.FC<any> = () => {
             <img className="width45" src={swap} />
             <span>KHI</span>
           </div>
-          <Divider className="hideOn1024 hideOn768" type="vertical" />
-          <div className="hideOn1024 hideOn768">
+          <Divider
+            className="hideOn1024 hideOn768 hideRange1350toMac"
+            type="vertical"
+          />
+          <div className="hideOn1024 hideOn768 hideRange1350toMac">
             <img className="width45" src={eventLogo} />
             <span>Wed, 15 Mar-Thu, 16 Mar</span>
           </div>
-          <Divider className="hideOn1024 hideOn768" type="vertical" />
-          <div className="hideOn1024 hideOn768">
+          <Divider
+            className="hideOn1024 hideOn768 hideRange1350toMac"
+            type="vertical"
+          />
+          <div className="hideOn1024 hideOn768 hideRange1350toMac">
             <img className="width45" src={persons} />
             <span>1 Passenger</span>
           </div>
-          <Divider className=" hideOn768" type="vertical" />
+          <Divider className=" hideOn768 " type="vertical" />
           <div>
             <img className="width45 hideOn768 " src={search} />
             <span className="stylesOn768">Modify Search</span>
@@ -44,7 +56,9 @@ const HeaderFlightDetails: React.FC<any> = () => {
 
         <div>
           <img className="avatarImage" src={avatar} />
-          <span className="login loginText hideOn768">Log in to pay Avios</span>
+          <span className="login loginText hideOn768 hide1025to1320">
+            Log in to pay Avios
+          </span>
         </div>
       </div>
     </>
