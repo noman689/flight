@@ -10,12 +10,13 @@ const PassengerDetailsPage: React.FC = () => {
     <Row className="passenger-details-page-layout">
       <Col span={16}>
         <PassengerDetailsForm
-          numAdults={1}
-          numChildren={1}
-          onFinish={handleFinish}
+          numberOfPassengers={2}
+          // numAdults={1}
+          // numChildren={1}
+          // onFinish={handleFinish}
         />
       </Col>
-      <Col span={6}>
+      {/* <Col span={6}>
         <FlightSummary
           departureCity="ISB"
           arrivalCity="DOH"
@@ -27,7 +28,7 @@ const PassengerDetailsPage: React.FC = () => {
           durationMin={40}
           TotalExpense={8752400}
         />
-      </Col>
+      </Col> */}
     </Row>
   );
 };

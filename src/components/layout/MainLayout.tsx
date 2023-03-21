@@ -351,18 +351,11 @@ const MainLayout = () => {
             />
             <Route
               path="/passanger-details"
-              element={
-                // <PassengerDetailsForm
-                //   numAdults={1}
-                //   numChildren={1}
-                //   onFinish={handleFinish}
-                // />
-                <PassengerDetailsPage />
-              }
+              element={<PassengerDetailsPage />}
             />
           </Routes>
         </Content>
-        <Footer />
+        {/* <Footer /> */}
       </BrowserRouter>
     </Layout>
   );
