@@ -293,7 +293,7 @@ const FlightSearchForm = ({ isStickyNav = false }: FlightSearchFormProps) => {
                 lg={isStickyNav ? 3 : 5}
                 className="first-child position-relative"
               >
-                <AutoComplete
+                {/* <AutoComplete
                   onChange={(value) => handleDepartureObj('departure', value)}
                   className="autoCompletegeneral"
                   options={departureCities}
@@ -303,6 +303,23 @@ const FlightSearchForm = ({ isStickyNav = false }: FlightSearchFormProps) => {
                       .toUpperCase()
                       .indexOf(inputValue.toUpperCase()) !== -1
                   }
+                /> */}
+                <Select
+                  allowClear
+                  className="autoCompletegeneral"
+                  showSearch
+                  style={{ width: '100%' }}
+                  placeholder="Select Departure City"
+                  optionFilterProp="children"
+                  // filterOption={(input, option) =>
+                  //   (option?.label ?? '').includes(input)
+                  // }
+                  // filterSort={(optionA, optionB) =>
+                  //   (optionA?.label ?? '')
+                  //     .toLowerCase()
+                  //     .localeCompare((optionB?.label ?? '').toLowerCase())
+                  // }
+                  options={departureCities}
                 />
 
                 <img
@@ -325,7 +342,7 @@ const FlightSearchForm = ({ isStickyNav = false }: FlightSearchFormProps) => {
                 lg={isStickyNav ? 3 : 5}
                 className="place-holder "
               >
-                <AutoComplete
+                {/* <AutoComplete
                   onChange={(value) => handleDepartureObj('destination', value)}
                   style={{ width: '100%' }}
                   options={destinationCities}
@@ -335,6 +352,23 @@ const FlightSearchForm = ({ isStickyNav = false }: FlightSearchFormProps) => {
                       .toUpperCase()
                       .indexOf(inputValue.toUpperCase()) !== -1
                   }
+                /> */}
+                <Select
+                  allowClear
+                  showSearch
+                  style={{ width: '100%' }}
+                  placeholder="Select Arrival City"
+                  optionFilterProp="children"
+                  className="arrival-city"
+                  // filterOption={(input, option) =>
+                  //   (option?.label ?? '').includes(input)
+                  // }
+                  // filterSort={(optionA, optionB) =>
+                  //   (optionA?.label ?? '')
+                  //     .toLowerCase()
+                  //     .localeCompare((optionB?.label ?? '').toLowerCase())
+                  // }
+                  options={destinationCities}
                 />
               </Col>
               <Col
@@ -344,7 +378,7 @@ const FlightSearchForm = ({ isStickyNav = false }: FlightSearchFormProps) => {
                 lg={4}
                 className="on768Screen mTop"
               >
-                <AutoComplete
+                {/* <AutoComplete
                   onChange={(value) => handleDepartureObj('trip', value)}
                   style={{
                     width: '100%',
@@ -356,6 +390,22 @@ const FlightSearchForm = ({ isStickyNav = false }: FlightSearchFormProps) => {
                       .toUpperCase()
                       .indexOf(inputValue.toUpperCase()) !== -1
                   }
+                /> */}
+                <Select
+                  allowClear
+                  showSearch
+                  style={{ width: '100%' }}
+                  placeholder="Select the Desired Trip"
+                  optionFilterProp="children"
+                  // filterOption={(input, option) =>
+                  //   (option?.label ?? '').includes(input)
+                  // }
+                  // filterSort={(optionA, optionB) =>
+                  //   (optionA?.label ?? '')
+                  //     .toLowerCase()
+                  //     .localeCompare((optionB?.label ?? '').toLowerCase())
+                  // }
+                  options={ticketType}
                 />
               </Col>
               {screenSize.width <= 768 && (

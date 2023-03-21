@@ -218,6 +218,12 @@
   }
 }
 
+.arrival-city {
+  .ant-select-selection-item {
+    margin-left: 10px !important;
+  }
+}
+
 .ant-popover-inner {
   width: 300px !important;
 }
