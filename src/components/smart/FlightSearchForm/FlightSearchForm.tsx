@@ -21,6 +21,7 @@ import { Space } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import { searchFlightAPI } from '@client/services/searchFlightService';
 import Spin from '@client/components/presentational/Spin';
+// @ts-ignore
 import swap from '../../../assets/swap.png';
 import moment from 'moment';
 import { Drawer } from 'antd';
@@ -242,7 +243,7 @@ const FlightSearchForm = ({ isStickyNav = false }: FlightSearchFormProps) => {
           // title="Select Date"
           // placement={'left'}
           width={screenSize.width}
-          onClose={closeDrawer}
+          onCancel={closeDrawer}
           open={drawerOpen}
           // extra={
           //   <Space>
