@@ -1,16 +1,18 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Layout } from 'antd';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import './MainLayout.scss';
 import SearchFlightCard from '../smart/BookingCard/BookingCard';
+import FlightDetail from '../smart/FlightDetails/FlightDetail';
+import PassengerDetailsPage from '../smart/PassengerDetails/PassengerDetailsPage';
+import StickyNavBar from './StickyNavBar/StickyNavBar';
 import HeaderComponent from './AppHeader/Header';
 import Footer from './AppFooter/Footer';
-import FlightDetail from '../smart/FlightDetails/FlightDetail';
-import PassengerDetailsForm from '../smart/PassengerDetails/PassengerDetailsForm';
-import PassengerDetailsPage from '../smart/PassengerDetails/PassengerDetailsPage';
+import './MainLayout.scss';
+
 const { Content } = Layout;
 
 const MainLayout = () => {
+
   const sampleObj = [
     {
       data: {
@@ -341,10 +343,18 @@ const MainLayout = () => {
   return (
     <Layout className="bg-cloud">
       <BrowserRouter>
-        {/* <HeaderComponent /> */}
+        <HeaderComponent />
+        <StickyNavBar/>
         <Content>
           <Routes>
-            <Route path="/" element={<SearchFlightCard />} />
+            <Route
+              path="/"
+              element={
+                <>
+                  <SearchFlightCard />
+                </>
+              }
+            />
             <Route
               path="/flight-details"
               element={<FlightDetail apiData={apiData} />}
@@ -355,7 +365,7 @@ const MainLayout = () => {
             />
           </Routes>
         </Content>
-        {/* <Footer /> */}
+        <Footer />
       </BrowserRouter>
     </Layout>
   );
