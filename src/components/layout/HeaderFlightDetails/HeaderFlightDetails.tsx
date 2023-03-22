@@ -3,11 +3,17 @@ import React, { useState, useEffect } from 'react';
 import './HeaderFlightDetails.scss';
 import { useNavigate } from 'react-router-dom';
 import { Divider } from 'antd';
+// @ts-ignore
 import back from '../../../assets/backbutton.svg';
+// @ts-ignore
 import swap from '../../../assets/swap2.svg';
+// @ts-ignore
 import eventLogo from '../../../assets/event.svg';
+// @ts-ignore
 import persons from '../../../assets/persons.svg';
+// @ts-ignore
 import search from '../../../assets/search.svg';
+// @ts-ignore
 import avatar from '../../../assets/avatar.svg';
 const HeaderFlightDetails: React.FC<any> = () => {
   const navigate = useNavigate();

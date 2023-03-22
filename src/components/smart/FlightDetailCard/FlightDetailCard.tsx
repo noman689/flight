@@ -26,22 +26,22 @@ const FlightDetailCard = ({
   const [passengersCount, setPassengersCount] = useState();
   const [showDrawer, setShowDrawer] = useState(false);
 
-  useEffect(() => {
-    const count = {};
-    if (plan) {
-      plan.forEach((obj) => {
-        if (obj && obj.type) {
-          if (count[obj.type]) {
-            count[obj.type]++;
-          } else {
-            count[obj.type] = 1;
-          }
-        }
-      });
-      console.log(count);
-      count && setPassengersCount(count);
-    }
-  }, [plan]);
+  // useEffect(() => {
+  //   const count = {};
+  //   if (plan) {
+  //     plan.forEach((obj) => {
+  //       if (obj && obj.type) {
+  //         if (count[obj.type]) {
+  //           count[obj.type]++;
+  //         } else {
+  //           count[obj.type] = 1;
+  //         }
+  //       }
+  //     });
+  //     console.log(count);
+  //     count && setPassengersCount(count);
+  //   }
+  // }, [plan]);
 
   return (
     <div className="flight-detail-card-item">
@@ -228,7 +228,12 @@ const FlightDetailCard = ({
               </div>
 
               <div className="lower-div mt-none mt-50">
-                <span className="flightDetails2 font-size">Flight Details</span>
+                <span
+                  className="flightDetails2 font-size"
+                  onClick={() => setShowDrawer(true)}
+                >
+                  Flight Details
+                </span>
                 <span className="hideAbove768">XOF 1,137,300</span>
               </div>
             </Col>
@@ -240,19 +245,23 @@ const FlightDetailCard = ({
               className="thirdPart hide-card-part"
             >
               <div className="card">
-                <div>
-                  <span className="cardhead">Economy</span>
-                  <br />
-                  <span style={{ fontSize: '30px' }}>XOF 1,137,300</span>
-                </div>
+                <Link to="/passanger-details">
+                  <div>
+                    <span className="cardhead">Economy</span>
+                    <br />
+                    <span style={{ fontSize: '30px' }}>XOF 1,137,300</span>
+                  </div>
+                </Link>
               </div>
 
               <div className="card">
-                <div>
-                  <span className="cardhead">Business</span>
-                  <br />
-                  <span style={{ fontSize: '30px' }}>XOF 2,087,300</span>
-                </div>
+                <Link to="/passanger-details">
+                  <div>
+                    <span className="cardhead">Business</span>
+                    <br />
+                    <span style={{ fontSize: '30px' }}>XOF 2,087,300</span>
+                  </div>
+                </Link>
               </div>
             </Col>
           </Row>

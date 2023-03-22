@@ -3,16 +3,15 @@ import { Layout } from 'antd';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import SearchFlightCard from '../smart/BookingCard/BookingCard';
 import FlightDetail from '../smart/FlightDetails/FlightDetail';
-import PassengerDetailsPage from '../smart/PassengerDetails/PassengerDetailsPage';
 import StickyNavBar from './StickyNavBar/StickyNavBar';
 import HeaderComponent from './AppHeader/Header';
 import Footer from './AppFooter/Footer';
 import './MainLayout.scss';
+import PassengerDetailsPage from '../smart/PassengerDetails/PassengerDetailsPage';
 
 const { Content } = Layout;
 
 const MainLayout = () => {
-
   const sampleObj = [
     {
       data: {
@@ -344,7 +343,7 @@ const MainLayout = () => {
     <Layout className="bg-cloud">
       <BrowserRouter>
         <HeaderComponent />
-        <StickyNavBar/>
+        <StickyNavBar />
         <Content>
           <Routes>
             <Route
