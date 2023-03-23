@@ -8,10 +8,7 @@ interface FlightInfoDrawerProps {
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const FlightInfoDrawer = ({
-  open,
-  setOpen,
-}: FlightInfoDrawerProps) => {
+const FlightInfoDrawer = ({ open, setOpen }: FlightInfoDrawerProps) => {
   const onClose = () => {
     setOpen(false);
   };

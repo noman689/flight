@@ -1,11 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Layout } from 'antd';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import './MainLayout.scss';
 import SearchFlightCard from '../smart/BookingCard/BookingCard';
+import FlightDetail from '../smart/FlightDetails/FlightDetail';
+import StickyNavBar from './StickyNavBar/StickyNavBar';
 import HeaderComponent from './AppHeader/Header';
 import Footer from './AppFooter/Footer';
-import FlightDetail from '../smart/FlightDetails/FlightDetail';
+import './MainLayout.scss';
+import PassengerDetailsPage from '../smart/PassengerDetails/PassengerDetailsPage';
+
 const { Content } = Layout;
 
 const MainLayout = () => {
@@ -335,16 +338,29 @@ const MainLayout = () => {
     },
   ];
   const [apiData, setApiData] = useState<any>(sampleObj);
+  const handleFinish = () => {};
   return (
     <Layout className="bg-cloud">
       <BrowserRouter>
         <HeaderComponent />
+        <StickyNavBar />
         <Content>
           <Routes>
-            <Route path="/" element={<SearchFlightCard />} />
+            <Route
+              path="/"
+              element={
+                <>
+                  <SearchFlightCard />
+                </>
+              }
+            />
             <Route
               path="/flight-details"
               element={<FlightDetail apiData={apiData} />}
+            />
+            <Route
+              path="/passanger-details"
+              element={<PassengerDetailsPage />}
             />
           </Routes>
         </Content>
