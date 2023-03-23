@@ -1,7 +1,7 @@
 .passenger-details-page-layout {
   justify-content: center;
   display: flex;
-  padding: 0 60px;
+  padding: 0 90px;
   width: 100%;
 }
 .horizontal-timeline .ant-timeline-item-content {
@@ -9,10 +9,17 @@
   text-align: center;
   padding-top: 20px;
 }
+.ant-card .ant-card-head-title {
+  color: #8e2157;
+}
+.red-head {
+  color: #8e2157;
+}
 .card-bottom-title {
-  font-size: 18px;
+  font-size: 16px;
   text-align: center;
 }
+
 .indicators {
   position: absolute;
   display: inline-block;

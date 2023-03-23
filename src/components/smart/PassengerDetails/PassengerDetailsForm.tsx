@@ -1,4 +1,14 @@
-import { Form, Input, Button, Collapse, Select, Row, Col, Radio } from 'antd';
+import {
+  Form,
+  Input,
+  Button,
+  Collapse,
+  Select,
+  Row,
+  Col,
+  Radio,
+  Card,
+} from 'antd';
 import { FC, useState, useMemo } from 'react';
 import './PassengerDetailsForm.scss';
 
@@ -69,12 +79,6 @@ const PassengerDetailsForm: FC<PassengerFormProps> = ({
                       </div>
                       <div className="radio-box">
                         <Radio value={'ms'}>Ms</Radio>
-                      </div>
-                      <div className="radio-box">
-                        <Radio value={'sheikh'}>Sheikh</Radio>
-                      </div>
-                      <div className="radio-box">
-                        <Radio value={'sheikha'}>Sheikha</Radio>
                       </div>
                     </Row>
                   </Radio.Group>
@@ -219,10 +223,15 @@ const PassengerDetailsForm: FC<PassengerFormProps> = ({
                 </Form.Item>
               </Col>
             </Row>
-            <Button type="primary" htmlType="submit">
+            <Button
+              type="primary"
+              htmlType="submit"
+              className="form-submit-button"
+            >
               SUBMIT
             </Button>
-
+            {/* this is prevents the form to reopen  
+   ==================================  */}
             {/* <Form.Item>
               {currentForm >= i + 1 && (
                 <Button type="primary" htmlType="submit">
@@ -240,6 +249,8 @@ const PassengerDetailsForm: FC<PassengerFormProps> = ({
     <div className="passenger-details-form">
       <Collapse
         accordion
+        /* // this is prevents the form to reopen  
+  /* ================================== */
         // activeKey={`passenger-${currentForm}`}
         onChange={(key) => {
           setCurrentForm(Number(key.slice(-1)));

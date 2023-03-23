@@ -39,7 +39,7 @@ const FlightSummary: React.FC<FlightSummaryProps> = ({
           <div>{departureDate}</div>
           <div>{arrivalDate}</div>
         </Row>
-        <Row justify="space-between">
+        <Row justify="space-between" className="red-head">
           <div>{departureTime}</div>
           <div>{arrivalTime}</div>
         </Row>
@@ -62,7 +62,7 @@ const FlightSummary: React.FC<FlightSummaryProps> = ({
           <div>{departureDate}</div>
           <div>{arrivalDate}</div>
         </Row>
-        <Row justify="space-between">
+        <Row justify="space-between" className="red-head">
           <div>{departureTime}</div>
           <div>{arrivalTime}</div>
         </Row>
@@ -81,8 +81,8 @@ const FlightSummary: React.FC<FlightSummaryProps> = ({
       </Col>
       <Divider />
       <Row justify="space-between">
-        <div className="card-bottom-title">Total Trip Price:</div>
-        <div className="card-bottom-title">{TotalExpense}.00 PKR</div>
+        <div>Total Trip Price:</div>
+        <div className="card-bottom-title red-head">{TotalExpense}.00 PKR</div>
       </Row>
     </Card>
   );
