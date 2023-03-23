@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, Row, Col, Timeline, Divider } from 'antd';
+import { Card, Row, Col, Divider } from 'antd';
 import './PassengerDetailsPage.scss';
 interface FlightSummaryProps {
   departureCity: string;
