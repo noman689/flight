@@ -50,7 +50,7 @@ const PassengerDetailsForm: FC<PassengerFormProps> = ({
         <Panel
           header={`Passenger ${i + 1}`}
           key={`passenger-${i + 1}`}
-          className={currentForm === i + 1 ? 'active-form' : ''}
+          className="active-form"
         >
           <Form
             initialValues={formValues}
@@ -223,13 +223,7 @@ const PassengerDetailsForm: FC<PassengerFormProps> = ({
                 </Form.Item>
               </Col>
             </Row>
-            <Button
-              type="primary"
-              htmlType="submit"
-              className="form-submit-button"
-            >
-              SUBMIT
-            </Button>
+
             {/* this is prevents the form to reopen  
    ==================================  */}
             {/* <Form.Item>
@@ -258,6 +252,76 @@ const PassengerDetailsForm: FC<PassengerFormProps> = ({
       >
         {passengerForms}
       </Collapse>
+      <Card className="contact-card">
+        <Row>
+          <h4>Contact details</h4>
+        </Row>
+        <Row>
+          <h6>
+            Please provide your contact details so that we can notify you the
+            updates on your flight
+          </h6>
+        </Row>
+        <Row gutter={[16, 16]}>
+          <Col xs={24} sm={24} md={12} lg={17} xl={17}>
+            <Row>
+              <Form.Item name={`contactInfo`}>
+                <Select placeholder="Select Primary Contact">
+                  <Option value="1">Passenger 1</Option>
+                  <Option value="2">Passenger 2</Option>
+                  <Option value="3">Passenger 3</Option>
+                </Select>
+              </Form.Item>
+            </Row>
+            <Row gutter={[16, 16]}>
+              <Col xs={24} sm={24} md={12} lg={12} xl={12}>
+                <Form.Item name="Contact Details">
+                  <Select placeholder="Country Code">
+                    <Option value="pk"> Pakistan (+92)</Option>
+                    <Option value="qt">Qatar (+974)</Option>
+                    <Option value="uk">UK (+44)</Option>
+                    <Option value="usa">USA (+1)</Option>
+                    <Option value="au">Australia (+61) </Option>
+                  </Select>
+                </Form.Item>
+              </Col>
+              <Col xs={24} sm={24} md={12} lg={12} xl={12}>
+                <Form.Item
+                  name="Phone Number"
+                  rules={[
+                    {
+                      required: true,
+                      message: 'Please input phone number!',
+                    },
+                  ]}
+                >
+                  <Input placeholder="Phone Number" />
+                </Form.Item>
+              </Col>
+            </Row>
+            <Row gutter={[16, 16]}>
+              <Col xs={24} sm={24} md={12} lg={12} xl={12}>
+                <Form.Item
+                  name="Email"
+                  rules={[
+                    {
+                      required: true,
+                      message: 'Please Enter an Email Address!',
+                    },
+                  ]}
+                >
+                  <Input placeholder="Email" />
+                </Form.Item>
+              </Col>
+            </Row>
+          </Col>
+        </Row>
+      </Card>
+      <Row justify={'center'}>
+        <Button type="primary" htmlType="submit" className="form-submit-button">
+          SUBMIT
+        </Button>
+      </Row>
     </div>
   );
 };
