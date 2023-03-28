@@ -1,6 +1,11 @@
 .passenger-details-form {
   margin-top: 24px;
 
+  input[type='date']::-webkit-inner-spin-button,
+  input[type='date']::-webkit-calendar-picker-indicator {
+    display: none;
+    -webkit-appearance: none;
+  }
   .ant-collapse {
     border: none;
     background-color: transparent;
@@ -9,6 +14,7 @@
     height: 50px;
     font-size: 1.2rem;
   }
+
   .active-form {
     width: 700px;
     margin-left: auto;

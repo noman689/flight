@@ -1,3 +1,4 @@
+import { UserOutlined } from '@ant-design/icons';
 import {
   Form,
   Input,
@@ -113,7 +114,6 @@ const PassengerDetailsForm: FC<PassengerFormProps> = ({
                 </Form.Item>
               </Col>
             </Row>
-
             <Row gutter={[16, 16]}>
               <Col xs={24} sm={24} md={12} lg={12} xl={12}>
                 <Form.Item
@@ -125,7 +125,7 @@ const PassengerDetailsForm: FC<PassengerFormProps> = ({
                     },
                   ]}
                 >
-                  <Input placeholder="DD/MM/YYYY" />
+                  <Input placeholder="DD/MM/YYYY" type="date" />
                 </Form.Item>
               </Col>
               <Col xs={24} sm={24} md={12} lg={12} xl={12}>
@@ -178,7 +178,10 @@ const PassengerDetailsForm: FC<PassengerFormProps> = ({
               </Col>
               <Col xs={24} sm={24} md={12} lg={12} xl={12}>
                 <Form.Item name="passportExpiryDate">
-                  <Input placeholder="Passport Expiry Date (DD/MM/YYYY)" />
+                  <Input
+                    placeholder="Passport Expiry Date (DD/MM/YYYY)"
+                    type="date"
+                  />
                 </Form.Item>
               </Col>
             </Row>
