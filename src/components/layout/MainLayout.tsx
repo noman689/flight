@@ -338,36 +338,6 @@ const MainLayout = () => {
       },
     },
   ];
-  const cards = [
-    {
-      id: 1,
-      imageUrl: './1.jpg',
-      link: '#',
-      title: 'Card 1',
-      description: 'This is the first card',
-    },
-    {
-      id: 2,
-      imageUrl: 'https://picsum.photos/250',
-      link: 'https://example.com/link2',
-      title: 'Card 2',
-      description: 'This is the second card',
-    },
-    {
-      id: 3,
-      imageUrl: 'https://picsum.photos/100',
-      link: 'https://example.com/link3',
-      title: 'Card 3',
-      description: 'This is the third card',
-    },
-    {
-      id: 4,
-      imageUrl: 'https://picsum.photos/100',
-      link: 'https://example.com/link4',
-      title: 'Card 4',
-      description: 'This is the fourth card',
-    },
-  ];
   const [apiData, setApiData] = useState<any>(sampleObj);
   return (
     <Layout className="bg-cloud">
@@ -380,8 +350,8 @@ const MainLayout = () => {
               path="/"
               element={
                 <>
-                  {/* <SearchFlightCard /> */}
-                  <DisplayCards cards={cards} />
+                  <SearchFlightCard />
+                  <DisplayCards />
                 </>
               }
             />
