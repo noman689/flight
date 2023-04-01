@@ -349,10 +349,10 @@ const MainLayout = () => {
             <Route
               path="/"
               element={
-                <>
+                <div>
                   <SearchFlightCard />
                   <DisplayCards />
-                </>
+                </div>
               }
             />
             <Route

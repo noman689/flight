@@ -1,11 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useState, useEffect } from 'react';
-import {
-  UserOutlined,
-  SearchOutlined,
-  DownOutlined,
-  MenuOutlined,
-} from '@ant-design/icons';
+import { UserOutlined, SearchOutlined, MenuOutlined } from '@ant-design/icons';
 import { Button, Row, Col } from 'antd';
 import type { MenuProps } from 'antd';
 import { Dropdown, Space, Typography } from 'antd';
@@ -60,7 +55,6 @@ const HeaderComponent: React.FC<any> = () => {
                 <UserOutlined /> login | Sign Up
               </span>
             </div>
-
             <div className="img-shadow">
               <span className="HeadingBanner">
                 Discover Amazing
