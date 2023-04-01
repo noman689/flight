@@ -1,10 +1,14 @@
 .passenger-details-form {
   margin-top: 24px;
-
+  width: 100%;
+  padding: 0 10px;
   input[type='date']::-webkit-inner-spin-button,
   input[type='date']::-webkit-calendar-picker-indicator {
     display: none;
     -webkit-appearance: none;
+  }
+  .formWrapper {
+    // padding: 0 90px;
   }
   .ant-collapse {
     border: none;
@@ -16,7 +20,7 @@
   }
 
   .active-form {
-    width: 700px;
+    width: 100%;
     margin-left: auto;
     margin-right: auto;
   }
@@ -82,8 +86,18 @@
   }
 }
 .contact-card {
-  width: 700px;
+  width: 100%;
   margin-left: auto;
   margin-right: auto;
   border-radius: 20px;
+  .ant-form-item {
+    width: 100%;
+  }
+}
+@media screen and (min-width: 788px) {
+  .passenger-details-form {
+    width: 70%;
+    margin-left: auto;
+    margin-right: auto;
+  }
 }

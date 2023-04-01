@@ -8,10 +8,10 @@ const PassengerDetailsPage: React.FC = () => {
 
   return (
     <Row className="passenger-details-page-layout">
-      <Col xs={24} lg={18}>
+      <Col xs={24} sm={24} md={24} lg={18}>
         <PassengerDetailsForm numberOfPassengers={2} />
       </Col>
-      <Col xs={24} lg={6} style={{ paddingLeft: '22px' }}>
+      <Col xs={24} sm={24} md={24} lg={6}>
         <FlightSummary
           departureCity="ISB"
           arrivalCity="DOH"

@@ -254,6 +254,7 @@ const PassengerDetailsForm: FC<PassengerFormProps> = ({
       >
         {passengerForms}
       </Collapse>
+
       <Card className="contact-card">
         <Row>
           <h4>Contact details</h4>
