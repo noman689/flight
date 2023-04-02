@@ -32,7 +32,6 @@ const SearchFlightCard = () => {
     };
   }, []);
 
-  console.log(screenSize.width);
   const item = [
     {
       label: (
@@ -76,7 +75,7 @@ const SearchFlightCard = () => {
     },
   ];
   return (
-    <Card className="card-wrapper child">
+    <Card className="card-wrapper">
       <Tabs
         type="card"
         defaultActiveKey="book"

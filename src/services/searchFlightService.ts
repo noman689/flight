@@ -4,11 +4,23 @@ import axios from 'axios';
 export const searchFlightAPI = async (payload) => {
   return await axios({
     method: 'POST',
-    url: `${SERVER_URL}/air/offer_requests?return_offers=false`,
+    url: `${SERVER_URL}/api/search`,
     data: payload,
     headers: {
       'Content-Type': 'application/json',
-      Authorization: `Bearer ${API_TOKEN}`,
+      'Access-Control-Allow-Origin': `${window.location.origin}/`,
+      'Access-Control-Allow-Headers':
+        'Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers,X-Access-Token,XKey,Authorization',
+    },
+  });
+};
+
+export const getFlightOffersAPI = async (id) => {
+  return await axios({
+    method: 'GET',
+    url: `${SERVER_URL}/api/getOffers/${id}`,
+    headers: {
+      'Content-Type': 'application/json',
       'Access-Control-Allow-Origin': `${window.location.origin}/`,
       'Access-Control-Allow-Headers':
         'Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers,X-Access-Token,XKey,Authorization',

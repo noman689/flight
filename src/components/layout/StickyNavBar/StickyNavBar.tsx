@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import FlightSearchForm from '@client/components/smart/FlightSearchForm/FlightSearchForm';
+import './StickyNavBar.scss'
 
 const StickyNavBar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -21,15 +22,7 @@ const StickyNavBar = () => {
     <>
       {isScrolled && (
         <div
-          className="asd"
-          style={{
-            position: 'fixed',
-            top: 0,
-            left: 0,
-            right: 0,
-            zIndex: 1,
-            backgroundColor: 'white',
-          }}
+          className="sticky-nav"
         >
           <FlightSearchForm isStickyNav={true} />
         </div>

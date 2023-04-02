@@ -1,7 +1,24 @@
 .passenger-details-page-layout {
-  justify-content: center;
+  justify-content: space-between;
   display: flex;
   width: 100%;
+  margin: 20px 50px;
+  .form-section{
+    width: 50%;
+    @media screen and (max-width:810px) {
+      width: 100%;
+    }
+  }
+  .summary-section{
+    width: 450px;
+    @media screen and (max-width:810px) {
+      width: 100%;
+    }
+  }
+  @media screen and (max-width:810px) {
+    flex-direction: column-reverse;
+    gap: 30px;
+  }
 }
 .horizontal-timeline .ant-timeline-item-content {
   display: inline-block;

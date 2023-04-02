@@ -4,7 +4,7 @@ import './DisplayCards.scss';
 const { Meta } = Card;
 
 const DisplayCards: React.FC = () => (
-  <div className="parentDiv">
+  <div>
     <div className="content">
       <h3 className="planing-start">Start planning your next trip</h3>
       <h5 className="planning-desc">

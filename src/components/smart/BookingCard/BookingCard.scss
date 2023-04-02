@@ -1,11 +1,9 @@
 .card-wrapper {
-  margin: 120px auto;
-  top: 310px;
   height: 240px;
   box-shadow: 0 15px 32px -10px rgb(108 117 125 / 10%),
     0 4px 11px -3px rgb(0 0 0 / 25%);
-  width: 900px;
-  border-radius: 9px;
+  width: 940px;
+  border-radius: 20px;
 
   span {
     display: flex !important;
@@ -30,7 +28,7 @@
   .ant-tabs-tab {
     color: white !important;
     background-color: #701644 !important;
-    width: 224px;
+    width: 234px;
     height: 50px;
     display: flex;
     justify-content: center;
@@ -88,7 +86,6 @@
 
 .tab-container .ant-tabs-nav {
   position: relative;
-  z-index: 2;
 }
 .ant-tabs-nav-more {
   display: none !important;

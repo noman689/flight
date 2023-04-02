@@ -1,7 +1,26 @@
+@font-face {
+  font-family: 'NoirPro-Regular';
+  src: local('NoirPro-Regular'),
+    url(./fonts/NoirPro-Regular.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'NoirPro-Medium';
+  src: local('NoirPro-Regular'),
+    url(./fonts/NoirPro-Medium.ttf) format('truetype');
+}
+
+@font-face {
+  font-family: 'NoirPro-Light';
+  src: local('NoirPro-Light'), url(./fonts/NoirPro-Light.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'NoirPro-Bold';
+  src: local('NoirPro-Bold'), url(./fonts/NoirPro-Bold.ttf) format('truetype');
+}
 * {
   padding: 0;
   margin: 0;
-  font-family: 'inter';
+  font-family: 'NoirPro-Regular';
   box-sizing: border-box;
 }
 .main_page_width {

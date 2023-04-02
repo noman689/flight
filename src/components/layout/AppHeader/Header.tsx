@@ -26,10 +26,10 @@ const items: MenuProps['items'] = [
 
 const HeaderComponent: React.FC<any> = () => {
   const location = useLocation();
-  const [showHeader, setShowHeader] = useState(Boolean);
-  useEffect(() => {
-    setShowHeader(location.pathname === '/');
-  }, [location.pathname]);
+  const [showHeader, setShowHeader] = useState<Boolean>(true);
+  // useEffect(() => {
+  //   setShowHeader(location.pathname === '/');
+  // }, [location.pathname]);
   return (
     <>
       {showHeader ? (

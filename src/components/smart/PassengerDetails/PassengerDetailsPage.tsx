@@ -7,11 +7,11 @@ const PassengerDetailsPage: React.FC = () => {
   const handleFinish = () => {};
 
   return (
-    <Row className="passenger-details-page-layout">
-      <Col xs={24} sm={24} md={24} lg={18}>
+    <div className="passenger-details-page-layout">
+      <div className='form-section'>
         <PassengerDetailsForm numberOfPassengers={2} />
-      </Col>
-      <Col xs={24} sm={24} md={24} lg={6}>
+      </div>
+      <div className='summary-section'>
         <FlightSummary
           departureCity="ISB"
           arrivalCity="DOH"
@@ -23,8 +23,8 @@ const PassengerDetailsPage: React.FC = () => {
           durationMin={40}
           TotalExpense={8752400}
         />
-      </Col>
-    </Row>
+      </div>
+    </div>
   );
 };
 
