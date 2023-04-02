@@ -65,7 +65,9 @@ const FlightDetailCard = ({
                 >
                   Flight Details
                 </span>
+                <Link to="/passanger-details">
                 <span className="hideAbove768">XOF 1,137,300</span>
+                </Link>
               </div>
             </Col>
             <Col

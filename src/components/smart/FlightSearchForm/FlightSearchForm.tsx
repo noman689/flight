@@ -111,40 +111,6 @@ const FlightSearchForm = ({ isStickyNav = false }: FlightSearchFormProps) => {
     { label: 'Premium(Business/First)', value: 'business' },
   ];
 
-  // const handleDepartureObj = (name, value) => {
-  //   switch (name) {
-  //     case 'date':
-  //       const startDate = value[0]
-  //         ? moment(value[0]).format('MMMM Do YYYY')
-  //         : '';
-  //       const endDate = value[1] ? moment(value[1]).format('MMMM Do YYYY') : '';
-  //       setReturnDate(endDate);
-  //       setDataObj((prevState) => ({
-  //         ...prevState,
-  //         [name]: startDate,
-  //       }));
-  //       break;
-  //     case 'startDate':
-  //     case 'endDate':
-  //       const formattedDate = value ? moment(value).format('MMMM Do YYYY') : '';
-  //       setReturnDate(formattedDate);
-  //       if (name === 'endDate') {
-  //         setReturnDate(formattedDate);
-  //       } else {
-  //         setDataObj((prevState) => ({
-  //           ...prevState,
-  //           ['date']: formattedDate,
-  //         }));
-  //       }
-  //       break;
-  //     default:
-  //       setDataObj((prevState) => ({
-  //         ...prevState,
-  //         [name]: value,
-  //       }));
-  //       break;
-  //   }
-  // };
 
   const handlePassengersObj = (name, value) => {
     setPassengersObj((prevState) => ({ ...prevState, [name]: value }));
@@ -259,9 +225,9 @@ const FlightSearchForm = ({ isStickyNav = false }: FlightSearchFormProps) => {
                 </Form.Item>
               </Col>
               <Col
-                xs={screenSize.width <= 768 ? 12 : 24}
-                sm={screenSize.width <= 768 ? 12 : 24}
-                md={screenSize.width <= 768 ? 12 : 24}
+                xs={24}
+                sm={24}
+                md={24}
                 lg={4}
                 className="on768Screen mTop"
               >
@@ -302,7 +268,6 @@ const FlightSearchForm = ({ isStickyNav = false }: FlightSearchFormProps) => {
                   ]}
                 >
                   <DatePicker
-                    disabled={screenSize.width < 768}
                     style={{ width: '100%' }}
                     onChange={onDateChange}
                     disabledDate={(current: dayjs.Dayjs) =>

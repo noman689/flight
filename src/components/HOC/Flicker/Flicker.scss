@@ -24,4 +24,8 @@
       top: -60px;
     }
   }
-  
+  @media screen and (max-width:821px) {
+    .left-arrow , .right-arrow{
+      display: none;
+    }
+}
