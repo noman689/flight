@@ -1,3 +1,4 @@
+import Spin from '@client/components/presentational/Spin';
 import { getFlightOffersAPI } from '@client/services/searchFlightService';
 import { Col, Row } from 'antd';
 import React, { useEffect, useState } from 'react';
@@ -9,7 +10,6 @@ const FlightDetail = () => {
   const [loading, setLoading] = useState(false);
   const params = useParams();
   const { id } = params;
-  console.log('id', id);
   useEffect(() => {
     const getOfers = async () => {
       try {
@@ -25,26 +25,29 @@ const FlightDetail = () => {
     getOfers();
   }, [id]);
 
-  console.log('offersArray', offersArray);
   return (
     <div className="main_page_width m-b-30">
-      <Row justify="center">
-        {offersArray.map((value, index) => (
-          <FlightDetailCard
-            fromDate={value.departure_date}
-            toDate={value.departure_date}
-            departure={value.origin.name}
-            departureSub={value.origin.iata_code}
-            destination={value.destination.name}
-            destinationSub={value.destination.iata_code}
-            // plan={value.data.passengers}
-            type={value.cabin_class}
-            departureImg={`https://source.unsplash.com/1600x900/?${value.origin.name}`}
-            departureTime={value.segments[0].departing_at}
-            arrivalTime={value.segments[0].arriving_at}
-          ></FlightDetailCard>
-        ))}
-      </Row>
+      {loading ? (
+        <Spin />
+      ) : (
+        <Row justify="center">
+          {offersArray.map((value, index) => (
+            <FlightDetailCard
+              fromDate={value.departure_date}
+              toDate={value.departure_date}
+              departure={value.origin.name}
+              departureSub={value.origin.iata_code}
+              destination={value.destination.name}
+              destinationSub={value.destination.iata_code}
+              // plan={value.data.passengers}
+              type={value.cabin_class}
+              departureImg={`https://source.unsplash.com/1600x900/?${value.origin.name}`}
+              departureTime={value.segments[0].departing_at}
+              arrivalTime={value.segments[0].arriving_at}
+            ></FlightDetailCard>
+          ))}
+        </Row>
+      )}
     </div>
   );
 };
