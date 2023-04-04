@@ -45,21 +45,6 @@ const FlightDetail = () => {
 
   const item = sevenDays.map((dateObj, index) => {
     today.setHours(0, 0, 0, 0);
-    debugger;
-    // const itemDate = new Date(dateObj.date); // convert date string to Date object
-    // const comparisonDate = new Date(
-    //   dateObj.month + ' ' + dateObj.date + ', ' + today.getFullYear(),
-    // );
-    // // const isPastDate = itemDate < today; // check if item date is prior to today's date
-    // let isPastDate = false;
-    // if (comparisonDate.getTime() < today.getTime()) {
-    //   // dateObj's date is before today's date
-    //   // do something here, like disabling the item
-    //   isPastDate = true;
-    // } else {
-    //   // dateObj's date is on or after today's date
-    //   // do something else here
-    // }
 
     const itemDate = new Date(
       `${dateObj.month} ${dateObj.date}, ${today.getFullYear()}`,
