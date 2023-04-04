@@ -29,3 +29,18 @@
     visibility: hidden;
   }
 }
+
+.ant-tabs-ink-bar {
+  background-color: #701644 !important;
+}
+
+.ant-tabs-tab-active,
+.ant-tabs-tab:hover {
+  .dateTextColor {
+    color: #701644 !important;
+  }
+
+  .ant-tabs-ink-bar {
+    background-color: #701644 !important;
+  }
+}

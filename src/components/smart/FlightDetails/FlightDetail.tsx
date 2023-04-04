@@ -56,11 +56,10 @@ const FlightDetail = () => {
         <Row>
           <div className="tab-header">
             <div>
-              <span>{`${dateObj.day}, ${dateObj.date} ${
-                dateObj.month ? dateObj.month.substr(0, 3) : ''
-              }`}</span>
+              <span className='dateTextColor'>{`${dateObj.day}, ${dateObj.date} ${dateObj.month ? dateObj.month.substr(0, 3) : ''
+                }`}</span>
             </div>
-            <div>AED 1,245</div>
+            <div className='dateTextColor'>AED 1,245</div>
           </div>
         </Row>
       ),
