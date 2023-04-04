@@ -8,7 +8,6 @@ import { AndroidOutlined, AppleOutlined } from '@ant-design/icons';
 import { useSelector } from 'react-redux';
 import { searchFlightAPI } from '@client/services/searchFlightService';
 
-
 const FlightDetail = () => {
   const [offersArray, setOffersArray] = useState([]);
   const today = new Date(); // get current date
@@ -44,15 +43,28 @@ const FlightDetail = () => {
     getOfers();
   }, [id]);
 
-  
-
   const item = sevenDays.map((dateObj, index) => {
-    debugger
-    const itemDate = new Date(dateObj.date); // convert date string to Date object
-    const isPastDate = itemDate < today; // check if item date is prior to today's date
+    today.setHours(0, 0, 0, 0);
+    debugger;
+    // const itemDate = new Date(dateObj.date); // convert date string to Date object
+    // const comparisonDate = new Date(
+    //   dateObj.month + ' ' + dateObj.date + ', ' + today.getFullYear(),
+    // );
+    // // const isPastDate = itemDate < today; // check if item date is prior to today's date
+    // let isPastDate = false;
+    // if (comparisonDate.getTime() < today.getTime()) {
+    //   // dateObj's date is before today's date
+    //   // do something here, like disabling the item
+    //   isPastDate = true;
+    // } else {
+    //   // dateObj's date is on or after today's date
+    //   // do something else here
+    // }
 
-    console.log(itemDate, 'itemDate');
-    console.log(today, 'today');
+    const itemDate = new Date(
+      `${dateObj.month} ${dateObj.date}, ${today.getFullYear()}`,
+    );
+    const disabled = itemDate < today;
 
     return {
       label: (
@@ -66,7 +78,7 @@ const FlightDetail = () => {
         </div>
       ),
       key: index,
-      disabled: isPastDate,
+      disabled: disabled,
       children: offersArray.map((value, index) => (
         <FlightDetailCard
           fromDate={value.departure_date}
