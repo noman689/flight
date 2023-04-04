@@ -4,9 +4,11 @@ import PassengerDetailsForm from './PassengerDetailsForm';
 import './PassengerDetailsPage.scss';
 import FlightSummary from './FlightSummary';
 import { useSelector } from 'react-redux';
-const PassengerDetailsPage: React.FC = () => {
+
+const PassengerDetailsPage: React.FC = (drawerData) => {
   const handleFinish = () => {};
   // @ts-ignore
+
   const offerData = useSelector((state) => state.app.offer);
   console.log('design:', offerData);
   return (
@@ -18,12 +20,13 @@ const PassengerDetailsPage: React.FC = () => {
       </div>
       <div className="summary-section">
         <FlightSummary
-          departureCity="ISB"
-          arrivalCity="DOH"
-          departureDate="Fri, 10 Mar"
-          arrivalDate="Fri, 10 Mar"
-          departureTime="06:15"
-          arrivalTime="08:30"
+          drawerData={drawerData}
+          departureCity={offerData.segments[0].destination.iata_city_code}
+          arrivalCity={offerData.segments[0].origin.iata_city_code}
+          departureDate={offerData.segments[0].departing_at}
+          arrivalDate={offerData.segments[0].arriving_at}
+          departureTime={offerData.segments[0].departing_at}
+          arrivalTime={offerData.segments[0].arriving_at}
           durationHour={8}
           durationMin={40}
           TotalExpense={8752400}

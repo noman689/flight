@@ -10,15 +10,15 @@ import { selectedOffer } from '@client/store/app/action';
 import { useNavigate } from 'react-router-dom';
 
 const FlightDetailCard = ({
-  fromDate = '02-02-2021',
-  toDate = '03-02-2021',
-  departure = 'Karachi',
-  departureSub = 'KTC',
-  destination = 'Lahore',
-  destinationSub = 'Lhr',
-  plan = '1 passenger',
-  type = 'Return',
-  departureImg = 'https://source.unsplash.com/1600x900/?lahore',
+  fromDate,
+  toDate,
+  departure,
+  departureSub,
+  destination,
+  destinationSub,
+  plan,
+  type,
+  departureImg,
   departureTime,
   arrivalTime,
   drawerData,
@@ -61,7 +61,6 @@ const FlightDetailCard = ({
 
               <div className="cardSecondPart dullWhite">
                 <span>{departureSub}</span>
-                {/* <span>2 Stops, 19h 20m</span> */}
                 <span>{destinationSub}</span>
               </div>
 

@@ -11,6 +11,7 @@ interface FlightSummaryProps {
   departureDate: string;
   arrivalDate: string;
   TotalExpense: number;
+  drawerData: any;
 }
 
 const FlightSummary: React.FC<FlightSummaryProps> = ({
@@ -23,17 +24,10 @@ const FlightSummary: React.FC<FlightSummaryProps> = ({
   departureDate,
   arrivalDate,
   TotalExpense,
+  drawerData,
 }) => {
   return (
-    <Card
-      title="Your Trip Summary"
-      style={{
-        borderRadius: '8px',
-        boxShadow: '0px 4px 12px rgba(0, 0, 0, 0.1)',
-        margin: '17px 0',
-        textAlign: 'center',
-      }}
-    >
+    <Card title="Your Trip Summary" className="main-card">
       <Col>
         <Row justify="space-between">
           <div>{departureDate}</div>
@@ -57,7 +51,7 @@ const FlightSummary: React.FC<FlightSummaryProps> = ({
         </Row>
       </Col>
 
-      <Col style={{ marginTop: '20px' }}>
+      {/* <Col style={{ marginTop: '20px' }}>
         <Row justify="space-between">
           <div>{departureDate}</div>
           <div>{arrivalDate}</div>
@@ -78,7 +72,7 @@ const FlightSummary: React.FC<FlightSummaryProps> = ({
           <div>{departureCity}</div>
           <div>{arrivalCity}</div>
         </Row>
-      </Col>
+      </Col> */}
       <Divider />
       <Row justify="space-between">
         <div>Total Trip Price:</div>

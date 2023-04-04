@@ -3,19 +3,19 @@
   display: flex;
   width: 100%;
   margin: 20px 50px;
-  .form-section{
+  .form-section {
     width: 50%;
-    @media screen and (max-width:810px) {
+    @media screen and (max-width: 810px) {
       width: 100%;
     }
   }
-  .summary-section{
+  .summary-section {
     width: 450px;
-    @media screen and (max-width:810px) {
+    @media screen and (max-width: 810px) {
       width: 100%;
     }
   }
-  @media screen and (max-width:810px) {
+  @media screen and (max-width: 810px) {
     flex-direction: column-reverse;
     gap: 30px;
   }
@@ -24,6 +24,12 @@
   display: inline-block;
   text-align: center;
   padding-top: 20px;
+}
+.main-card {
+  border-radius: 8px;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+  margin: 17px 0;
+  text-align: center;
 }
 .ant-card .ant-card-head-title {
   color: #8e2157;

@@ -5,7 +5,7 @@
 }
 .ant-timeline {
   margin-top: 20px;
-  margin-left: -135px;
+  margin-left: -90px;
   p {
     margin-top: 0;
     margin-bottom: 0rem !important;
@@ -24,6 +24,9 @@
 @media (max-width: 424px) {
   .ant-drawer-right > .ant-drawer-content-wrapper {
     width: 95% !important;
+  }
+  .ant-timeline {
+    margin-left: -80px;
   }
   .ant-drawer .ant-drawer-body {
     padding: 16px 5px;

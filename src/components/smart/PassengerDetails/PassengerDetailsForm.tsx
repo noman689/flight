@@ -235,6 +235,13 @@ const PassengerDetailsForm: FC<PassengerFormProps> = ({
                 </Button>
               )}
             </Form.Item> */}
+            <Button
+              type="primary"
+              htmlType="submit"
+              className="form-submit-button"
+            >
+              SUBMIT
+            </Button>
           </Form>
         </Panel>
       )),
