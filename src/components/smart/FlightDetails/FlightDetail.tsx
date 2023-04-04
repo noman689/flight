@@ -55,9 +55,8 @@ const FlightDetail = () => {
       label: (
         <div className="tab-header">
           <div>
-            <span>{`${dateObj.day}, ${dateObj.date} ${
-              dateObj.month ? dateObj.month.substr(0, 3) : ''
-            }`}</span>
+            <span>{`${dateObj.day}, ${dateObj.date} ${dateObj.month ? dateObj.month.substr(0, 3) : ''
+              }`}</span>
           </div>
           <div>AED 1,245</div>
         </div>
@@ -197,13 +196,14 @@ const FlightDetail = () => {
       ) : (
         <Row justify="center">
           <Tabs
-          tabBarStyle={{
-            display:"flex",
-            justifyContent:"space-between"
-          }}
+            tabBarStyle={{
+              display: "flex",
+              justifyContent: "space-between"
+            }}
             onTabClick={(e) => {
               setGetTabId(e);
             }}
+            activeKey={tabId}
             defaultActiveKey={3}
             items={item}
           />
