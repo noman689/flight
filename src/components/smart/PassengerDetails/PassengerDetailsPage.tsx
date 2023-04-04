@@ -3,15 +3,20 @@ import { Row, Col, Card } from 'antd';
 import PassengerDetailsForm from './PassengerDetailsForm';
 import './PassengerDetailsPage.scss';
 import FlightSummary from './FlightSummary';
+import { useSelector } from 'react-redux';
 const PassengerDetailsPage: React.FC = () => {
   const handleFinish = () => {};
-
+  // @ts-ignore
+  const offerData = useSelector((state) => state.app.offer);
+  console.log('design:', offerData);
   return (
     <div className="passenger-details-page-layout">
-      <div className='form-section'>
-        <PassengerDetailsForm numberOfPassengers={2} />
+      <div className="form-section">
+        <PassengerDetailsForm
+          numberOfPassengers={offerData.segments[0].passengers.length}
+        />
       </div>
-      <div className='summary-section'>
+      <div className="summary-section">
         <FlightSummary
           departureCity="ISB"
           arrivalCity="DOH"

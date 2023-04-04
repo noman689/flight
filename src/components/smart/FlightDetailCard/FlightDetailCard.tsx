@@ -1,16 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { Row, Col, Button, Divider } from 'antd';
+import { Row, Col, Divider } from 'antd';
 import moment from 'moment';
-import {
-  ArrowRightOutlined,
-  MobileOutlined,
-  MinusCircleOutlined,
-  DiffOutlined,
-  ArrowDownOutlined,
-} from '@ant-design/icons';
+
 import './FlightDetailCard.scss';
 import FlightInfoDrawer from '../FlightInfoDrawer/FlightInfoDrawer';
 import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { selectedOffer } from '@client/store/app/action';
+import { useNavigate } from 'react-router-dom';
 
 const FlightDetailCard = ({
   fromDate = '02-02-2021',
@@ -23,7 +20,8 @@ const FlightDetailCard = ({
   type = 'Return',
   departureImg = 'https://source.unsplash.com/1600x900/?lahore',
   departureTime,
-  arrivalTime
+  arrivalTime,
+  drawerData,
 }) => {
   const [showDrawer, setShowDrawer] = useState(false);
 
@@ -39,6 +37,14 @@ const FlightDetailCard = ({
     type,
     departureImg,
   );
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    // @ts-ignore
+    dispatch(selectedOffer(drawerData));
+    navigate('/passanger-details');
+  };
   return (
     <div className="flight-detail-card-item">
       <Row className="flightDetails" justify="space-between">
@@ -52,6 +58,7 @@ const FlightDetailCard = ({
                 </Divider>
                 <span>{moment(arrivalTime).format('hh:m')}</span>
               </div>
+
               <div className="cardSecondPart dullWhite">
                 <span>{departureSub}</span>
                 {/* <span>2 Stops, 19h 20m</span> */}
@@ -66,7 +73,7 @@ const FlightDetailCard = ({
                   Flight Details
                 </span>
                 <Link to="/passanger-details">
-                <span className="hideAbove768">XOF 1,137,300</span>
+                  <span className="hideAbove768">XOF 1,137,300</span>
                 </Link>
               </div>
             </Col>
@@ -78,23 +85,19 @@ const FlightDetailCard = ({
               className="thirdPart hide-card-part"
             >
               <div className="card">
-                <Link to="/passanger-details">
-                  <div>
-                    <span className="cardhead">Economy</span>
-                    <br />
-                    <span style={{ fontSize: '30px' }}>XOF 1,137,300</span>
-                  </div>
-                </Link>
+                <div onClick={handleClick}>
+                  <span className="cardhead">Economy</span>
+                  <br />
+                  <span style={{ fontSize: '30px' }}>XOF 1,137,300</span>
+                </div>
               </div>
 
               <div className="card">
-                <Link to="/passanger-details">
-                  <div>
-                    <span className="cardhead">Business</span>
-                    <br />
-                    <span style={{ fontSize: '30px' }}>XOF 2,087,300</span>
-                  </div>
-                </Link>
+                <div onClick={handleClick}>
+                  <span className="cardhead">Business</span>
+                  <br />
+                  <span style={{ fontSize: '30px' }}>XOF 2,087,300</span>
+                </div>
               </div>
             </Col>
           </Row>
@@ -102,6 +105,7 @@ const FlightDetailCard = ({
       </Row>
       <FlightInfoDrawer
         open={showDrawer}
+        drawerData={drawerData}
         setOpen={setShowDrawer}
         key="FlightInfoDrawer"
       />

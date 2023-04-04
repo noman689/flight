@@ -245,7 +245,7 @@ const PassengerDetailsForm: FC<PassengerFormProps> = ({
     <div className="passenger-details-form">
       <Collapse
         accordion
-        /* // this is prevents the form to reopen  
+        /* // this prevents the form to reopen  
   /* ================================== */
         // activeKey={`passenger-${currentForm}`}
         onChange={(key) => {

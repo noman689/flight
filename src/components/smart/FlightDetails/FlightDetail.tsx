@@ -44,6 +44,7 @@ const FlightDetail = () => {
               departureImg={`https://source.unsplash.com/1600x900/?${value.origin.name}`}
               departureTime={value.segments[0].departing_at}
               arrivalTime={value.segments[0].arriving_at}
+              drawerData={value}
             ></FlightDetailCard>
           ))}
         </Row>

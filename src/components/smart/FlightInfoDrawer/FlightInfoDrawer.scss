@@ -5,10 +5,28 @@
 }
 .ant-timeline {
   margin-top: 20px;
-  margin-left: -60px;
+  margin-left: -135px;
+  p {
+    margin-top: 0;
+    margin-bottom: 0rem !important;
+  }
 }
 .drawer-top-heading {
   margin-bottom: 24px;
   display: flex;
   justify-content: center;
+  .ant-drawer .ant-drawer-body {
+    padding: 16px 5px;
+    overflow: scroll;
+  }
+}
+
+@media (max-width: 424px) {
+  .ant-drawer-right > .ant-drawer-content-wrapper {
+    width: 95% !important;
+  }
+  .ant-drawer .ant-drawer-body {
+    padding: 16px 5px;
+    overflow: scroll;
+  }
 }

@@ -6,34 +6,38 @@ import './FlightInfoDrawer.scss';
 interface FlightInfoDrawerProps {
   open: boolean;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  drawerData: any;
 }
 
-const FlightInfoDrawer = ({ open, setOpen }: FlightInfoDrawerProps) => {
+const FlightInfoDrawer = ({
+  open,
+  setOpen,
+  drawerData,
+}: FlightInfoDrawerProps) => {
   const onClose = () => {
     setOpen(false);
   };
+  console.log(drawerData);
 
   return (
     <>
-      <Drawer
-        width={500}
-        placement="right"
-        closable={true}
-        onClose={onClose}
-        open={open}
-      >
+      <Drawer placement="right" closable={true} onClose={onClose} open={open}>
         <h3 className="drawer-top-heading">Flight Details</h3>
+        <h5> Friday, Mar 10</h5>
         <Row>
           <Timeline
             mode={'left'}
             items={[
               {
-                label: '03:15',
+                label: '03:14',
                 color: 'green',
                 children: (
                   <>
-                    <p>Islamabad</p>
-                    <p>Islamabad International Airport (ISB)</p>
+                    <p>{drawerData.segments[0].origin.city_name}</p>
+                    <span>
+                      {drawerData.segments[0].origin.name} (
+                      {drawerData.segments[0].origin.iata_city_code})
+                    </span>
                   </>
                 ),
               },
@@ -42,8 +46,8 @@ const FlightInfoDrawer = ({ open, setOpen }: FlightInfoDrawerProps) => {
                 color: 'gray',
                 children: (
                   <>
-                    <p>QR633 - Boeing 787-9</p>
-                    <p>Operated by Qatar Airways</p>
+                    <p>{drawerData.segments[0].aircraft.name}</p>
+                    <span>Operated by Duffle Airways</span>
                   </>
                 ),
               },
@@ -52,8 +56,11 @@ const FlightInfoDrawer = ({ open, setOpen }: FlightInfoDrawerProps) => {
                 color: 'green',
                 children: (
                   <>
-                    <p>Doha</p>
-                    <p>Hamad International Airport (DOH)</p>
+                    <p>{drawerData.segments[0].destination.city_name}</p>
+                    <span>
+                      {drawerData.segments[0].destination.name} (
+                      {drawerData.segments[0].destination.iata_city_code})
+                    </span>
                   </>
                 ),
               },
@@ -61,16 +68,18 @@ const FlightInfoDrawer = ({ open, setOpen }: FlightInfoDrawerProps) => {
           />
         </Row>
 
-        <Divider />
-        <Space direction="vertical">
-          <Text>2h 30m transit in Doha</Text>
-          <Text style={{ marginTop: 10 }}>
-            Hamad International Airport (DOH)
-          </Text>
-          <Text type="secondary">Skytrax World’s Best Airport 2022</Text>
-        </Space>
+        {/* <Divider />
+        <div style={{ marginLeft: '20px' }}>
+          <Space direction="vertical">
+            <Text>2h 30m transit in Doha</Text>
+            <Text style={{ marginTop: 10 }}>
+              Hamad International Airport (DOH)
+            </Text>
+            <Text type="secondary">Skytrax World’s Best Airport 2022</Text>
+          </Space>
+        </div> */}
 
-        <Divider />
+        {/* <Divider />
         <h5> Friday, Mar 10</h5>
         <Row>
           <Timeline
@@ -108,7 +117,7 @@ const FlightInfoDrawer = ({ open, setOpen }: FlightInfoDrawerProps) => {
               },
             ]}
           />
-        </Row>
+        </Row> */}
       </Drawer>
     </>
   );
