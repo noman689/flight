@@ -53,32 +53,20 @@ const FlightDetail = () => {
 
     return {
       label: (
-        <div className="tab-header">
-          <div>
-            <span>{`${dateObj.day}, ${dateObj.date} ${dateObj.month ? dateObj.month.substr(0, 3) : ''
-              }`}</span>
+        <Row>
+          <Col xs></Col>
+          <div className="tab-header">
+            <div>
+              <span>{`${dateObj.day}, ${dateObj.date} ${dateObj.month ? dateObj.month.substr(0, 3) : ''
+                }`}</span>
+            </div>
+            <div>AED 1,245</div>
           </div>
-          <div>AED 1,245</div>
-        </div>
+        </Row>
       ),
       key: index,
       disabled: disabled,
-      children: offersArray.map((value, index) => (
-        <FlightDetailCard
-          fromDate={value.departure_date}
-          toDate={value.departure_date}
-          departure={value.origin.name}
-          departureSub={value.origin.iata_code}
-          destination={value.destination.name}
-          destinationSub={value.destination.iata_code}
-          // plan={value.data.passengers}
-          type={value.cabin_class}
-          departureImg={`https://source.unsplash.com/1600x900/?${value.origin.name}`}
-          departureTime={value.segments[0].departing_at}
-          arrivalTime={value.segments[0].arriving_at}
-          drawerData={value}
-        ></FlightDetailCard>
-      )),
+
     };
   });
   function getDateRangeWithIds(dateString) {
@@ -191,25 +179,50 @@ const FlightDetail = () => {
 
   return (
     <div className="main_page_width m-b-30">
+
+      <Row justify="center">
+        <Tabs
+          tabBarStyle={{
+            display: "flex",
+            justifyContent: "space-between"
+          }}
+          onTabClick={(e) => {
+            setLoading(true)
+            setGetTabId(e);
+          }}
+          activeKey={tabId}
+          defaultActiveKey={3}
+          items={item}
+        />
+      </Row>
+
+
+
       {loading ? (
-        <Spin />
-      ) : (
-        <Row justify="center">
-          <Tabs
-            tabBarStyle={{
-              display: "flex",
-              justifyContent: "space-between"
-            }}
-            onTabClick={(e) => {
-              setGetTabId(e);
-            }}
-            activeKey={tabId}
-            defaultActiveKey={3}
-            items={item}
-          />
+        <Row justify='center'>
+          <Spin />
         </Row>
+      ) : (
+
+        offersArray.map((value, index) => (
+          <FlightDetailCard
+            fromDate={value.departure_date}
+            toDate={value.departure_date}
+            departure={value.origin.name}
+            departureSub={value.origin.iata_code}
+            destination={value.destination.name}
+            destinationSub={value.destination.iata_code}
+            // plan={value.data.passengers}
+            type={value.cabin_class}
+            departureImg={`https://source.unsplash.com/1600x900/?${value.origin.name}`}
+            departureTime={value.segments[0].departing_at}
+            arrivalTime={value.segments[0].arriving_at}
+            drawerData={value}
+          ></FlightDetailCard>
+        ))
+
       )}
-    </div>
+    </div >
   );
 };
 
