@@ -39,7 +39,6 @@ const FlightSearchForm = ({ isStickyNav = false }: FlightSearchFormProps) => {
   const [isLoading, setIsLoading] = useState(false);
   const [screenSize, setScreenSize] = useState({ width: 0, height: 0 });
 
-
   const [passengersObj, setPassengersObj] = useState({
     adult: 1,
     child: 0,
@@ -132,10 +131,7 @@ const FlightSearchForm = ({ isStickyNav = false }: FlightSearchFormProps) => {
     };
   }, []);
 
-  const onDateChange: DatePickerProps['onChange'] = (date, dateString) => {
-   
-  };
- 
+  const onDateChange: DatePickerProps['onChange'] = (date, dateString) => {};
 
   return (
     <>

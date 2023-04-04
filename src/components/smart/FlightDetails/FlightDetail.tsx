@@ -54,11 +54,11 @@ const FlightDetail = () => {
     return {
       label: (
         <Row>
-          <Col xs></Col>
           <div className="tab-header">
             <div>
-              <span>{`${dateObj.day}, ${dateObj.date} ${dateObj.month ? dateObj.month.substr(0, 3) : ''
-                }`}</span>
+              <span>{`${dateObj.day}, ${dateObj.date} ${
+                dateObj.month ? dateObj.month.substr(0, 3) : ''
+              }`}</span>
             </div>
             <div>AED 1,245</div>
           </div>
@@ -66,7 +66,6 @@ const FlightDetail = () => {
       ),
       key: index,
       disabled: disabled,
-
     };
   });
   function getDateRangeWithIds(dateString) {
@@ -179,15 +178,14 @@ const FlightDetail = () => {
 
   return (
     <div className="main_page_width m-b-30">
-
       <Row justify="center">
         <Tabs
           tabBarStyle={{
-            display: "flex",
-            justifyContent: "space-between"
+            display: 'flex',
+            justifyContent: 'space-between',
           }}
           onTabClick={(e) => {
-            setLoading(true)
+            setLoading(true);
             setGetTabId(e);
           }}
           activeKey={tabId}
@@ -196,14 +194,11 @@ const FlightDetail = () => {
         />
       </Row>
 
-
-
       {loading ? (
-        <Row justify='center'>
+        <Row justify="center">
           <Spin />
         </Row>
       ) : (
-
         offersArray.map((value, index) => (
           <FlightDetailCard
             fromDate={value.departure_date}
@@ -220,9 +215,8 @@ const FlightDetail = () => {
             drawerData={value}
           ></FlightDetailCard>
         ))
-
       )}
-    </div >
+    </div>
   );
 };
 
