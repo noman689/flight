@@ -59,7 +59,7 @@ const FlightDetail = () => {
               <span className='dateTextColor'>{`${dateObj.day}, ${dateObj.date} ${dateObj.month ? dateObj.month.substr(0, 3) : ''
                 }`}</span>
             </div>
-            <div className='dateTextColor'>AED 1,245</div>
+            {/* <div className='dateTextColor'>AED 1,245</div> */}
           </div>
         </Row>
       ),
