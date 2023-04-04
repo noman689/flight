@@ -12,3 +12,16 @@
   justify-content: center;
   align-items: center;
 }
+
+.mainPageCard {
+  .ant-tabs-content {
+    min-height: 160px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .textColor {
+    color: #701644;
+  }
+}

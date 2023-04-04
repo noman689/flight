@@ -51,7 +51,7 @@ const SearchFlightCard = () => {
         </span>
       ),
       key: 'trip',
-      children: <> Comming Soon..!</>,
+      children: <span className='textColor'>Comming Soon..!</span>,
     },
     {
       label: (
@@ -61,7 +61,7 @@ const SearchFlightCard = () => {
         </span>
       ),
       key: 'checkIn',
-      children: <>Comming Soon..!</>,
+      children: <span className='textColor'>Comming Soon..!</span>,
     },
     screenSize.width > 768 && {
       label: (
@@ -71,11 +71,11 @@ const SearchFlightCard = () => {
         </span>
       ),
       key: 'flightStatus',
-      children: <>Comming Soon..!</>,
+      children: <span className='textColor'>Comming Soon..!</span>,
     },
   ];
   return (
-    <Card className="card-wrapper">
+    <Card className="card-wrapper mainPageCard">
       <Tabs
         type="card"
         defaultActiveKey="book"
