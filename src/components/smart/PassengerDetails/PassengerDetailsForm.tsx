@@ -273,7 +273,7 @@ const PassengerDetailsForm: FC<PassengerFormProps> = ({
           </h6>
         </Row>
         <Row gutter={[16, 16]}>
-          <Col xs={24} sm={24} md={12} lg={17} xl={17}>
+          <Col xs={24} sm={24} md={24} lg={24} xl={24}>
             <Row>
               <Form.Item name={`contactInfo`}>
                 <Select placeholder="Select Primary Contact">
@@ -284,7 +284,7 @@ const PassengerDetailsForm: FC<PassengerFormProps> = ({
               </Form.Item>
             </Row>
             <Row gutter={[16, 16]}>
-              <Col xs={24} sm={24} md={12} lg={12} xl={12}>
+              <Col xs={24} sm={24} md={24} lg={12} xl={12}>
                 <Form.Item name="Contact Details">
                   <Select placeholder="Country Code">
                     <Option value="pk"> Pakistan (+92)</Option>
@@ -295,7 +295,7 @@ const PassengerDetailsForm: FC<PassengerFormProps> = ({
                   </Select>
                 </Form.Item>
               </Col>
-              <Col xs={24} sm={24} md={12} lg={12} xl={12}>
+              <Col xs={24} sm={24} md={24} lg={12} xl={12}>
                 <Form.Item
                   name="Phone Number"
                   rules={[
@@ -310,7 +310,7 @@ const PassengerDetailsForm: FC<PassengerFormProps> = ({
               </Col>
             </Row>
             <Row gutter={[16, 16]}>
-              <Col xs={24} sm={24} md={12} lg={12} xl={12}>
+              <Col xs={24} sm={24} md={24} lg={12} xl={12}>
                 <Form.Item
                   name="Email"
                   rules={[
