@@ -172,7 +172,6 @@ const FlightDetail = () => {
   }, [selectedDate]);
 
   const apiCall = async (object) => {
-    debugger;
     const response = await searchFlightAPI(object);
     navigate(`/flight-details/${response.data?.offer_id}`);
   };
@@ -198,6 +197,10 @@ const FlightDetail = () => {
       ) : (
         <Row justify="center">
           <Tabs
+          tabBarStyle={{
+            display:"flex",
+            justifyContent:"space-between"
+          }}
             onTabClick={(e) => {
               setGetTabId(e);
             }}

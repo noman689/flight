@@ -121,6 +121,10 @@
   .first-child {
     .ant-select-auto-complete .ant-select-selector {
       // border-radius: 6px 0px 0px 6px !important;
+    
+    }
+    .ant-select-arrow{
+      display: none !important;
     }
   }
   .last-child {
@@ -149,6 +153,7 @@
       .mb {
         margin-bottom: 30px !important;
       }
+      
     }
     .on768Screen {
       .ant-select-selector {
@@ -196,6 +201,9 @@
   .ant-select-selection-search-input {
     padding-inline: 10px !important;
   }
+  .ant-select-arrow{
+      display: none !important;
+    }
 }
 
 .ant-select-dropdown {
@@ -310,3 +318,8 @@
     }
   }
 }
+
+@media (max-width: 1024px) {
+  /* Your CSS styles for screens up to and including 1024 pixels go here */
+}
+

@@ -8,18 +8,16 @@
 }
 .img-shadow {
   .banner-text {
-    margin-left: 60px 
+    padding: 0px 10px;
   }
 }
 .header {
   display: flex;
-  justify-content: center;
-  align-items: center;
+  justify-content: space-between;
   font-size: 20px;
   font-weight: 300;
   color: white;
   padding: 15px 30px;
-  gap: 210px;
   cursor: pointer;
   a {
     color: unset !important;
@@ -28,16 +26,16 @@
     }
   }
 }
+
 .d-flex {
   display: flex;
   align-items: center;
 }
+
 .headerTexts {
   padding-left: 10px;
   padding-right: 10px;
   color: white;
-  display: flex;
-  align-items: center;
 }
 
 .HeadingBanner {

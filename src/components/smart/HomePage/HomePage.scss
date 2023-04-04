@@ -11,3 +11,11 @@
         gap: 120px;
     }
 }
+
+@media (max-width: 768px) {
+  /* Your CSS styles for screens up to and including 1024 pixels go here */
+
+  .content-section{
+  margin-top: -70px;
+}
+}

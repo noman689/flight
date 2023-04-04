@@ -198,7 +198,7 @@ const FlightSearchForm = ({ isStickyNav = false }: FlightSearchFormProps) => {
                 sm={24}
                 md={24}
                 lg={isStickyNav ? 3 : 5}
-                className="place-holder "
+                className="place-holder"
               >
                 <Form.Item
                   name="destination"
