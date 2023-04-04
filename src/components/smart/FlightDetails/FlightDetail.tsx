@@ -169,6 +169,7 @@ const FlightDetail = () => {
     }
 
     if (tabId !== 3) {
+      setLoading(true);
       apiCall(
         updateDepartureDateById(getObjectById(tabId, getDatesForTabs).date),
       );
@@ -184,7 +185,6 @@ const FlightDetail = () => {
             justifyContent: 'space-between',
           }}
           onTabClick={(e) => {
-            setLoading(true);
             setGetTabId(e);
           }}
           activeKey={tabId}
