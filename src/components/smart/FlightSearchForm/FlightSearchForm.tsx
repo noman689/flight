@@ -23,7 +23,9 @@ import { searchFlightAPI } from '@client/services/searchFlightService';
 import Spin from '@client/components/presentational/Spin';
 // @ts-ignore
 import swap from '../../../assets/swap.png';
+import { useDispatch } from 'react-redux';
 import moment from 'moment';
+import { saveSelectedDate } from '../../../store/app/action';
 
 interface FlightSearchFormProps {
   isStickyNav?: boolean;
@@ -31,11 +33,12 @@ interface FlightSearchFormProps {
 
 const FlightSearchForm = ({ isStickyNav = false }: FlightSearchFormProps) => {
   const navigate = useNavigate();
-
+  const dispatch = useDispatch();
   const [form] = Form.useForm();
   const { RangePicker } = DatePicker;
   const [isLoading, setIsLoading] = useState(false);
   const [screenSize, setScreenSize] = useState({ width: 0, height: 0 });
+
 
   const [passengersObj, setPassengersObj] = useState({
     adult: 1,
@@ -43,18 +46,18 @@ const FlightSearchForm = ({ isStickyNav = false }: FlightSearchFormProps) => {
     infant: 0,
   });
   const [cabinClassValue, setCabinClassValue] = useState<any>('economy');
-  console.log(
-    'test', 
-    [...new Array(2)].map(item=>{
-      return {
-        type:'adult'
-      }
-    })
-  );
+  // console.log(
+  //   'test',
+  //   [...new Array(2)].map((item) => {
+  //     return {
+  //       type: 'adult',
+  //     };
+  //   }),
+  // );
   const onFinish = async (values) => {
-    console.log('values', values);
+    // console.log('values', values);
     const { adult, child, infant } = passengersObj;
-    
+
     const passengers = [
       ...[...new Array(adult)].map((item) => {
         return { type: 'adult' };
@@ -77,9 +80,9 @@ const FlightSearchForm = ({ isStickyNav = false }: FlightSearchFormProps) => {
     };
 
     try {
+      dispatch(saveSelectedDate(payload));
       setIsLoading(true);
       const response = await searchFlightAPI(payload);
-      console.log('response', response);
       navigate(`/flight-details/${response.data?.offer_id}`);
     } catch (error) {
       setIsLoading(false);
@@ -111,7 +114,6 @@ const FlightSearchForm = ({ isStickyNav = false }: FlightSearchFormProps) => {
     { label: 'Premium(Business/First)', value: 'business' },
   ];
 
-
   const handlePassengersObj = (name, value) => {
     setPassengersObj((prevState) => ({ ...prevState, [name]: value }));
   };
@@ -131,8 +133,9 @@ const FlightSearchForm = ({ isStickyNav = false }: FlightSearchFormProps) => {
   }, []);
 
   const onDateChange: DatePickerProps['onChange'] = (date, dateString) => {
-    console.log(date, dateString);
+   
   };
+ 
 
   return (
     <>
@@ -224,13 +227,7 @@ const FlightSearchForm = ({ isStickyNav = false }: FlightSearchFormProps) => {
                   </Select>
                 </Form.Item>
               </Col>
-              <Col
-                xs={24}
-                sm={24}
-                md={24}
-                lg={4}
-                className="on768Screen mTop"
-              >
+              <Col xs={24} sm={24} md={24} lg={4} className="on768Screen mTop">
                 <Form.Item
                   name="travelType"
                   rules={[

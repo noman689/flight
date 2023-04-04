@@ -25,18 +25,18 @@ const FlightDetailCard = ({
 }) => {
   const [showDrawer, setShowDrawer] = useState(false);
 
-  console.log(
-    'testingValues',
-    fromDate,
-    toDate,
-    departure,
-    departureSub,
-    destination,
-    destinationSub,
-    plan,
-    type,
-    departureImg,
-  );
+  // console.log(
+  //   'testingValues',
+  //   fromDate,
+  //   toDate,
+  //   departure,
+  //   departureSub,
+  //   destination,
+  //   destinationSub,
+  //   plan,
+  //   type,
+  //   departureImg,
+  // );
   const dispatch = useDispatch();
   const navigate = useNavigate();
 

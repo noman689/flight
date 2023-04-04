@@ -17,7 +17,6 @@ const FlightInfoDrawer = ({
   const onClose = () => {
     setOpen(false);
   };
-  console.log(drawerData);
 
   return (
     <>
