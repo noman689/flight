@@ -24,11 +24,13 @@ const FlightDetail = () => {
   const { id } = params;
 
   useEffect(() => {
-    setGetDatesForTabs(
-      getDateRangeWithIds(selectedDate.app?.selectedDate?.departure_date),
-    );
-    if (saveObject) {
-      setSaveObject(selectedDate.app?.selectedDate);
+    if (selectedDate.app?.selectedDate?.departure_date) {
+      setGetDatesForTabs(
+        getDateRangeWithIds(selectedDate.app?.selectedDate?.departure_date),
+      );
+      if (saveObject) {
+        setSaveObject(selectedDate.app?.selectedDate);
+      }
     }
   }, [selectedDate.app?.selectedDate?.departure_date]);
 
@@ -180,7 +182,7 @@ const FlightDetail = () => {
         updateDepartureDateById(getObjectById(tabId, getDatesForTabs).date),
       );
     } else if (tabId === 3 && !isEmpty(saveObject)) {
-      debugger
+      debugger;
       setLoading(true);
       apiCall(saveObject);
     }

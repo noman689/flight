@@ -26,6 +26,7 @@ import swap from '../../../assets/swap.png';
 import { useDispatch } from 'react-redux';
 import moment from 'moment';
 import { saveSelectedDate } from '../../../store/app/action';
+import { searchPlacesAPI } from '@client/services/searchPlacesServices';
 
 interface FlightSearchFormProps {
   isStickyNav?: boolean;
@@ -38,6 +39,10 @@ const FlightSearchForm = ({ isStickyNav = false }: FlightSearchFormProps) => {
   const { RangePicker } = DatePicker;
   const [isLoading, setIsLoading] = useState(false);
   const [screenSize, setScreenSize] = useState({ width: 0, height: 0 });
+  const [originCity, setOriginCity] = useState('');
+  const [destinationCity, setDestinationCity] = useState('');
+  const [departureCities, setDepartureCities] = useState([]);
+  const [destinationCities, setDestinationCities] = useState([]);
 
   const [passengersObj, setPassengersObj] = useState({
     adult: 1,
@@ -73,12 +78,13 @@ const FlightSearchForm = ({ isStickyNav = false }: FlightSearchFormProps) => {
     const payload = {
       origin: values.origin,
       destination: values.destination,
-      departure_date: values.departure_date.toISOString(),
+      departure_date: values.departure_date?.toISOString(),
       cabin_class: cabinClassValue,
       passengers: passengers,
     };
 
     try {
+      // @ts-ignore
       dispatch(saveSelectedDate(payload));
       setIsLoading(true);
       const response = await searchFlightAPI(payload);
@@ -94,18 +100,6 @@ const FlightSearchForm = ({ isStickyNav = false }: FlightSearchFormProps) => {
     setOpen(newOpen);
   };
 
-  const destinationCities = [
-    { label: 'Birmingham', value: 'BHM' },
-    { label: 'Dothan', value: 'DHN' },
-    { label: 'Huntsville', value: 'HSV' },
-    { label: 'Fort Smith', value: 'FSM' },
-  ];
-
-  const departureCities = [
-    { label: 'Birmingham', value: 'BHM' },
-    { label: 'Huntsville', value: 'HSV' },
-    { label: 'Fort Smith', value: 'FSM' },
-  ];
   const ticketType = [{ value: 'One Way' }];
 
   const cabinClass = [
@@ -132,6 +126,17 @@ const FlightSearchForm = ({ isStickyNav = false }: FlightSearchFormProps) => {
   }, []);
 
   const onDateChange: DatePickerProps['onChange'] = (date, dateString) => {};
+
+  const handleStudentSearch = async (value, type) => {
+    try {
+      const result = await searchPlacesAPI(value);
+      type == 'origin'
+        ? setDepartureCities(result?.data?.offer?.data)
+        : setDestinationCities(result?.data?.offer?.data);
+    } catch (error) {
+      console.log('error', error);
+    }
+  };
 
   return (
     <>
@@ -165,28 +170,22 @@ const FlightSearchForm = ({ isStickyNav = false }: FlightSearchFormProps) => {
                     className="autoCompletegeneral"
                     style={{ width: '100%' }}
                     placeholder="Select Departure City"
+                    onChange={(value) => setOriginCity(value)}
+                    onSearch={(value) => {
+                      handleStudentSearch(value, 'origin');
+                    }}
+                    filterOption={false}
+                    value={originCity}
                   >
-                    {departureCities.map((item, index) => {
+                    {departureCities?.map((item, index) => {
                       return (
-                        <Select.Option value={item.value} key={index}>
-                          {item.label}
+                        <Select.Option value={item.iata_code} key={index}>
+                          {item.city_name}
                         </Select.Option>
                       );
                     })}
                   </Select>
                 </Form.Item>
-
-                <img
-                  className="position-absolute top-0 start-100 translate-middle hide"
-                  style={{
-                    width: '30px',
-                    zIndex: 1,
-                    marginTop: '29px',
-                    border: '1px solid #6c1542',
-                    borderRadius: '100%',
-                  }}
-                  src={swap}
-                />
               </Col>
 
               <Col
@@ -212,11 +211,17 @@ const FlightSearchForm = ({ isStickyNav = false }: FlightSearchFormProps) => {
                     placeholder="Select Arrival City"
                     optionFilterProp="children"
                     className="arrival-city"
+                    onChange={(value) => setDestinationCity(value)}
+                    onSearch={(value) => {
+                      handleStudentSearch(value, 'destination');
+                    }}
+                    filterOption={false}
+                    value={destinationCity}
                   >
-                    {departureCities.map((item, index) => {
+                    {destinationCities?.map((item, index) => {
                       return (
-                        <Select.Option value={item.value} key={index}>
-                          {item.label}
+                        <Select.Option value={item.iata_code} key={index}>
+                          {item.city_name}
                         </Select.Option>
                       );
                     })}
