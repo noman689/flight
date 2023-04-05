@@ -89,7 +89,7 @@ const HeaderComponent: React.FC<any> = () => {
                 </span>
               </div>
             </div>
-            <Row justify={'center'}>
+            <Row justify={'center'} className="bannerTextStyle">
               <Col xs={15} sm={15} md={15} lg={15}>
                 <div className="img-shadow main_page_width">
                   <div className="banner-text">

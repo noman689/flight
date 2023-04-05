@@ -10,23 +10,21 @@ import './MainLayout.scss';
 import PassengerDetailsPage from '../smart/PassengerDetails/PassengerDetailsPage';
 import DisplayCards from '../smart/DisplayCards/DisplayCards';
 import HomePage from '../smart/HomePage/HomePage';
+import HeaderFlightDetails from './HeaderFlightDetails/HeaderFlightDetails';
 
 const { Content } = Layout;
 
 const MainLayout = () => {
-  
   return (
     <Layout className="bg-cloud">
       <BrowserRouter>
+      
         <HeaderComponent />
         <StickyNavBar />
         <Content>
           <Routes>
             <Route path="/" element={<HomePage />} />
-            <Route
-              path="/flight-details/:id"
-              element={<FlightDetail />}
-            />
+            <Route path="/flight-details/:id" element={<FlightDetail />} />
             <Route
               path="/passanger-details"
               element={<PassengerDetailsPage />}

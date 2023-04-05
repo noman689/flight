@@ -6,11 +6,14 @@
   width: 100%;
   height: 480px;
 }
+
 .img-shadow {
   .banner-text {
-    margin-left: 60px 
+    margin-left: 60px
   }
+
 }
+
 .header {
   display: flex;
   justify-content: center;
@@ -21,17 +24,23 @@
   padding: 15px 30px;
   gap: 210px;
   cursor: pointer;
+
   a {
     color: unset !important;
+
     &:hover {
       color: unset !important;
     }
   }
+
+
 }
+
 .d-flex {
   display: flex;
   align-items: center;
 }
+
 .headerTexts {
   padding-left: 10px;
   padding-right: 10px;
@@ -45,14 +54,17 @@
   color: white;
   margin-top: 80px;
 }
+
 .saveupto {
   font-size: 30px;
   color: white;
   padding-top: 10px;
 }
+
 .padding10 {
   padding: 10px;
 }
+
 .btnBookNow {
   background-color: rgba(255, 255, 255, 0);
   border-radius: 100px;
@@ -77,28 +89,52 @@
   .header {
     font-size: 15px;
   }
+
+  .bannerTextStyle {
+    justify-content: flex-start !important;
+  }
+
   .HeadingBanner {
     font-size: 40px;
   }
+
   .saveupto {
     font-size: 25px;
   }
+
   .btnBookNow {
     width: 130px;
     height: 30px;
   }
 }
+
 .hideOnSmallScreen {
   position: relative;
 }
 
-@media only screen and (max-width: 425px) {
+@media only screen and (max-width: 768px) {
   .hideOnSmallScreen {
     display: none;
   }
+
+  .img-shadow {
+    margin-top: 100px !important;
+    padding-inline: 35px;
+  }
+
+  .headerTexts {
+
+    align-items: center !important;
+  }
+
+  .anticon-user {
+    margin-right: 5px !important;
+  }
+
   .HeadingBanner {
     font-size: 30px;
   }
+
   .dFlexEnd {
     display: flex;
     justify-content: space-between;
@@ -106,7 +142,7 @@
   }
 }
 
-@media only screen and (min-width: 426px) {
+@media only screen and (min-width: 769px) {
   .hideOnLargeScreen {
     display: none;
   }
@@ -119,28 +155,19 @@
 }
 
 :where(.css-dev-only-do-not-override-1km3mtt).ant-dropdown .ant-dropdown-menu,
-:where(.css-dev-only-do-not-override-1km3mtt).ant-dropdown-menu-submenu
-  .ant-dropdown-menu {
+:where(.css-dev-only-do-not-override-1km3mtt).ant-dropdown-menu-submenu .ant-dropdown-menu {
   background-color: #652954 !important;
 }
-:where(.css-dev-only-do-not-override-1km3mtt).ant-dropdown
-  .ant-dropdown-menu
-  .ant-dropdown-menu-title-content,
-:where(.css-dev-only-do-not-override-1km3mtt).ant-dropdown-menu-submenu
-  .ant-dropdown-menu
-  .ant-dropdown-menu-title-content {
+
+:where(.css-dev-only-do-not-override-1km3mtt).ant-dropdown .ant-dropdown-menu .ant-dropdown-menu-title-content,
+:where(.css-dev-only-do-not-override-1km3mtt).ant-dropdown-menu-submenu .ant-dropdown-menu .ant-dropdown-menu-title-content {
   color: white !important;
 }
+
 .ant-dropdown-menu-item-selected,
-:where(.css-dev-only-do-not-override-1km3mtt).ant-dropdown-menu-submenu
-  .ant-dropdown-menu
-  .ant-dropdown-menu-item-selected,
-:where(.css-dev-only-do-not-override-1km3mtt).ant-dropdown
-  .ant-dropdown-menu
-  .ant-dropdown-menu-submenu-title-selected,
-:where(.css-dev-only-do-not-override-1km3mtt).ant-dropdown-menu-submenu
-  .ant-dropdown-menu
-  .ant-dropdown-menu-submenu-title-selected {
+:where(.css-dev-only-do-not-override-1km3mtt).ant-dropdown-menu-submenu .ant-dropdown-menu .ant-dropdown-menu-item-selected,
+:where(.css-dev-only-do-not-override-1km3mtt).ant-dropdown .ant-dropdown-menu .ant-dropdown-menu-submenu-title-selected,
+:where(.css-dev-only-do-not-override-1km3mtt).ant-dropdown-menu-submenu .ant-dropdown-menu .ant-dropdown-menu-submenu-title-selected {
   color: #652954 !important;
 }
 

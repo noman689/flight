@@ -60,8 +60,8 @@
   .btnSearchFlight {
     background-color: #ffa903;
     color: black;
-    width: 245px;
-    height: 62px;
+    width: 190px;
+    height: 55px;
     font-size: 18px;
     margin-left: 20px;
   }
@@ -121,6 +121,10 @@
   .first-child {
     .ant-select-auto-complete .ant-select-selector {
       // border-radius: 6px 0px 0px 6px !important;
+    
+    }
+    .ant-select-arrow{
+      display: none !important;
     }
   }
   .last-child {
@@ -149,6 +153,7 @@
       .mb {
         margin-bottom: 30px !important;
       }
+      
     }
     .on768Screen {
       .ant-select-selector {
@@ -196,6 +201,9 @@
   .ant-select-selection-search-input {
     padding-inline: 10px !important;
   }
+  .ant-select-arrow{
+      display: none !important;
+    }
 }
 
 .ant-select-dropdown {
@@ -308,5 +316,23 @@
       border-top-left-radius: 0px !important;
       border-bottom-left-radius: 0px !important;
     }
+  }
+}
+
+@media (max-width: 1024px) {
+  /* Your CSS styles for screens up to and including 1024 pixels go here */
+}
+
+
+.rotate {
+  animation: rotate 1s ease-in-out;
+}
+
+@keyframes rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(180deg);
   }
 }
