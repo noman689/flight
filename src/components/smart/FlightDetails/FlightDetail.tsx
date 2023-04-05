@@ -16,6 +16,7 @@ const FlightDetail = () => {
   const [sevenDays, setSevenDays] = useState([]);
   const [tabId, setGetTabId] = useState(3);
   const [getDatesForTabs, setGetDatesForTabs] = useState([]);
+  const [saveObject, setSaveObject] = useState({});
 
   const params = useParams();
   const navigate = useNavigate();
@@ -25,7 +26,12 @@ const FlightDetail = () => {
     setGetDatesForTabs(
       getDateRangeWithIds(selectedDate.app?.selectedDate?.departure_date),
     );
+    if (saveObject) {
+      setSaveObject(selectedDate.app?.selectedDate);
+    }
   }, [selectedDate.app?.selectedDate?.departure_date]);
+
+  console.log(saveObject, 'saveObject');
 
   useEffect(() => {
     const getOfers = async () => {
@@ -56,8 +62,9 @@ const FlightDetail = () => {
         <Row>
           <div className="tab-header">
             <div>
-              <span className='dateTextColor'>{`${dateObj.day}, ${dateObj.date} ${dateObj.month ? dateObj.month.substr(0, 3) : ''
-                }`}</span>
+              <span className="dateTextColor">{`${dateObj.day}, ${
+                dateObj.date
+              } ${dateObj.month ? dateObj.month.substr(0, 3) : ''}`}</span>
             </div>
             {/* <div className='dateTextColor'>AED 1,245</div> */}
           </div>
@@ -173,6 +180,10 @@ const FlightDetail = () => {
       apiCall(
         updateDepartureDateById(getObjectById(tabId, getDatesForTabs).date),
       );
+    } else {
+      saveObject;
+      setLoading(true);
+      apiCall(saveObject);
     }
   }, [selectedDate.app?.selectedDate, tabId]);
 
