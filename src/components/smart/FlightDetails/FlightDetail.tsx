@@ -7,6 +7,7 @@ import FlightDetailCard from '../FlightDetailCard/FlightDetailCard';
 import { AndroidOutlined, AppleOutlined } from '@ant-design/icons';
 import { useSelector } from 'react-redux';
 import { searchFlightAPI } from '@client/services/searchFlightService';
+import { isEmpty } from 'ramda';
 
 const FlightDetail = () => {
   const [offersArray, setOffersArray] = useState([]);
@@ -30,8 +31,6 @@ const FlightDetail = () => {
       setSaveObject(selectedDate.app?.selectedDate);
     }
   }, [selectedDate.app?.selectedDate?.departure_date]);
-
-  console.log(saveObject, 'saveObject');
 
   useEffect(() => {
     const getOfers = async () => {
@@ -180,8 +179,8 @@ const FlightDetail = () => {
       apiCall(
         updateDepartureDateById(getObjectById(tabId, getDatesForTabs).date),
       );
-    } else {
-      saveObject;
+    } else if (tabId === 3 && !isEmpty(saveObject)) {
+      debugger
       setLoading(true);
       apiCall(saveObject);
     }
