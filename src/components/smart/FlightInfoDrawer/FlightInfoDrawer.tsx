@@ -20,11 +20,18 @@ const FlightInfoDrawer = ({
 
   return (
     <>
-      <Drawer placement="right" closable={true} onClose={onClose} open={open}>
+      <Drawer
+        placement="right"
+        closable={true}
+        onClose={onClose}
+        open={open}
+        style={{ height: '100%' }}
+      >
         <h3 className="drawer-top-heading">Flight Details</h3>
         <h5> Friday, Mar 10</h5>
         <Row>
           <Timeline
+            className="info-timeline"
             mode={'left'}
             items={[
               {

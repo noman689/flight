@@ -86,7 +86,7 @@ const PassengerDetailsForm: FC<PassengerFormProps> = ({
               </Col>
             </Row>
             <Row gutter={[16, 16]}>
-              <Col xs={24} sm={24} md={12} lg={12} xl={12}>
+              <Col xs={24} sm={24} md={24} lg={12} xl={12}>
                 <Form.Item
                   name={`firstName${i + 1}`}
                   rules={[
@@ -99,7 +99,7 @@ const PassengerDetailsForm: FC<PassengerFormProps> = ({
                   <Input placeholder="First Name / Middle Name" />
                 </Form.Item>
               </Col>
-              <Col xs={24} sm={24} md={12} lg={12} xl={12}>
+              <Col xs={24} sm={24} md={24} lg={12} xl={12}>
                 <Form.Item
                   name={`lastName${i + 1}`}
                   rules={[
@@ -114,7 +114,7 @@ const PassengerDetailsForm: FC<PassengerFormProps> = ({
               </Col>
             </Row>
             <Row gutter={[16, 16]}>
-              <Col xs={24} sm={24} md={12} lg={12} xl={12}>
+              <Col xs={24} sm={24} md={24} lg={12} xl={12}>
                 <Form.Item
                   name={`dob${i + 1}`}
                   rules={[
@@ -127,7 +127,7 @@ const PassengerDetailsForm: FC<PassengerFormProps> = ({
                   <Input placeholder="DD/MM/YYYY" type="date" />
                 </Form.Item>
               </Col>
-              <Col xs={24} sm={24} md={12} lg={12} xl={12}>
+              <Col xs={24} sm={24} md={24} lg={12} xl={12}>
                 <Form.Item
                   name={`nationality${i + 1}`}
                   rules={[
@@ -148,7 +148,7 @@ const PassengerDetailsForm: FC<PassengerFormProps> = ({
               </Col>
             </Row>
             <Row gutter={[16, 16]} style={{ marginBottom: '10px' }}>
-              <Col span={12}>
+              <Col xl={24}>
                 <div>
                   <Radio.Group
                     value={gender}
@@ -170,7 +170,7 @@ const PassengerDetailsForm: FC<PassengerFormProps> = ({
               <h5>Passport Details</h5>
             </Row>
             <Row gutter={[16, 16]}>
-              <Col xs={24} sm={24} md={12} lg={12} xl={12}>
+              <Col xs={24} sm={24} md={24} lg={12} xl={12}>
                 <Form.Item name="passportNumber">
                   <Input placeholder="Passport Number" />
                 </Form.Item>
@@ -188,7 +188,7 @@ const PassengerDetailsForm: FC<PassengerFormProps> = ({
               <h5>Travel Documents (Optional)</h5>
             </Row>
             <Row gutter={[16, 16]}>
-              <Col xs={24} sm={24} md={12} lg={12} xl={12}>
+              <Col xs={24} sm={24} md={24} lg={12} xl={12}>
                 <Form.Item
                   name={`docuType${i + 1}`}
                   rules={[
@@ -206,7 +206,7 @@ const PassengerDetailsForm: FC<PassengerFormProps> = ({
                   </Select>
                 </Form.Item>
               </Col>
-              <Col xs={24} sm={24} md={12} lg={12} xl={12}>
+              <Col xs={24} sm={24} md={24} lg={12} xl={12}>
                 <Form.Item
                   name={`country${i + 1}`}
                   rules={[
