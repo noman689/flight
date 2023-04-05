@@ -1,0 +1,36 @@
+.tab-header {
+  width: 230px;
+}
+.dateTextColor {
+  color: #701644 !important;
+  font-weight: 500;
+  font-size: 20px;
+  border-bottom: 2px solid #701644;
+  padding-bottom: 2px;
+  margin-bottom: 12px;
+  cursor: pointer;
+}
+
+.disabled {
+  font-size: 20px;
+  color: #bfc1d4;
+  cursor: not-allowed;
+}
+@media (max-width: 821px) {
+  .date-flicker {
+    width: 450px;
+  }
+  .tab-header {
+    width: fit-content;
+    margin: 0px 6px;
+  }
+}
+@media (max-width: 620px) {
+  .date-flicker {
+    width: 80vw;
+  }
+  .tab-header {
+    width: fit-content;
+    margin: 0px 6px;
+  }
+}

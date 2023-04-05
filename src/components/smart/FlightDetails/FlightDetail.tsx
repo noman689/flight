@@ -1,13 +1,14 @@
 import Spin from '@client/components/presentational/Spin';
 import { getFlightOffersAPI } from '@client/services/searchFlightService';
-import { Col, Row, Tabs } from 'antd';
-import React, { useEffect, useState } from 'react';
+import { Row } from 'antd';
+import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router';
 import FlightDetailCard from '../FlightDetailCard/FlightDetailCard';
-import { AndroidOutlined, AppleOutlined } from '@ant-design/icons';
 import { useSelector } from 'react-redux';
 import { searchFlightAPI } from '@client/services/searchFlightService';
 import { isEmpty } from 'ramda';
+import './FlightDetail.scss';
+import HorizontalFliker from '@client/components/HOC/Flicker/Flicker';
 
 const FlightDetail = () => {
   const [offersArray, setOffersArray] = useState([]);
@@ -50,31 +51,7 @@ const FlightDetail = () => {
     getOfers();
   }, [id]);
 
-  const item = sevenDays.map((dateObj, index) => {
-    today.setHours(0, 0, 0, 0);
-
-    const itemDate = new Date(
-      `${dateObj.month} ${dateObj.date}, ${today.getFullYear()}`,
-    );
-    const disabled = itemDate < today;
-
-    return {
-      label: (
-        <Row>
-          <div className="tab-header">
-            <div>
-              <span className="dateTextColor">{`${dateObj.day}, ${
-                dateObj.date
-              } ${dateObj.month ? dateObj.month.substr(0, 3) : ''}`}</span>
-            </div>
-            {/* <div className='dateTextColor'>AED 1,245</div> */}
-          </div>
-        </Row>
-      ),
-      key: index,
-      disabled: disabled,
-    };
-  });
+  // const item =
   function getDateRangeWithIds(dateString) {
     const centerDate = new Date(dateString);
     const result = [];
@@ -189,22 +166,27 @@ const FlightDetail = () => {
   }, [selectedDate.app?.selectedDate, tabId]);
 
   return (
-    <div className="main_page_width m-b-30">
-      <Row justify="center">
-        <Tabs
-          tabBarStyle={{
-            display: 'flex',
-            justifyContent: 'space-between',
-          }}
-          onTabClick={(e) => {
-            setGetTabId(e);
-          }}
-          activeKey={tabId}
-          defaultActiveKey={3}
-          items={item}
-        />
-      </Row>
+    <div className="main_page_width m-b-30 date-tabs">
+      <div className='date-flicker'>
+        <HorizontalFliker>
+          {sevenDays.map((dateObj, index) => {
+            today.setHours(0, 0, 0, 0);
 
+            const itemDate = new Date(
+              `${dateObj.month} ${dateObj.date}, ${today.getFullYear()}`,
+            );
+            const disabled = itemDate < today;
+
+            return (
+              <div className="tab-header" key={index}>
+                <span className={disabled ? 'disabled' :"dateTextColor"}>{`${dateObj.day}, ${
+                  dateObj.date
+                } ${dateObj.month ? dateObj.month.substr(0, 3) : ''}`}</span>
+              </div>
+            );
+          })}
+        </HorizontalFliker>
+      </div>
       {loading ? (
         <Row justify="center">
           <Spin />

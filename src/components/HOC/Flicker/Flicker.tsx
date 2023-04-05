@@ -6,7 +6,19 @@ import LEFT_ARROW from '../../../assets/left-arrow.svg';
 import RIGHT_ARROW from '../../../assets/right-arrow.svg';
 import './Flicker.scss';
 
-const HorizontalFliker = ({ children, showNagivation = false ,showHeading=false}) => {
+interface FLICKERPROPS {
+  children?: any;
+  showNagivation?: Boolean;
+  showHeading?: Boolean;
+  defaultIndex?: number;
+}
+
+const HorizontalFliker = ({
+  children,
+  showNagivation = false,
+  showHeading = false,
+  defaultIndex = 0,
+}: FLICKERPROPS) => {
   const flickinfRef: any = useRef();
 
   const onClickLeft = () => {
@@ -32,7 +44,7 @@ const HorizontalFliker = ({ children, showNagivation = false ,showHeading=false}
       <div>
         <Flicking
           viewportTag="div"
-          defaultIndex={0}
+          defaultIndex={defaultIndex}
           align="prev"
           circular={true}
           horizontal={true}
