@@ -43,7 +43,7 @@ const FlightSearchForm = ({ isStickyNav = false }: FlightSearchFormProps) => {
   const [destinationCity, setDestinationCity] = useState('');
   const [departureCities, setDepartureCities] = useState([]);
   const [destinationCities, setDestinationCities] = useState([]);
-
+  const [isSearching, setIsSearching] = useState(false);
   const [passengersObj, setPassengersObj] = useState({
     adult: 1,
     child: 0,
@@ -129,11 +129,14 @@ const FlightSearchForm = ({ isStickyNav = false }: FlightSearchFormProps) => {
 
   const handleStudentSearch = async (value, type) => {
     try {
+      setIsSearching(true);
       const result = await searchPlacesAPI(value);
       type == 'origin'
         ? setDepartureCities(result?.data?.offer?.data)
         : setDestinationCities(result?.data?.offer?.data);
+      setIsSearching(false);
     } catch (error) {
+      setIsSearching(false);
       console.log('error', error);
     }
   };
@@ -176,6 +179,7 @@ const FlightSearchForm = ({ isStickyNav = false }: FlightSearchFormProps) => {
                     }}
                     filterOption={false}
                     value={originCity}
+                    loading={isSearching}
                   >
                     {departureCities?.map((item, index) => {
                       return (
@@ -217,6 +221,8 @@ const FlightSearchForm = ({ isStickyNav = false }: FlightSearchFormProps) => {
                     }}
                     filterOption={false}
                     value={destinationCity}
+                    loading={isSearching}
+
                   >
                     {destinationCities?.map((item, index) => {
                       return (

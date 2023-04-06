@@ -55,7 +55,6 @@ const PassengerDetailsForm: FC<PassengerFormProps> = ({
           <Form
             initialValues={formValues}
             onFinish={(values) => {
-              console.log('Form submitted:', values);
               setFormValues({ ...formValues, ...values });
               setCurrentForm(currentForm + 1);
             }}
@@ -225,23 +224,13 @@ const PassengerDetailsForm: FC<PassengerFormProps> = ({
                 </Form.Item>
               </Col>
             </Row>
-
-            {/* this is prevents the form to reopen  
-   ==================================  */}
-            {/* <Form.Item>
-              {currentForm >= i + 1 && (
-                <Button type="primary" htmlType="submit">
-                  {currentForm === numberOfPassengers ? 'Finish' : 'Next'}
-                </Button>
-              )}
-            </Form.Item> */}
             <Row justify={'center'}>
               <Button
                 type="primary"
                 htmlType="submit"
                 className="form-submit-button"
               >
-                SUBMIT
+                NEXT
               </Button>
             </Row>
           </Form>
