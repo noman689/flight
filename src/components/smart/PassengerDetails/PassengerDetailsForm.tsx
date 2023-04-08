@@ -245,10 +245,10 @@ const PassengerDetailsForm: FC<PassengerFormProps> = ({
         accordion
         /* // this prevents the form to reopen  
   /* ================================== */
-        // activeKey={`passenger-${currentForm}`}
-        onChange={(key) => {
-          setCurrentForm(Number(key.slice(-1)));
-        }}
+        activeKey={`passenger-${currentForm}`}
+        // onChange={(key) => {
+        //   setCurrentForm(Number(key.slice(-1)));
+        // }}
       >
         {passengerForms}
       </Collapse>

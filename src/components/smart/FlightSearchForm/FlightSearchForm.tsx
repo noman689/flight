@@ -27,6 +27,7 @@ import { useDispatch } from 'react-redux';
 import moment from 'moment';
 import { saveSelectedDate } from '../../../store/app/action';
 import { searchPlacesAPI } from '@client/services/searchPlacesServices';
+import { RangePickerProps } from 'antd/es/date-picker';
 
 interface FlightSearchFormProps {
   isStickyNav?: boolean;
@@ -36,7 +37,6 @@ const FlightSearchForm = ({ isStickyNav = false }: FlightSearchFormProps) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [form] = Form.useForm();
-  const { RangePicker } = DatePicker;
   const [isLoading, setIsLoading] = useState(false);
   const [screenSize, setScreenSize] = useState({ width: 0, height: 0 });
   const [originCity, setOriginCity] = useState('');
@@ -74,11 +74,12 @@ const FlightSearchForm = ({ isStickyNav = false }: FlightSearchFormProps) => {
       // })
       // , { child: child }, { infant: infant }
     ];
-
+    console.log("values",values)
     const payload = {
       origin: values.origin,
       destination: values.destination,
-      departure_date: values.departure_date?.toISOString(),
+      departure_date: values.departure_date[0]?.toISOString(),
+      return_date:values.departure_date[1]?.toISOString(),
       cabin_class: cabinClassValue,
       passengers: passengers,
     };
@@ -125,7 +126,7 @@ const FlightSearchForm = ({ isStickyNav = false }: FlightSearchFormProps) => {
     };
   }, []);
 
-  const onDateChange: DatePickerProps['onChange'] = (date, dateString) => {};
+  const onDateChange: RangePickerProps['onChange'] = (date, dateString) => {};
 
   const handleStudentSearch = async (value, type) => {
     try {
@@ -148,7 +149,7 @@ const FlightSearchForm = ({ isStickyNav = false }: FlightSearchFormProps) => {
           <Form onFinish={onFinish} form={form}>
             <Row
               justify={'center'}
-              style={{ alignItems: 'baseline', display: 'flex' }}
+              style={{ alignItems: 'baseline', display: 'flex',width:'100%' }}
               className="autoCompleteHeight"
             >
               <Col
@@ -271,7 +272,7 @@ const FlightSearchForm = ({ isStickyNav = false }: FlightSearchFormProps) => {
                     },
                   ]}
                 >
-                  <DatePicker
+                  <DatePicker.RangePicker
                     style={{ width: '100%' }}
                     onChange={onDateChange}
                     disabledDate={(current: dayjs.Dayjs) =>
@@ -279,10 +280,10 @@ const FlightSearchForm = ({ isStickyNav = false }: FlightSearchFormProps) => {
                     }
                     format="DD/MM/YYYY"
                     className="form-input"
-                    placeholder="Select Departure Date"
                   />
                 </Form.Item>
               </Col>
+           
               <Col
                 xs={24}
                 sm={24}

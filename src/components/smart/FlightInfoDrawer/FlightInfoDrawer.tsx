@@ -25,11 +25,12 @@ const FlightInfoDrawer = ({
         closable={true}
         onClose={onClose}
         open={open}
-        style={{ height: '100%' }}
+        // width={"500px"}
+        style={{ height: '100%'}}
       >
         <h3 className="drawer-top-heading">Flight Details</h3>
         <h5> Friday, Mar 10</h5>
-        <Row>
+        <div>
           <Timeline
             className="info-timeline"
             mode={'left'}
@@ -72,7 +73,7 @@ const FlightInfoDrawer = ({
               },
             ]}
           />
-        </Row>
+        </div>
 
         {/* <Divider />
         <div style={{ marginLeft: '20px' }}>
