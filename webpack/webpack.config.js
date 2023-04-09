@@ -3,6 +3,7 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { EnvironmentPlugin, ProvidePlugin } = require('webpack');
+const webpack = require('webpack');
 
 const webpackData = require('../src/assets/weback.json');
 
@@ -65,16 +66,21 @@ module.exports = {
     new ProvidePlugin({
       Buffer: ['buffer', 'Buffer'],
     }),
+    new webpack.ProvidePlugin({
+      process: 'process/browser',
+    }),
   ],
   resolve: {
     alias: {
       '@client': path.resolve('src/'),
+      process: 'process/browser',
     },
     fallback: {
       crypto: false,
       stream: false,
       path: false,
       buffer: require.resolve('buffer'),
+      assert: false,
     },
     extensions: ['*', '.js', '.jsx', '.ts', '.tsx'],
   },
@@ -88,3 +94,4 @@ module.exports = {
     clean: true,
   },
 };
+

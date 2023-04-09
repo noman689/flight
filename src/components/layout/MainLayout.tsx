@@ -11,6 +11,7 @@ import PassengerDetailsPage from '../smart/PassengerDetails/PassengerDetailsPage
 import DisplayCards from '../smart/DisplayCards/DisplayCards';
 import HomePage from '../smart/HomePage/HomePage';
 import HeaderFlightDetails from './HeaderFlightDetails/HeaderFlightDetails';
+import BookSeats from '../smart/BookSeats/BookSeats';
 
 const { Content } = Layout;
 
@@ -18,7 +19,6 @@ const MainLayout = () => {
   return (
     <Layout className="bg-cloud">
       <BrowserRouter>
-      
         <HeaderComponent />
         <StickyNavBar />
         <Content>
@@ -29,6 +29,7 @@ const MainLayout = () => {
               path="/passanger-details"
               element={<PassengerDetailsPage />}
             />
+            <Route path="/seats" element={<BookSeats />} />
           </Routes>
         </Content>
         <Footer />

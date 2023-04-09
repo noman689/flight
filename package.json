@@ -29,6 +29,7 @@
     "eslint-plugin-prettier": "^4.2.1",
     "html-webpack-plugin": "^5.5.0",
     "prettier": "^2.7.1",
+    "process": "^0.11.10",
     "sass": "^1.54.4",
     "sass-loader": "^13.0.2",
     "style-loader": "^3.3.1",
@@ -41,6 +42,7 @@
   },
   "dependencies": {
     "@ant-design/icons": "^5.0.1",
+    "@duffel/components": "^2.7.14",
     "@egjs/react-flicking": "^4.10.8",
     "@types/react-redux": "^7.1.25",
     "antd": "^5.2.2",
@@ -58,6 +60,7 @@
     "react-router-dom": "^6.3.0",
     "redux": "^4.2.1",
     "redux-thunk": "^2.4.2",
-    "ts-node": "^10.9.1"
+    "ts-node": "^10.9.1",
+    "util": "^0.12.5"
   }
 }
