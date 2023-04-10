@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import {
   Form,
   Input,
@@ -12,8 +12,6 @@ import {
   Divider,
   Radio,
   Tooltip,
-  Modal,
-  DatePickerProps,
 } from 'antd';
 import dayjs from 'dayjs';
 import './FlightSearchForm.scss';
@@ -22,12 +20,8 @@ import { useNavigate } from 'react-router-dom';
 import { searchFlightAPI } from '@client/services/searchFlightService';
 import Spin from '@client/components/presentational/Spin';
 // @ts-ignore
-import swap from '../../../assets/swap.png';
 import { useDispatch } from 'react-redux';
-import moment from 'moment';
-import { saveSelectedDate } from '../../../store/app/action';
 import { searchPlacesAPI } from '@client/services/searchPlacesServices';
-import { RangePickerProps } from 'antd/es/date-picker';
 
 interface FlightSearchFormProps {
   isStickyNav?: boolean;
@@ -50,45 +44,45 @@ const FlightSearchForm = ({ isStickyNav = false }: FlightSearchFormProps) => {
     infant: 0,
   });
   const [cabinClassValue, setCabinClassValue] = useState<any>('economy');
-  // console.log(
-  //   'test',
-  //   [...new Array(2)].map((item) => {
-  //     return {
-  //       type: 'adult',
-  //     };
-  //   }),
-  // );
-  const onFinish = async (values) => {
-    // console.log('values', values);
-    const { adult, child, infant } = passengersObj;
+  const ticketType = [{ value: 'One Way' }, { value: 'return' }];
 
+  const cabinClass = [
+    { label: 'Economy', value: 'economy' },
+    { label: 'Premium(Business/First)', value: 'business' },
+  ];
+
+  const onFinish = async (values) => {
+    const { adult, child, infant } = passengersObj;
     const passengers = [
       ...[...new Array(adult)].map((item) => {
         return { type: 'adult' };
       }),
-      // ...new Array(adult).map((item)=>{
-      //   return {type:'adult'}
-      // }),
-      // ...new Array(adult).map((item)=>{
-      //   return {type:'adult'}
-      // })
-      // , { child: child }, { infant: infant }
+      ...[...new Array(infant)].map((item) => {
+        return { type: 'infant_without_seat' };
+      }),
+      ...[...new Array(child)].map((item) => {
+        return { type: 'child' };
+      }),
     ];
-    console.log("values",values)
     const payload = {
       origin: values.origin,
       destination: values.destination,
-      departure_date: values.departure_date[0]?.toISOString(),
-      return_date:values.departure_date[1]?.toISOString(),
+      departure_date:
+        window.innerWidth < 821
+          ? values.departure_date?.toISOString()
+          : values.departure_date[0]?.toISOString(),
+      return_date:
+        window.innerWidth < 821
+          ? values.return_date?.toISOString()
+          : values.departure_date[1]?.toISOString(),
       cabin_class: cabinClassValue,
       passengers: passengers,
+      return_offer: values.travelType == 'return' ? true : false,
     };
-
     try {
-      // @ts-ignore
-      dispatch(saveSelectedDate(payload));
       setIsLoading(true);
       const response = await searchFlightAPI(payload);
+      setIsLoading(false);
       navigate(`/flight-details/${response.data?.offer_id}`);
     } catch (error) {
       setIsLoading(false);
@@ -100,13 +94,6 @@ const FlightSearchForm = ({ isStickyNav = false }: FlightSearchFormProps) => {
   const handleOpenChange = (newOpen: boolean) => {
     setOpen(newOpen);
   };
-
-  const ticketType = [{ value: 'One Way' }];
-
-  const cabinClass = [
-    { label: 'Economy', value: 'economy' },
-    { label: 'Premium(Business/First)', value: 'business' },
-  ];
 
   const handlePassengersObj = (name, value) => {
     setPassengersObj((prevState) => ({ ...prevState, [name]: value }));
@@ -125,8 +112,6 @@ const FlightSearchForm = ({ isStickyNav = false }: FlightSearchFormProps) => {
       window.removeEventListener('resize', handleResize);
     };
   }, []);
-
-  const onDateChange: RangePickerProps['onChange'] = (date, dateString) => {};
 
   const handleStudentSearch = async (value, type) => {
     try {
@@ -149,7 +134,7 @@ const FlightSearchForm = ({ isStickyNav = false }: FlightSearchFormProps) => {
           <Form onFinish={onFinish} form={form}>
             <Row
               justify={'center'}
-              style={{ alignItems: 'baseline', display: 'flex',width:'100%' }}
+              style={{ alignItems: 'baseline', display: 'flex', width: '100%' }}
               className="autoCompleteHeight"
             >
               <Col
@@ -164,7 +149,7 @@ const FlightSearchForm = ({ isStickyNav = false }: FlightSearchFormProps) => {
                   rules={[
                     {
                       required: true,
-                      message: 'Select Departure city',
+                      message: 'Search Departure city',
                     },
                   ]}
                 >
@@ -173,7 +158,7 @@ const FlightSearchForm = ({ isStickyNav = false }: FlightSearchFormProps) => {
                     showSearch
                     className="autoCompletegeneral"
                     style={{ width: '100%' }}
-                    placeholder="Select Departure City"
+                    placeholder="Search Departure City"
                     onChange={(value) => setOriginCity(value)}
                     onSearch={(value) => {
                       handleStudentSearch(value, 'origin');
@@ -205,7 +190,7 @@ const FlightSearchForm = ({ isStickyNav = false }: FlightSearchFormProps) => {
                   rules={[
                     {
                       required: true,
-                      message: 'Select destination city',
+                      message: 'Search destination city',
                     },
                   ]}
                 >
@@ -213,7 +198,7 @@ const FlightSearchForm = ({ isStickyNav = false }: FlightSearchFormProps) => {
                     allowClear
                     showSearch
                     style={{ width: '100%' }}
-                    placeholder="Select Arrival City"
+                    placeholder="Search Arrival City"
                     optionFilterProp="children"
                     className="arrival-city"
                     onChange={(value) => setDestinationCity(value)}
@@ -223,7 +208,6 @@ const FlightSearchForm = ({ isStickyNav = false }: FlightSearchFormProps) => {
                     filterOption={false}
                     value={destinationCity}
                     loading={isSearching}
-
                   >
                     {destinationCities?.map((item, index) => {
                       return (
@@ -235,7 +219,7 @@ const FlightSearchForm = ({ isStickyNav = false }: FlightSearchFormProps) => {
                   </Select>
                 </Form.Item>
               </Col>
-              <Col xs={24} sm={24} md={24} lg={4} className="on768Screen mTop">
+              <Col xs={24} sm={24} md={24} lg={4} className="on768Screen">
                 <Form.Item
                   name="travelType"
                   rules={[
@@ -256,34 +240,90 @@ const FlightSearchForm = ({ isStickyNav = false }: FlightSearchFormProps) => {
                 </Form.Item>
               </Col>
 
-              <Col
-                xs={24}
-                sm={24}
-                md={24}
-                lg={isStickyNav ? 3 : 5}
-                className="date-range"
-              >
-                <Form.Item
-                  name="departure_date"
-                  rules={[
-                    {
-                      required: true,
-                      message: 'Select departure date',
-                    },
-                  ]}
+              {window.innerWidth < 821 ? (
+                <>
+                  <Col
+                    xs={24}
+                    sm={24}
+                    md={24}
+                    lg={isStickyNav ? 3 : 5}
+                    className="date-range"
+                  >
+                    <Form.Item
+                      name="departure_date"
+                      rules={[
+                        {
+                          required: true,
+                          message: 'Select departure date',
+                        },
+                      ]}
+                    >
+                      <DatePicker
+                        style={{ width: '100%' }}
+                        disabledDate={(current: dayjs.Dayjs) =>
+                          current && current < dayjs().startOf('day')
+                        }
+                        format="DD/MM/YYYY"
+                        className="form-input"
+                      />
+                    </Form.Item>
+                  </Col>
+                  <Col
+                    xs={24}
+                    sm={24}
+                    md={24}
+                    lg={isStickyNav ? 3 : 5}
+                    className="date-range"
+                  >
+                    <Form.Item
+                      name="return_date"
+                      rules={[
+                        {
+                          required: true,
+                          message: 'Select departure date',
+                        },
+                      ]}
+                    >
+                      <DatePicker
+                        style={{ width: '100%' }}
+                        disabledDate={(current: dayjs.Dayjs) =>
+                          current && current < dayjs().startOf('day')
+                        }
+                        format="DD/MM/YYYY"
+                        className="form-input"
+                      />
+                    </Form.Item>
+                  </Col>
+                </>
+              ) : (
+                <Col
+                  xs={24}
+                  sm={24}
+                  md={24}
+                  lg={isStickyNav ? 3 : 5}
+                  className="date-range"
                 >
-                  <DatePicker.RangePicker
-                    style={{ width: '100%' }}
-                    onChange={onDateChange}
-                    disabledDate={(current: dayjs.Dayjs) =>
-                      current && current < dayjs().startOf('day')
-                    }
-                    format="DD/MM/YYYY"
-                    className="form-input"
-                  />
-                </Form.Item>
-              </Col>
-           
+                  <Form.Item
+                    name="departure_date"
+                    rules={[
+                      {
+                        required: true,
+                        message: 'Select departure date',
+                      },
+                    ]}
+                  >
+                    <DatePicker.RangePicker
+                      style={{ width: '100%' }}
+                      disabledDate={(current: dayjs.Dayjs) =>
+                        current && current < dayjs().startOf('day')
+                      }
+                      format="DD/MM/YYYY"
+                      className="form-input"
+                    />
+                  </Form.Item>
+                </Col>
+              )}
+
               <Col
                 xs={24}
                 sm={24}
@@ -310,7 +350,7 @@ const FlightSearchForm = ({ isStickyNav = false }: FlightSearchFormProps) => {
                         </div>
                         <div style={{ marginTop: '10px' }}>
                           <div className="dflex">
-                            <span>Adult (12+ Years)</span>
+                            <span>Adult (18+ Years)</span>
 
                             <InputNumber
                               min={0}
@@ -323,7 +363,7 @@ const FlightSearchForm = ({ isStickyNav = false }: FlightSearchFormProps) => {
                             />
                           </div>
                           <div className="dflex form">
-                            <span>Child (2-11 Years)</span>
+                            <span>Child (2-17 Years)</span>
                             <Form.Item
                               name="passengers-class"
                               rules={[

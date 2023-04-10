@@ -25,8 +25,8 @@ const MainLayout = () => {
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/flight-details/:id" element={<FlightDetail />} />
-            <Route
-              path="/passanger-details"
+             <Route
+              path="/offer-details/:id/:sliceId"
               element={<PassengerDetailsPage />}
             />
           </Routes>

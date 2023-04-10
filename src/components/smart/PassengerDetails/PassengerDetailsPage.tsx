@@ -1,40 +1,51 @@
-import React from 'react';
-import { Row, Col, Card } from 'antd';
+import React, { Fragment, useEffect, useState } from 'react';
 import PassengerDetailsForm from './PassengerDetailsForm';
-import './PassengerDetailsPage.scss';
 import FlightSummary from './FlightSummary';
-import { useSelector } from 'react-redux';
+import { getSelectedOfferDetailsAPI } from '@client/services/searchFlightService';
+import { useParams } from 'react-router';
+import './PassengerDetailsPage.scss';
+import Spin from '@client/components/presentational/Spin';
 
-const PassengerDetailsPage: React.FC = (drawerData) => {
-  const handleFinish = () => {};
-  // @ts-ignore
-
-  const offerData = useSelector((state) => state.app.offer);
-  console.log('design:', offerData);
+const PassengerDetailsPage: React.FC = () => {
+  const [selectedSlice, setSelectedSlice] = useState(null);
+  const [passengerData, setPassengerData] = useState(0);
+  const [fare,setFare]=useState('')
+  const [loading, setLoading] = useState(false);
+  const params = useParams();
+  const { id, sliceId } = params;
+  useEffect(() => {
+    const selectedOfferDetails = async () => {
+      try {
+        setLoading(true);
+        const { data } = await getSelectedOfferDetailsAPI(id);
+        const selectedSliceItem = data?.offer?.data?.slices?.find(
+          (item) => item.id == sliceId,
+        );
+        setFare(data?.offer?.data?.total_amount)
+        setSelectedSlice(selectedSliceItem);
+        setPassengerData(data?.offer?.data?.passengers);
+        setLoading(false);
+      } catch (error) {
+        setLoading(false);
+        console.log('error', error);
+      }
+    };
+    selectedOfferDetails();
+  }, []);
   return (
     <div className="passenger-details-page-layout">
-      <div className="form-section">
-        <PassengerDetailsForm
-          numberOfPassengers={
-            4
-            // offerData.segments[0].passengers.length
-          }
-        />
-      </div>
-      <div className="summary-section">
-        <FlightSummary
-          drawerData={drawerData}
-          departureCity={offerData.segments[0].destination.iata_city_code}
-          arrivalCity={offerData.segments[0].origin.iata_city_code}
-          departureDate={offerData.segments[0].departing_at}
-          arrivalDate={offerData.segments[0].arriving_at}
-          departureTime={offerData.segments[0].departing_at}
-          arrivalTime={offerData.segments[0].arriving_at}
-          durationHour={8}
-          durationMin={40}
-          TotalExpense={8752400}
-        />
-      </div>
+      {loading ? (
+        <Spin />
+      ) : (
+        <Fragment>
+          <div className="form-section">
+            <PassengerDetailsForm passengerData={passengerData} />
+          </div>
+          <div className="summary-section">
+            <FlightSummary summaryData={selectedSlice} fare={fare} />
+          </div>
+        </Fragment>
+      )}
     </div>
   );
 };
