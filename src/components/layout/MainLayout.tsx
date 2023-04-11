@@ -12,6 +12,7 @@ import DisplayCards from '../smart/DisplayCards/DisplayCards';
 import HomePage from '../smart/HomePage/HomePage';
 import HeaderFlightDetails from './HeaderFlightDetails/HeaderFlightDetails';
 import SeatSelectionComp from '../smart/SeatSelection/SeatSelection';
+import PaymentMethod from '../smart/PaymentMethod/PaymentMethod';
 import { Switch } from 'react-router-dom/cjs/react-router-dom.min';
 
 const { Content } = Layout;
@@ -31,7 +32,12 @@ const MainLayout = () => {
               path="/offer-details/:id/:sliceId"
               component={PassengerDetailsPage}
             />
-            <Route exact path="/seat-selection/:id" component={SeatSelectionComp} />
+            <Route
+              exact
+              path="/seat-selection/:id"
+              component={SeatSelectionComp}
+            />
+            <Route exact path="/payment-method" component={PaymentMethod} />
           </Switch>
         </Content>
         <Footer />
