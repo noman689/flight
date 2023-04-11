@@ -15,10 +15,7 @@ const PassengerDetailsPage: React.FC = (drawerData) => {
     <div className="passenger-details-page-layout">
       <div className="form-section">
         <PassengerDetailsForm
-          numberOfPassengers={
-            4
-            // offerData.segments[0].passengers.length
-          }
+          numberOfPassengers={offerData.segments[0].passengers.length}
         />
       </div>
       <div className="summary-section">

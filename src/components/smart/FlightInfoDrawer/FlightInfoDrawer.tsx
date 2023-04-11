@@ -1,6 +1,5 @@
-import React, { useState } from 'react';
-import { Typography, Divider, Drawer, List, Row, Timeline, Space } from 'antd';
-const { Text } = Typography;
+import React from 'react';
+import { Drawer, Timeline } from 'antd';
 import './FlightInfoDrawer.scss';
 
 interface FlightInfoDrawerProps {
@@ -25,8 +24,7 @@ const FlightInfoDrawer = ({
         closable={true}
         onClose={onClose}
         open={open}
-        // width={"500px"}
-        style={{ height: '100%'}}
+        style={{ height: '100%' }}
       >
         <h3 className="drawer-top-heading">Flight Details</h3>
         <h5> Friday, Mar 10</h5>
