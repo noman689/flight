@@ -1,16 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import { SeatSelection } from '@duffel/components';
 import { Modal } from 'antd';
-import { useParams } from 'react-router';
+import { useParams, useHistory } from 'react-router';
 import {
   getSeatPlanAPI,
   getSelectedOfferDetailsAPI,
 } from '@client/services/searchFlightService';
 import Spin from '@client/components/presentational/Spin';
 import { paymentIntentAPI } from '@client/services/paymentService';
+import { isEmpty } from 'ramda';
 
 const SeatSelectionComp = () => {
   const params = useParams();
+  const history = useHistory();
   const [loading, setLoading] = useState(false);
   const [seatMap, setSeatMap] = useState(null);
   const [offerMeta, setOfferMeta] = useState(null);
@@ -48,14 +50,10 @@ const SeatSelectionComp = () => {
       }
     }
 
-    const newData = {
-      data: {
-        total_currency: currency,
-        total_amount: totalAmount.toFixed(2),
-      },
+    return {
+      total_currency: currency,
+      total_amount: totalAmount.toFixed(2),
     };
-
-    return newData;
   }
 
   const onSubmitFn = (e) => {
@@ -64,18 +62,32 @@ const SeatSelectionComp = () => {
     console.log(e);
   };
 
+  useEffect(() => {
+    if (!isEmpty(payloadObject)) {
+      // history.push(`/seat-selection/${payloadObject.data.id}`);
+      // history.push(`/seat-selection/${}`);
+
+      history.push({
+        pathname: '/ticket-payment',
+        search: '?id=pit_00009hthhsUZ8W4LxQgkjo',
+      });
+    }
+  }, [payloadObject]);
+
   console.log(payloadObject, 'payloadObject');
   return (
     <div>
       {loading ? (
         <Spin />
       ) : (
-        <SeatSelection
-          offer={offerMeta}
-          seatMaps={[{ ...seatMap }]}
-          passengers={passengerData}
-          onSubmit={onSubmitFn}
-        />
+        <div className='mb-4 mt-4'>
+          <SeatSelection
+            offer={offerMeta}
+            seatMaps={[{ ...seatMap }]}
+            passengers={passengerData}
+            onSubmit={onSubmitFn}
+          />
+        </div>
       )}
     </div>
   );

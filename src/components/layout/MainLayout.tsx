@@ -13,6 +13,7 @@ import HomePage from '../smart/HomePage/HomePage';
 import HeaderFlightDetails from './HeaderFlightDetails/HeaderFlightDetails';
 import SeatSelectionComp from '../smart/SeatSelection/SeatSelection';
 import { Switch } from 'react-router-dom/cjs/react-router-dom.min';
+import TicketPayment from '../smart/TicketPayment/TicketPayment';
 
 const { Content } = Layout;
 
@@ -31,7 +32,12 @@ const MainLayout = () => {
               path="/offer-details/:id/:sliceId"
               component={PassengerDetailsPage}
             />
-            <Route exact path="/seat-selection/:id" component={SeatSelectionComp} />
+            <Route
+              exact
+              path="/seat-selection/:id"
+              component={SeatSelectionComp}
+            />
+            <Route exact path="/ticket-payment" component={TicketPayment} />
           </Switch>
         </Content>
         <Footer />
