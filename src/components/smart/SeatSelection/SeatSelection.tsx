@@ -7,6 +7,7 @@ import {
   getSelectedOfferDetailsAPI,
 } from '@client/services/searchFlightService';
 import Spin from '@client/components/presentational/Spin';
+import { paymentIntentAPI } from '@client/services/paymentService';
 
 const SeatSelectionComp = () => {
   const params = useParams();
@@ -14,6 +15,8 @@ const SeatSelectionComp = () => {
   const [seatMap, setSeatMap] = useState(null);
   const [offerMeta, setOfferMeta] = useState(null);
   const [passengerData, setPassengerData] = useState([]);
+  const [payloadObject, setPayloadObject] = useState({});
+
   // @ts-ignore
   const { id } = params;
   useEffect(() => {
@@ -35,10 +38,33 @@ const SeatSelectionComp = () => {
     getSeatPlan();
   }, []);
 
+  function calculateTotal(obj) {
+    let totalAmount = 0;
+    let currency = '';
+    for (const key1 in obj) {
+      for (const key2 in obj[key1]) {
+        totalAmount += parseFloat(obj[key1][key2].service.total_amount);
+        currency = obj[key1][key2].service.total_currency;
+      }
+    }
+
+    const newData = {
+      data: {
+        total_currency: currency,
+        total_amount: totalAmount.toFixed(2),
+      },
+    };
+
+    return newData;
+  }
+
   const onSubmitFn = (e) => {
     alert(JSON.stringify(e));
+    setPayloadObject(paymentIntentAPI(calculateTotal(e)));
     console.log(e);
   };
+
+  console.log(payloadObject, 'payloadObject');
   return (
     <div>
       {loading ? (
