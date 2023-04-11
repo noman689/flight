@@ -16,7 +16,7 @@ import {
 import dayjs from 'dayjs';
 import './FlightSearchForm.scss';
 import { Space } from 'antd';
-import { useNavigate } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { searchFlightAPI } from '@client/services/searchFlightService';
 import Spin from '@client/components/presentational/Spin';
 // @ts-ignore
@@ -28,8 +28,7 @@ interface FlightSearchFormProps {
 }
 
 const FlightSearchForm = ({ isStickyNav = false }: FlightSearchFormProps) => {
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const history = useHistory();
   const [form] = Form.useForm();
   const [isLoading, setIsLoading] = useState(false);
   const [screenSize, setScreenSize] = useState({ width: 0, height: 0 });
@@ -83,7 +82,7 @@ const FlightSearchForm = ({ isStickyNav = false }: FlightSearchFormProps) => {
       setIsLoading(true);
       const response = await searchFlightAPI(payload);
       setIsLoading(false);
-      navigate(`/flight-details/${response.data?.offer_id}`);
+      history.push(`/flight-details/${response.data?.offer_id}`);
     } catch (error) {
       setIsLoading(false);
     }

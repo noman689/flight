@@ -2,7 +2,7 @@ import { Row, Col, Divider } from 'antd';
 import moment from 'moment';
 
 import './FlightDetailCard.scss';
-import { useNavigate } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
 const FlightDetailCard = ({
   fromDate,
@@ -13,11 +13,11 @@ const FlightDetailCard = ({
   offerId,
   sliceId,
 }) => {
-  const navigate = useNavigate();
+  const history = useHistory();
 
   const handleClick = (e) => {
     e.stopPropagation();
-    navigate(`/offer-details/${offerId}/${sliceId}`);
+    history.push(`/offer-details/${offerId}/${sliceId}`);
   };
   return (
     <div className="flight-detail-card-item">

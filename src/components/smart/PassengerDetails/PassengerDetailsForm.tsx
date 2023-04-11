@@ -1,28 +1,24 @@
-import {
-  Form,
-  Input,
-  Button,
-  Collapse,
-  Row,
-  Col,
-  Radio,
-} from 'antd';
+import { Form, Input, Button, Collapse, Row, Col, Radio } from 'antd';
 import { FC, useState } from 'react';
+import { Link, useHistory } from 'react-router-dom';
 import './PassengerDetailsForm.scss';
 
 const { Panel } = Collapse;
 
 interface PassengerFormProps {
   passengerData: any;
+  offerId: string;
 }
 
 const PassengerDetailsForm: FC<PassengerFormProps> = ({
   passengerData = [],
+  offerId,
 }) => {
   const [currentForm, setCurrentForm] = useState(1);
   const [formValues, setFormValues] = useState<any>([]);
-
-
+  const [passengerDataForSeatSelection, setPassengerDataForSeatSelection] =
+    useState([]);
+  const history = useHistory();
   const onFinish = (values, passengerId) => {
     setFormValues((prev) => [
       ...prev,
@@ -31,6 +27,21 @@ const PassengerDetailsForm: FC<PassengerFormProps> = ({
         passengerId,
       },
     ]);
+    setPassengerDataForSeatSelection((prev) => [
+      ...prev,
+      {
+        id: passengerId,
+        name: `${values.given_name} ${values.family_name}`,
+      },
+    ]);
+  };
+
+  const handleClick = () => {
+    history.push(
+      `/seat-selection/${offerId}?meta=${encodeURIComponent(
+        JSON.stringify(passengerDataForSeatSelection),
+      )}`,
+    );
   };
 
   const passengerForms =
@@ -198,8 +209,17 @@ const PassengerDetailsForm: FC<PassengerFormProps> = ({
         {passengerForms}
       </Collapse>
       <Row justify={'center'}>
-        <Button type="primary" htmlType="submit" className="form-submit-button">
-          Checkout
+        <Button
+          type="primary"
+          className={
+            formValues?.length != passengerData?.length
+              ? 'form-submit-button disabled'
+              : 'form-submit-button'
+          }
+          onClick={handleClick}
+          disabled={formValues?.length != passengerData?.length}
+        >
+          Select Seats
         </Button>
       </Row>
     </div>

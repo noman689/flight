@@ -10,6 +10,7 @@ const FlightDetail = () => {
   const [offersArray, setOffersArray] = useState<any>([]);
   const [loading, setLoading] = useState(false);
   const params = useParams();
+  // @ts-ignore
   const { id } = params;
 
   useEffect(() => {

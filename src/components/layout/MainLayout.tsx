@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Layout } from 'antd';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 import SearchFlightCard from '../smart/BookingCard/BookingCard';
 import FlightDetail from '../smart/FlightDetails/FlightDetail';
 import StickyNavBar from './StickyNavBar/StickyNavBar';
@@ -11,28 +11,31 @@ import PassengerDetailsPage from '../smart/PassengerDetails/PassengerDetailsPage
 import DisplayCards from '../smart/DisplayCards/DisplayCards';
 import HomePage from '../smart/HomePage/HomePage';
 import HeaderFlightDetails from './HeaderFlightDetails/HeaderFlightDetails';
+import SeatSelectionComp from '../smart/SeatSelection/SeatSelection';
+import { Switch } from 'react-router-dom/cjs/react-router-dom.min';
 
 const { Content } = Layout;
 
 const MainLayout = () => {
   return (
     <Layout className="bg-cloud">
-      <BrowserRouter>
-      
+      <Router>
         <HeaderComponent />
         <StickyNavBar />
         <Content>
-          <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/flight-details/:id" element={<FlightDetail />} />
-             <Route
+          <Switch>
+            <Route exact path="/" component={HomePage} />
+            <Route exact path="/flight-details/:id" component={FlightDetail} />
+            <Route
+              exact
               path="/offer-details/:id/:sliceId"
-              element={<PassengerDetailsPage />}
+              component={PassengerDetailsPage}
             />
-          </Routes>
+            <Route exact path="/seat-selection/:id" component={SeatSelectionComp} />
+          </Switch>
         </Content>
         <Footer />
-      </BrowserRouter>
+      </Router>
     </Layout>
   );
 };

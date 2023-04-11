@@ -9,9 +9,10 @@ import Spin from '@client/components/presentational/Spin';
 const PassengerDetailsPage: React.FC = () => {
   const [selectedSlice, setSelectedSlice] = useState(null);
   const [passengerData, setPassengerData] = useState(0);
-  const [fare,setFare]=useState('')
+  const [fare, setFare] = useState('');
   const [loading, setLoading] = useState(false);
   const params = useParams();
+  // @ts-ignore
   const { id, sliceId } = params;
   useEffect(() => {
     const selectedOfferDetails = async () => {
@@ -21,7 +22,7 @@ const PassengerDetailsPage: React.FC = () => {
         const selectedSliceItem = data?.offer?.data?.slices?.find(
           (item) => item.id == sliceId,
         );
-        setFare(data?.offer?.data?.total_amount)
+        setFare(data?.offer?.data?.total_amount);
         setSelectedSlice(selectedSliceItem);
         setPassengerData(data?.offer?.data?.passengers);
         setLoading(false);
@@ -39,7 +40,7 @@ const PassengerDetailsPage: React.FC = () => {
       ) : (
         <Fragment>
           <div className="form-section">
-            <PassengerDetailsForm passengerData={passengerData} />
+            <PassengerDetailsForm passengerData={passengerData} offerId={id} />
           </div>
           <div className="summary-section">
             <FlightSummary summaryData={selectedSlice} fare={fare} />

@@ -76,7 +76,7 @@ module.exports = {
       path: false,
       buffer: require.resolve('buffer'),
     },
-    extensions: ['*', '.js', '.jsx', '.ts', '.tsx'],
+    extensions: ['.*', '.js', '.jsx', '.ts', '.tsx'],
   },
   devServer: {
     historyApiFallback: true,
