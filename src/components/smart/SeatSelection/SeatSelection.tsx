@@ -7,6 +7,7 @@ import {
   getSelectedOfferDetailsAPI,
 } from '@client/services/searchFlightService';
 import Spin from '@client/components/presentational/Spin';
+import './SeatSelection.scss';
 
 const SeatSelectionComp = () => {
   const params = useParams();
@@ -14,6 +15,7 @@ const SeatSelectionComp = () => {
   const [seatMap, setSeatMap] = useState(null);
   const [offerMeta, setOfferMeta] = useState(null);
   const [passengerData, setPassengerData] = useState([]);
+
   // @ts-ignore
   const { id } = params;
   useEffect(() => {
@@ -39,8 +41,9 @@ const SeatSelectionComp = () => {
     alert(JSON.stringify(e));
     console.log(e);
   };
+
   return (
-    <div>
+    <div className="seat-component">
       {loading ? (
         <Spin />
       ) : (
