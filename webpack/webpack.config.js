@@ -75,6 +75,8 @@ module.exports = {
       stream: false,
       path: false,
       buffer: require.resolve('buffer'),
+      assert: false,
+      util:false
     },
     extensions: ['.*', '.js', '.jsx', '.ts', '.tsx'],
   },
