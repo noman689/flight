@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { SeatSelection } from '@duffel/components';
-import { Modal } from 'antd';
-import { useParams } from 'react-router';
+import { useHistory, useParams } from 'react-router';
 import {
   getSeatPlanAPI,
   getSelectedOfferDetailsAPI,
@@ -15,7 +14,7 @@ const SeatSelectionComp = () => {
   const [seatMap, setSeatMap] = useState(null);
   const [offerMeta, setOfferMeta] = useState(null);
   const [passengerData, setPassengerData] = useState([]);
-
+  const history = useHistory();
   // @ts-ignore
   const { id } = params;
   useEffect(() => {
@@ -37,9 +36,14 @@ const SeatSelectionComp = () => {
     getSeatPlan();
   }, []);
 
-  const onSubmitFn = (e) => {
-    alert(JSON.stringify(e));
-    console.log(e);
+  const onSubmitFn = (values) => {
+    try {
+      history.push(
+        `/payment-method?data=${encodeURIComponent(JSON.stringify({passengerDetails:values,offerDetails:offerMeta}))}`,
+      );
+    } catch (e) {
+      console.log('error', e);
+    }
   };
 
   return (
