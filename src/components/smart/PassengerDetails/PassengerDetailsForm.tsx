@@ -24,7 +24,7 @@ const PassengerDetailsForm: FC<PassengerFormProps> = ({
       ...prev,
       {
         ...values,
-        passengerId,
+        id:passengerId,
       },
     ]);
     setPassengerDataForSeatSelection((prev) => [
@@ -39,7 +39,10 @@ const PassengerDetailsForm: FC<PassengerFormProps> = ({
   const handleClick = () => {
     history.push(
       `/seat-selection/${offerId}?meta=${encodeURIComponent(
-        JSON.stringify(passengerDataForSeatSelection),
+        JSON.stringify({
+          passengerDataForSeatSelection: passengerDataForSeatSelection,
+          passengerInfo: formValues,
+        }),
       )}`,
     );
   };

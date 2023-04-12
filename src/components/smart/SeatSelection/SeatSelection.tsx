@@ -14,6 +14,7 @@ const SeatSelectionComp = () => {
   const [seatMap, setSeatMap] = useState(null);
   const [offerMeta, setOfferMeta] = useState(null);
   const [passengerData, setPassengerData] = useState([]);
+  const [passengerInfo, setPassengerInfo] = useState([]);
   const history = useHistory();
   // @ts-ignore
   const { id } = params;
@@ -26,7 +27,10 @@ const SeatSelectionComp = () => {
         setSeatMap(data?.offer);
         setOfferMeta(sliceData?.offer?.data);
         const encodedData = window.location.href.split('=')[1];
-        setPassengerData([...JSON.parse(decodeURIComponent(encodedData))]);
+        const parsedData = JSON.parse(decodeURIComponent(encodedData));
+        console.log("parsedData",parsedData)
+        setPassengerData([...parsedData.passengerDataForSeatSelection]);
+        setPassengerInfo([...parsedData.passengerInfo]);
         setLoading(false);
       } catch (error) {
         console.log('error', error);
@@ -39,7 +43,13 @@ const SeatSelectionComp = () => {
   const onSubmitFn = (values) => {
     try {
       history.push(
-        `/payment-method?data=${encodeURIComponent(JSON.stringify({passengerDetails:values,offerDetails:offerMeta}))}`,
+        `/payment-method?data=${encodeURIComponent(
+          JSON.stringify({
+            passengerDetails: values,
+            offerDetails: offerMeta,
+            passengerData: passengerInfo,
+          }),
+        )}`,
       );
     } catch (e) {
       console.log('error', e);

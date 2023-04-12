@@ -5,6 +5,7 @@ import {
   paymentIntentAPI,
 } from '@client/services/paymentService';
 import Spin from '@client/components/presentational/Spin';
+import { createOrderAPI } from '@client/services/createOrderService';
 
 const PaymentMethod = () => {
   const [clientToken, setClientToken] = useState('');
@@ -56,8 +57,31 @@ const PaymentMethod = () => {
   const successfulPaymentHandlerFn = async () => {
     try {
       const { data } = await confirmPaymentAPI(clientId);
+      console.log("testing",data)
       if (data.offer?.data) {
-        console.log('success');
+        const encodedData = window.location.href.split('=')[1];
+        const meta = JSON.parse(decodeURIComponent(encodedData));
+        const total_amount = calculateTotalAmount(
+          meta.offerDetails,
+          meta.passengerDetails,
+        );
+        const payload = {
+          type: 'instant',
+          selected_offers: [meta.offerDetails.id],
+          payments: [
+            {
+              type: 'balance',
+              currency: 'USD',
+              amount: total_amount,
+            },
+          ],
+          passengers: [...meta.passengerData],
+          metadata: {
+            payment_intent_id: clientId,
+          },
+        };
+        const create = await createOrderAPI(payload);
+        console.log("create",create)
       }
     } catch (e) {
       console.log('e', e);
