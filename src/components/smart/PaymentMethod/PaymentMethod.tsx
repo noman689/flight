@@ -8,6 +8,7 @@ import {
 import Spin from '@client/components/presentational/Spin';
 import { createOrderAPI } from '@client/services/createOrderService';
 import { getFriendlyErrorMessage } from './ErrorHandling'
+import { notification, Space } from 'antd';
 
 const PaymentMethod = () => {
   const [clientToken, setClientToken] = useState('');
@@ -15,6 +16,17 @@ const PaymentMethod = () => {
   const [loading, setLoading] = useState(false);
   const [selectedSlice, setSelectedSlice] = useState({})
   const history = useHistory();
+  const [api, contextHolder] = notification.useNotification();
+
+
+  const openNotification = (alertMessage) => {
+    const placement = 'topRight'
+    api.error({
+      message: `${alertMessage}`,
+      // description: `${alertDescription}`,
+      placement,
+    });
+  };
 
   const calculateTotalAmount = (offerData, passengerData) => {
     const parentObjKeys = Object.keys(passengerData);
@@ -100,6 +112,7 @@ const PaymentMethod = () => {
         );
       }
     } catch (e) {
+      openNotification(getFriendlyErrorMessage(e))
       console.log(getFriendlyErrorMessage(e))
       console.log('e', e);
     }
