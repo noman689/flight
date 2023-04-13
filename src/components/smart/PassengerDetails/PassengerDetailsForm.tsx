@@ -8,11 +8,13 @@ const { Panel } = Collapse;
 interface PassengerFormProps {
   passengerData: any;
   offerId: string;
+  summaryData: any;
 }
 
 const PassengerDetailsForm: FC<PassengerFormProps> = ({
   passengerData = [],
   offerId,
+  summaryData
 }) => {
   const [currentForm, setCurrentForm] = useState(1);
   const [formValues, setFormValues] = useState<any>([]);
@@ -42,6 +44,7 @@ const PassengerDetailsForm: FC<PassengerFormProps> = ({
         JSON.stringify({
           passengerDataForSeatSelection: passengerDataForSeatSelection,
           passengerInfo: formValues,
+          selectedSlice: summaryData
         }),
       )}`,
     );

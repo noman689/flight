@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useHistory, useParams } from 'react-router';
 import { CardPayment } from '@duffel/components';
 import {
   confirmPaymentAPI,
@@ -6,11 +7,15 @@ import {
 } from '@client/services/paymentService';
 import Spin from '@client/components/presentational/Spin';
 import { createOrderAPI } from '@client/services/createOrderService';
+import { getFriendlyErrorMessage } from './ErrorHandling'
 
 const PaymentMethod = () => {
   const [clientToken, setClientToken] = useState('');
   const [clientId, setClientId] = useState('');
   const [loading, setLoading] = useState(false);
+  const [selectedSlice, setSelectedSlice] = useState({})
+  const history = useHistory();
+
   const calculateTotalAmount = (offerData, passengerData) => {
     const parentObjKeys = Object.keys(passengerData);
     const nestedKeys = Object.keys(passengerData[parentObjKeys[0]]);
@@ -36,10 +41,13 @@ const PaymentMethod = () => {
         setLoading(true);
         const encodedData = window.location.href.split('=')[1];
         const meta = JSON.parse(decodeURIComponent(encodedData));
+        console.log("user information", meta)
+        setSelectedSlice(meta.selectedSlice)
         const total_amount = calculateTotalAmount(
           meta.offerDetails,
           meta.passengerDetails,
         );
+
         const { data } = await paymentIntentAPI({
           total_amount: total_amount,
           total_currency: 'USD',
@@ -82,8 +90,17 @@ const PaymentMethod = () => {
         };
         const create = await createOrderAPI(payload);
         console.log("create", create)
+        history.push(
+          `/flight-ticket?data=${encodeURIComponent(
+            JSON.stringify({
+              confirmationDetails: create,
+              selectedSlice: selectedSlice
+            }),
+          )}`,
+        );
       }
     } catch (e) {
+      console.log(getFriendlyErrorMessage(e))
       console.log('e', e);
     }
   };

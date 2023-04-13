@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Row, Col } from 'antd';
 import planeImage from '../../../assets/ticket.svg';
 import planeImageBlack from '../../../assets/ticketBlack.svg';
@@ -6,6 +6,17 @@ import barCode from '../../../assets/barCode.svg';
 import './FlightTicket.scss';
 
 const FlightTicket = () => {
+  const [encodedData, setEncodedData] = useState('')
+  const [meta, setMeta] = useState('')
+
+  useEffect(() => {
+    debugger
+    const encodedData = (window.location.href.split('=')[1]);
+    setMeta(JSON.parse(decodeURIComponent(encodedData)));
+
+  }, [window.location.href])
+
+  console.log(meta)
   return (
     <div style={{ width: '100%' }}>
       <Row className="main" justify={'center'}>

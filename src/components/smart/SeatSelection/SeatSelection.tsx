@@ -15,6 +15,7 @@ const SeatSelectionComp = () => {
   const [offerMeta, setOfferMeta] = useState(null);
   const [passengerData, setPassengerData] = useState([]);
   const [passengerInfo, setPassengerInfo] = useState([]);
+  const [selectedSlice, setSelectedSlice] = useState({})
   const history = useHistory();
   // @ts-ignore
   const { id } = params;
@@ -31,6 +32,7 @@ const SeatSelectionComp = () => {
         console.log("parsedData", parsedData)
         setPassengerData([...parsedData.passengerDataForSeatSelection]);
         setPassengerInfo([...parsedData.passengerInfo]);
+        setSelectedSlice([parsedData.selectedSlice])
         setLoading(false);
       } catch (error) {
         console.log('error', error);
@@ -48,6 +50,7 @@ const SeatSelectionComp = () => {
             passengerDetails: values,
             offerDetails: offerMeta,
             passengerData: passengerInfo,
+            selectedSlice: selectedSlice
           }),
         )}`,
       );

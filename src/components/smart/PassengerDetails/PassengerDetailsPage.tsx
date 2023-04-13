@@ -40,7 +40,7 @@ const PassengerDetailsPage: React.FC = () => {
       ) : (
         <Fragment>
           <div className="form-section">
-            <PassengerDetailsForm passengerData={passengerData} offerId={id} />
+            <PassengerDetailsForm passengerData={passengerData} offerId={id} summaryData={selectedSlice} />
           </div>
           <div className="summary-section">
             <FlightSummary summaryData={selectedSlice} fare={fare} />
