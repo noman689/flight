@@ -103,5 +103,70 @@
   transform: rotate(-90deg);
   position: relative;
   top: 50px;
-  
+  animation: none;
+}
+.barCode {
+  width: 70px;
+}
+
+@media screen and (width: 1024px) {
+  .font70 {
+    font-size: 55px;
+  }
+  .planeImageWidth {
+    width: 60px;
+  }
+  .marginLeft10 {
+    margin-right: 10px;
+  }
+  .fontSize20 {
+    font-size: 17px;
+  }
+  .barCode {
+    width: 50px !important;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .main {
+    .fontSize1 {
+      font-size: 16px;
+    }
+    .planeImage {
+      width: 28px;
+    }
+  }
+  .font70 {
+    font-size: 30px;
+  }
+  .mx-image {
+    padding-bottom: 15px;
+  }
+  .planeImageWidth {
+    width: 51px;
+  }
+  .size768 {
+    font-size: 14px;
+  }
+  .barCode {
+    width: 50px;
+  }
+  .margin768 {
+    margin-right: 0px;
+  }
+  .fontSizeOn768 {
+    font-size: 17px;
+  }
+}
+
+@media screen and (max-width: 425px) {
+  .hideOnSmallScreens {
+    display: none !important;
+  }
+  .smallscreen-borderrighttop{
+    border-top-right-radius: 25px;
+  }
+  .smallScreen-borderRightBottom{
+    border-bottom-right-radius: 25px;
+  }
 }
