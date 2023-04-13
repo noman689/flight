@@ -43,7 +43,31 @@ const FlightTicket = () => {
             <span className="font70">LHR</span>
           </div>
         </Col>
-        <Col xs={24} sm={24} md={5} lg={5} className="Row2BorderCol2Top"></Col>
+        <Col xs={24} sm={24} md={5} lg={5} className="Row2BorderCol2Top">
+          <Row justify={'center'} className="rotate ">
+            <Col xs={24} sm={24} md={5} lg={8}>
+              <div className=" marginLeft10 fontSize20">
+                <span className="headingColor">Passenger</span>
+                <br />
+                <span>Jhon Jack</span>
+              </div>
+            </Col>
+            <Col xs={24} sm={24} md={5} lg={8}>
+              <div className=" marginLeft10 fontSize20">
+                <span className="headingColor">Gate</span>
+                <br />
+                <span>23A</span>
+              </div>
+            </Col>
+            <Col xs={24} sm={24} md={5} lg={24}>
+              <div className=" marginLeft10 fontSize20">
+                <span className="headingColor">Departure</span>
+                <br />
+                <span>06:55 12 DEC 2019</span>
+              </div>
+            </Col>
+          </Row>
+        </Col>
       </Row>
       <Row justify={'center'}>
         <Col
@@ -53,32 +77,37 @@ const FlightTicket = () => {
           lg={8}
           className="displayCenter Row2BorderCol1"
         >
-          <div className="dFlex">
-            <div className="dFlex">
+          <div className="footer-div ">
+            <div className="dFlex fontSize20">
               <div className=" marginLeft10">
-                <span>Passenger</span>
+                <span className="headingColor">Passenger</span>
                 <br />
                 <span>Jhon Jack</span>
               </div>
               <div className=" marginLeft10">
-                <span>Gate</span>
+                <span className="headingColor">Gate</span>
                 <br />
                 <span>23A</span>
               </div>
               <div className=" marginLeft10">
-                <span>Departure</span>
+                <span className="headingColor">Departure</span>
                 <br />
                 <span>06:55 12 DEC 2019</span>
               </div>
             </div>
             <div>
-              <div>
-                <img style={{ width: '50px' }} src={barCode} />
-              </div>
+              <img style={{ width: '70px' }} src={barCode} />
             </div>
           </div>
         </Col>
-        <Col xs={24} sm={24} md={5} lg={5} className="Row2BorderCol2"></Col>
+        <Col xs={24} sm={24} md={5} lg={5} className="Row2BorderCol2">
+          <Row>
+            <Col xs={24} sm={24} md={5} lg={15}></Col>
+            <Col xs={24} sm={24} md={5} lg={5}>
+              <img style={{ width: '70px' }} src={barCode} />
+            </Col>
+          </Row>
+        </Col>
       </Row>
     </div>
   );

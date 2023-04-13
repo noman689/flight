@@ -44,6 +44,7 @@
 .mx-image {
   margin-left: 20px;
   margin-right: 20px;
+  padding-bottom: 45px;
 }
 
 .font70 {
@@ -81,7 +82,26 @@
   display: flex;
   align-items: center;
 }
-.marginLeft10
-{
-    margin-right: 10px;
+.marginLeft10 {
+  margin-right: 25px;
+}
+.footer-div {
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+}
+.fontSize20 {
+  font-size: 20px;
+  text-align: center;
+  font-weight: 600;
+}
+.headingColor {
+  color: #802c5e;
+  font-weight: 600;
+}
+.rotate {
+  transform: rotate(-90deg);
+  position: relative;
+  top: 50px;
+  
 }
