@@ -34,7 +34,7 @@ const FlightTicket = () => {
   return (
     <div style={{ width: '100%' }
     }>
-      {ticketObj?.map((item, index) => {
+      {!isEmpty(ticketObj) && ticketObj.map((item, index) => {
         return (
           <React.Fragment key={index}>
             <Row className="main" justify={'center'}>
@@ -150,8 +150,10 @@ const FlightTicket = () => {
 
 
           </React.Fragment>)
-      })
-      }
+
+      })}
+
+
       <div>testing</div>
     </div >)
 };
