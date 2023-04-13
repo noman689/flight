@@ -1,6 +1,7 @@
 import Spin from '@client/components/presentational/Spin';
 import { getFlightOffersAPI } from '@client/services/searchFlightService';
 import { Row } from 'antd';
+import { isEmpty } from 'ramda';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
 import FlightDetailCard from '../FlightDetailCard/FlightDetailCard';
@@ -39,7 +40,7 @@ const FlightDetail = () => {
         </Row>
       ) : (
         <>
-          {offersArray.slices?.map((item) => {
+          {!isEmpty(offersArray.slices) && offersArray.slices?.map((item) => {
             return (
               <FlightDetailCard
                 fromDate={item.segments[0].departing_at}

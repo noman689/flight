@@ -122,7 +122,9 @@ const PaymentMethod = () => {
     // Show error page
   };
   return (
+
     <div>
+      {contextHolder}
       {loading ? (
         <Spin />
       ) : (
