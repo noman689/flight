@@ -7,20 +7,19 @@ import {
 } from '@client/services/paymentService';
 import Spin from '@client/components/presentational/Spin';
 import { createOrderAPI } from '@client/services/createOrderService';
-import { getFriendlyErrorMessage } from './ErrorHandling'
-import { notification, Space } from 'antd';
+import { getFriendlyErrorMessage } from './ErrorHandling';
+import { notification, Space, Card } from 'antd';
 
 const PaymentMethod = () => {
   const [clientToken, setClientToken] = useState('');
   const [clientId, setClientId] = useState('');
   const [loading, setLoading] = useState(false);
-  const [selectedSlice, setSelectedSlice] = useState({})
+  const [selectedSlice, setSelectedSlice] = useState({});
   const history = useHistory();
   const [api, contextHolder] = notification.useNotification();
 
-
   const openNotification = (alertMessage) => {
-    const placement = 'topRight'
+    const placement = 'topRight';
     api.error({
       message: `${alertMessage}`,
       // description: `${alertDescription}`,
@@ -53,8 +52,8 @@ const PaymentMethod = () => {
         setLoading(true);
         const encodedData = window.location.href.split('=')[1];
         const meta = JSON.parse(decodeURIComponent(encodedData));
-        console.log("user information", meta)
-        setSelectedSlice(meta.selectedSlice)
+        console.log('user information', meta);
+        setSelectedSlice(meta.selectedSlice);
         const total_amount = calculateTotalAmount(
           meta.offerDetails,
           meta.passengerDetails,
@@ -77,7 +76,7 @@ const PaymentMethod = () => {
   const successfulPaymentHandlerFn = async () => {
     try {
       const { data } = await confirmPaymentAPI(clientId);
-      console.log("testing", data)
+      console.log('testing', data);
       if (data.offer?.data) {
         const encodedData = window.location.href.split('=')[1];
         const meta = JSON.parse(decodeURIComponent(encodedData));
@@ -101,19 +100,19 @@ const PaymentMethod = () => {
           },
         };
         const create = await createOrderAPI(payload);
-        console.log("create", create)
+        console.log('create', create);
         history.push(
           `/flight-ticket?data=${encodeURIComponent(
             JSON.stringify({
               confirmationDetails: create,
-              selectedSlice: selectedSlice
+              selectedSlice: selectedSlice,
             }),
           )}`,
         );
       }
     } catch (e) {
-      openNotification(getFriendlyErrorMessage(e))
-      console.log(getFriendlyErrorMessage(e))
+      openNotification(getFriendlyErrorMessage(e));
+      console.log(getFriendlyErrorMessage(e));
       console.log('e', e);
     }
   };
@@ -122,21 +121,22 @@ const PaymentMethod = () => {
     // Show error page
   };
   return (
-
-    <div>
-      {contextHolder}
-      {loading ? (
-        <Spin />
-      ) : (
-        <CardPayment
-          duffelPaymentIntentClientToken={
-            clientToken ||
-            'eyJjbGllbnRfc2VjcmV0IjoicGlfMUl5YTBiQW5rMVRkeXJvRE1iWkJPN0ZSX3NlY3JldF9TbGFrYnJjYnFHZGZha2VrcjdCNE5jZWVyIiwicHVibGlzaGFibGVfa2V5IjoicGtfbGl2ZV81MUl0Q3YwQW5rMUdkeXJvRFlFU3M3RnBTUEdrNG9kbDhneDF3Y1RBNVEzaUcyWEFWVEhxdFlKSVhWMUxoSU5GQUtFMjA1dFdmRGVIcXhwUVdnYkIzTkVFbzAwMmdVY1hzR0YifQ=='
-          }
-          successfulPaymentHandler={successfulPaymentHandlerFn}
-          errorPaymentHandler={errorPaymentHandlerFn}
-        />
-      )}
+    <div className="my-4">
+      <Card title="Payment Info" bordered={false}>
+        {contextHolder}
+        {loading ? (
+          <Spin />
+        ) : (
+          <CardPayment
+            duffelPaymentIntentClientToken={
+              clientToken ||
+              'eyJjbGllbnRfc2VjcmV0IjoicGlfMUl5YTBiQW5rMVRkeXJvRE1iWkJPN0ZSX3NlY3JldF9TbGFrYnJjYnFHZGZha2VrcjdCNE5jZWVyIiwicHVibGlzaGFibGVfa2V5IjoicGtfbGl2ZV81MUl0Q3YwQW5rMUdkeXJvRFlFU3M3RnBTUEdrNG9kbDhneDF3Y1RBNVEzaUcyWEFWVEhxdFlKSVhWMUxoSU5GQUtFMjA1dFdmRGVIcXhwUVdnYkIzTkVFbzAwMmdVY1hzR0YifQ=='
+            }
+            successfulPaymentHandler={successfulPaymentHandlerFn}
+            errorPaymentHandler={errorPaymentHandlerFn}
+          />
+        )}
+      </Card>
     </div>
   );
 };
