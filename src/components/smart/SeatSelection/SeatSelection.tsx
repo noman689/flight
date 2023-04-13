@@ -28,7 +28,7 @@ const SeatSelectionComp = () => {
         setOfferMeta(sliceData?.offer?.data);
         const encodedData = window.location.href.split('=')[1];
         const parsedData = JSON.parse(decodeURIComponent(encodedData));
-        console.log("parsedData",parsedData)
+        console.log("parsedData", parsedData)
         setPassengerData([...parsedData.passengerDataForSeatSelection]);
         setPassengerInfo([...parsedData.passengerInfo]);
         setLoading(false);
@@ -55,7 +55,7 @@ const SeatSelectionComp = () => {
       console.log('error', e);
     }
   };
-
+  console.log(offerMeta)
   return (
     <div className="seat-component">
       {loading ? (

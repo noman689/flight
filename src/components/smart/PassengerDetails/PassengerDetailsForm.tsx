@@ -24,7 +24,7 @@ const PassengerDetailsForm: FC<PassengerFormProps> = ({
       ...prev,
       {
         ...values,
-        id:passengerId,
+        id: passengerId,
       },
     ]);
     setPassengerDataForSeatSelection((prev) => [
@@ -120,7 +120,7 @@ const PassengerDetailsForm: FC<PassengerFormProps> = ({
                 >
                   <Input
                     placeholder="enter passenger phone number"
-                    type="number"
+                    type="text"
                   />
                 </Form.Item>
               </Col>
@@ -181,10 +181,10 @@ const PassengerDetailsForm: FC<PassengerFormProps> = ({
                     <Radio.Group>
                       <Row className="radio-group">
                         <div className="radio-box">
-                          <Radio value={'male'}>Male</Radio>
+                          <Radio value={'m'}>Male</Radio>
                         </div>
                         <div className="radio-box">
-                          <Radio value={'female'}>Female</Radio>
+                          <Radio value={'f'}>Female</Radio>
                         </div>
                       </Row>
                     </Radio.Group>

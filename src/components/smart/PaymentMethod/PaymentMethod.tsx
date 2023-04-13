@@ -57,7 +57,7 @@ const PaymentMethod = () => {
   const successfulPaymentHandlerFn = async () => {
     try {
       const { data } = await confirmPaymentAPI(clientId);
-      console.log("testing",data)
+      console.log("testing", data)
       if (data.offer?.data) {
         const encodedData = window.location.href.split('=')[1];
         const meta = JSON.parse(decodeURIComponent(encodedData));
@@ -72,7 +72,7 @@ const PaymentMethod = () => {
             {
               type: 'balance',
               currency: 'USD',
-              amount: total_amount,
+              amount: meta.offerDetails.total_amount,
             },
           ],
           passengers: [...meta.passengerData],
@@ -81,7 +81,7 @@ const PaymentMethod = () => {
           },
         };
         const create = await createOrderAPI(payload);
-        console.log("create",create)
+        console.log("create", create)
       }
     } catch (e) {
       console.log('e', e);
