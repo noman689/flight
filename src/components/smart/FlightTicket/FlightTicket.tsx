@@ -1,14 +1,16 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Row, Col } from 'antd';
 // @ts-ignore
 import planeImageBlack from '../../../assets/ticketBlack.svg';
 import './FlightTicket.scss';
 import { isEmpty } from 'ramda';
 import moment from 'moment';
-import Barcode from 'react-barcode';
+// import Barcode from 'react-barcode';
+import JsBarcode from 'jsbarcode';
 
 const FlightTicket = () => {
   const [ticketsData, setTicketsData] = useState([]);
+ 
 
   useEffect(() => {
     const encodedData = window.location.href.split('=')[1];
@@ -32,6 +34,49 @@ const FlightTicket = () => {
     }
   }, [window.location.href]);
 
+   const [screenWidth, setScreenWidth] = useState(window.innerWidth);
+   const [screenHeight, setScreenHeight] = useState(window.innerHeight);
+
+   // Update screen size on window resize
+   const handleResize = () => {
+     setScreenWidth(window.innerWidth);
+     setScreenHeight(window.innerHeight);
+   };
+
+   useEffect(() => {
+     // Add event listener for window resize
+     window.addEventListener('resize', handleResize);
+
+     // Clean up the event listener on component unmount
+     return () => {
+       window.removeEventListener('resize', handleResize);
+     };
+   }, []);
+   const canvasRef1 = useRef(null);
+   const canvasRef2 = useRef(null);
+
+   useEffect(() => {
+     if (canvasRef1.current) {
+       // Generate Code128 barcode for canvasRef1
+       JsBarcode(canvasRef1.current, 'Hello, world!', {
+         format: 'CODE128',
+         displayValue: false,
+         width: screenWidth <= 768 ? 0.5 : 1,
+         height: screenWidth <= 768 ? 25 : 50,
+       });
+     }
+     if (canvasRef2.current) {
+       // Generate Code39 barcode for canvasRef2
+       JsBarcode(canvasRef2.current, '123456', {
+         format: 'CODE39',
+         displayValue: false,
+         width: screenWidth <= 768 ? 1.5 : 2,
+         height: screenWidth <= 768 ? 25 : 30,
+       });
+     }
+   }, []);
+ 
+
   return (
     <div style={{ width: '100%' }}>
       {ticketsData.length &&
@@ -43,7 +88,7 @@ const FlightTicket = () => {
                   xs={24}
                   sm={24}
                   md={12}
-                  lg={10}
+                  lg={screenWidth === 1024 ? 11 : 7}
                   className="flexCenter borderTopLeftRadius smallscreen-borderrighttop dottedBorder"
                 >
                   <img
@@ -57,7 +102,7 @@ const FlightTicket = () => {
                   xs={24}
                   sm={24}
                   md={9}
-                  lg={6}
+                  lg={screenWidth === 1024 ? 7 : 4}
                   className="flexCenter borderTopRightRadius hideOnSmallScreens"
                 ></Col>
               </Row>
@@ -67,7 +112,7 @@ const FlightTicket = () => {
                   xs={24}
                   sm={24}
                   md={12}
-                  lg={10}
+                  lg={screenWidth === 1024 ? 11 : 7}
                   className="displayCenter Row2BorderCol1Top"
                 >
                   <div>
@@ -87,7 +132,7 @@ const FlightTicket = () => {
                   xs={24}
                   sm={24}
                   md={9}
-                  lg={6}
+                  lg={screenWidth === 1024 ? 7 : 4}
                   className="Row2BorderCol2Top"
                 >
                   <Row justify={'center'} className="rotate hideOnSmallScreens">
@@ -128,7 +173,7 @@ const FlightTicket = () => {
                   xs={24}
                   sm={24}
                   md={12}
-                  lg={10}
+                  lg={screenWidth === 1024 ? 11 : 7}
                   className="displayCenter Row2BorderCol1 smallScreen-borderRightBottom"
                 >
                   <div className="footer-div">
@@ -158,7 +203,9 @@ const FlightTicket = () => {
                       </div>
                     </div>
                     <div>
-                      <Barcode value={item} displayValue={false} />
+                      {/* <Barcode displayValue={false} />
+                <canvas ref={canvasRef} /> */}
+                      <canvas ref={canvasRef1} />
                     </div>
                   </div>
                 </Col>
@@ -166,13 +213,18 @@ const FlightTicket = () => {
                   xs={24}
                   sm={24}
                   md={9}
-                  lg={6}
+                  lg={screenWidth === 1024 ? 7 : 4}
                   className="Row2BorderCol2 hideOnSmallScreens"
                 >
                   <Row>
-                    <Col xs={24} sm={24} md={5} lg={15}></Col>
-                    <Col xs={24} sm={24} md={5} lg={5}>
-                      <Barcode value={item} displayValue={false} />
+                    <Col
+                      xs={24}
+                      sm={24}
+                      md={24}
+                      lg={24}
+                      style={{ textAlign: 'center', marginTop: '20px' }}
+                    >
+                      <canvas ref={canvasRef2} />
                     </Col>
                   </Row>
                 </Col>
@@ -180,7 +232,6 @@ const FlightTicket = () => {
             </React.Fragment>
           );
         })}
-
     </div>
   );
 };

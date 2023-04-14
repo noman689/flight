@@ -42,6 +42,7 @@
   },
   "dependencies": {
     "@ant-design/icons": "^5.0.1",
+    "@createnextapp/react-barcode": "^1.1.1",
     "@duffel/components": "2.0.0",
     "@egjs/react-flicking": "^4.10.8",
     "@types/react-redux": "^7.1.25",
@@ -50,6 +51,7 @@
     "buffer": "^6.0.3",
     "dotenv": "^16.0.1",
     "jquery": "^3.6.4",
+    "jsbarcode": "^3.11.5",
     "moment": "^2.29.4",
     "numeral": "^2.0.6",
     "ramda": "^0.28.0",

@@ -3,13 +3,13 @@
   width: 100%;
 
   .planeImage {
-    width: 50px;
+    width: 35px;
     left: 50px;
     position: absolute;
   }
 
   .fontSize1 {
-    font-size: 30px;
+    font-size: 26px;
     color: white;
   }
   .flexCenter {
@@ -26,13 +26,13 @@
     border-top-right-radius: 25px;
   }
   .dottedBorder {
-    border-right: 1px dotted #ffffff;
+    border-right: 2px dotted #ffffff;
     // border-spacing: 5px;
   }
 }
 
 .planeImageWidth {
-  width: 90px;
+  width: 65px;
 }
 
 .displayCenter {
@@ -48,23 +48,23 @@
 }
 
 .font70 {
-  font-size: 85px;
+  font-size: 60px;
   color: #802c5e;
 }
 
 .RowHeight {
-  height: 220px;
+  height: 197px;
 }
 
 .Row2BorderCol1 {
   border-left: 1px solid #cdcdcd;
-  border-right: 1px dotted #c6c6c6;
+  border-right: 2px dotted #c6c6c6;
   border-bottom: 1px solid #c6c6c6;
   border-bottom-left-radius: 25px;
 }
 .Row2BorderCol1Top {
   border-left: 1px solid #cdcdcd;
-  border-right: 1px dotted #c6c6c6;
+  border-right: 2px dotted #c6c6c6;
 }
 .Row2BorderCol2 {
   border-right: 1px solid #cdcdcd;
@@ -91,7 +91,7 @@
   justify-content: space-around;
 }
 .fontSize20 {
-  font-size: 20px;
+  font-size: 17px;
   text-align: center;
   font-weight: 600;
 }
