@@ -8,11 +8,13 @@ const { Panel } = Collapse;
 interface PassengerFormProps {
   passengerData: any;
   offerId: string;
+  summaryData: any;
 }
 
 const PassengerDetailsForm: FC<PassengerFormProps> = ({
   passengerData = [],
   offerId,
+  summaryData
 }) => {
   const [currentForm, setCurrentForm] = useState(1);
   const [formValues, setFormValues] = useState<any>([]);
@@ -24,7 +26,7 @@ const PassengerDetailsForm: FC<PassengerFormProps> = ({
       ...prev,
       {
         ...values,
-        id:passengerId,
+        id: passengerId,
       },
     ]);
     setPassengerDataForSeatSelection((prev) => [
@@ -42,6 +44,7 @@ const PassengerDetailsForm: FC<PassengerFormProps> = ({
         JSON.stringify({
           passengerDataForSeatSelection: passengerDataForSeatSelection,
           passengerInfo: formValues,
+          selectedSlice: summaryData
         }),
       )}`,
     );
@@ -120,7 +123,7 @@ const PassengerDetailsForm: FC<PassengerFormProps> = ({
                 >
                   <Input
                     placeholder="enter passenger phone number"
-                    type="number"
+                    type="text"
                   />
                 </Form.Item>
               </Col>
@@ -181,10 +184,10 @@ const PassengerDetailsForm: FC<PassengerFormProps> = ({
                     <Radio.Group>
                       <Row className="radio-group">
                         <div className="radio-box">
-                          <Radio value={'male'}>Male</Radio>
+                          <Radio value={'m'}>Male</Radio>
                         </div>
                         <div className="radio-box">
-                          <Radio value={'female'}>Female</Radio>
+                          <Radio value={'f'}>Female</Radio>
                         </div>
                       </Row>
                     </Radio.Group>
