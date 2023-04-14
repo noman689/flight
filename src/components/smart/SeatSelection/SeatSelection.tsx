@@ -29,7 +29,6 @@ const SeatSelectionComp = () => {
         setOfferMeta(sliceData?.offer?.data);
         const encodedData = window.location.href.split('=')[1];
         const parsedData = JSON.parse(decodeURIComponent(encodedData));
-        console.log("parsedData", parsedData)
         setPassengerData([...parsedData.passengerDataForSeatSelection]);
         setPassengerInfo([...parsedData.passengerInfo]);
         setSelectedSlice([parsedData.selectedSlice])
@@ -45,7 +44,7 @@ const SeatSelectionComp = () => {
   const onSubmitFn = (values) => {
     try {
       history.push(
-        `/payment-method?data=${encodeURIComponent(
+        `/payment-method?meta=${encodeURIComponent(
           JSON.stringify({
             passengerDetails: values,
             offerDetails: offerMeta,

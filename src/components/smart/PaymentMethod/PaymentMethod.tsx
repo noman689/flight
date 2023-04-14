@@ -52,7 +52,6 @@ const PaymentMethod = () => {
         setLoading(true);
         const encodedData = window.location.href.split('=')[1];
         const meta = JSON.parse(decodeURIComponent(encodedData));
-        console.log('user information', meta);
         setSelectedSlice(meta.selectedSlice);
         const total_amount = calculateTotalAmount(
           meta.offerDetails,
@@ -76,14 +75,9 @@ const PaymentMethod = () => {
   const successfulPaymentHandlerFn = async () => {
     try {
       const { data } = await confirmPaymentAPI(clientId);
-      console.log('testing', data);
       if (data.offer?.data) {
         const encodedData = window.location.href.split('=')[1];
         const meta = JSON.parse(decodeURIComponent(encodedData));
-        const total_amount = calculateTotalAmount(
-          meta.offerDetails,
-          meta.passengerDetails,
-        );
         const payload = {
           type: 'instant',
           selected_offers: [meta.offerDetails.id],
@@ -100,7 +94,6 @@ const PaymentMethod = () => {
           },
         };
         const create = await createOrderAPI(payload);
-        console.log('create', create);
         history.push(
           `/flight-ticket?data=${encodeURIComponent(
             JSON.stringify({
