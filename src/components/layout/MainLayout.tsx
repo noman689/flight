@@ -42,11 +42,11 @@ const MainLayout = () => {
             <Route exact path="/payment-method" component={PaymentMethod} />
 
             <Route exact path="/flight-ticket" component={FlightTicket} />
-            {/* <Route
+            <Route
               exact
               path="/234"
               component={FlightTicketTest}
-            /> */}
+            />
           </Switch>
         </Content>
         <Footer />

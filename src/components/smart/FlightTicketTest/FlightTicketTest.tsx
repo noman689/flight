@@ -58,12 +58,12 @@ const FlightTicketTest = () => {
           xs={24}
           sm={24}
           md={12}
-          lg={screenWidth === 1024 ? 11 : 7}
+          lg={screenWidth === 1024 ? 11 : 8}
           className="flexCenter borderTopLeftRadius smallscreen-borderrighttop dottedBorder"
         >
-          <img src={item.airline.logo_symbol_url} className="planeImage" />
+          <img src={planeImageBlack} className="planeImage" />
 
-          <span className="fontSize1">{item.airline.name}</span>
+          <span className="fontSize1">AIR</span>
         </Col>
         <Col
           xs={24}
@@ -79,15 +79,13 @@ const FlightTicketTest = () => {
           xs={24}
           sm={24}
           md={12}
-          lg={screenWidth === 1024 ? 11 : 7}
+          lg={screenWidth === 1024 ? 11 : 8}
           className="displayCenter Row2BorderCol1Top"
         >
           <div>
-            <span className="font70">{item.slice.origin.iata_city_code}</span>
+            <span className="font70">LHR</span>
             <img src={planeImageBlack} className="planeImageWidth mx-image" />
-            <span className="font70">
-              {item.slice.destination.iata_city_code}
-            </span>
+            <span className="font70">FSD</span>
           </div>
         </Col>
         <Col
@@ -99,30 +97,24 @@ const FlightTicketTest = () => {
         >
           <Row justify={'center'} className="rotate hideOnSmallScreens">
             <Col xs={24} sm={24} md={24} lg={8}>
-              <div className=" marginLeft10 fontSize20 margin768 fontSizeOn768">
+              <div className=" invertedDivmarginLeft10 fontSize20 margin768 fontSizeOn768">
                 <span className="headingColor">Passenger</span>
                 <br />
-                <span>
-                  {item.passenger.given_name + ' ' + item.passenger.family_name}
-                </span>
+                <span>Muhammadd</span>
               </div>
             </Col>
             <Col xs={24} sm={24} md={24} lg={8}>
-              <div className=" marginLeft10 fontSize20 margin768 fontSizeOn768">
+              <div className=" invertedDivmarginLeft10 fontSize20 margin768 fontSizeOn768">
                 <span className="headingColor">Gate</span>
                 <br />
                 <span>23A</span>
               </div>
             </Col>
             <Col xs={24} sm={24} md={24} lg={24}>
-              <div className=" marginLeft10 fontSize20 margin768 fontSizeOn768">
+              <div className=" invertedDivmarginLeft10 fontSize20 margin768 fontSizeOn768">
                 <span className="headingColor">Departure</span>
                 <br />
-                <span>
-                  {moment(item.slice.segments[0].departing_at).format(
-                    'HH:mm:ss YYYY-MM-DD',
-                  )}
-                </span>
+                <span>23,234,23</span>
               </div>
             </Col>
           </Row>
@@ -133,7 +125,7 @@ const FlightTicketTest = () => {
           xs={24}
           sm={24}
           md={12}
-          lg={screenWidth === 1024 ? 11 : 7}
+          lg={screenWidth === 1024 ? 11 : 8}
           className="displayCenter Row2BorderCol1 smallScreen-borderRightBottom"
         >
           <div className="footer-div">
@@ -141,9 +133,7 @@ const FlightTicketTest = () => {
               <div className=" marginLeft10">
                 <span className="headingColor">Passenger</span>
                 <br />
-                <span>
-                  {item.passenger.given_name + ' ' + item.passenger.family_name}
-                </span>
+                <span>Muhammad Ab</span>
               </div>
               <div className=" marginLeft10">
                 <span className="headingColor">Gate</span>
@@ -153,11 +143,7 @@ const FlightTicketTest = () => {
               <div className=" marginLeft10">
                 <span className="headingColor">Departure</span>
                 <br />
-                <span>
-                  {moment(item.slice.segments[0].departing_at).format(
-                    'HH:mm:ss YYYY-MM-DD',
-                  )}
-                </span>
+                <span>333,324,234</span>
               </div>
             </div>
             <div>

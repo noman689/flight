@@ -10,7 +10,6 @@ import JsBarcode from 'jsbarcode';
 
 const FlightTicket = () => {
   const [ticketsData, setTicketsData] = useState([]);
- 
 
   useEffect(() => {
     const encodedData = window.location.href.split('=')[1];
@@ -34,48 +33,47 @@ const FlightTicket = () => {
     }
   }, [window.location.href]);
 
-   const [screenWidth, setScreenWidth] = useState(window.innerWidth);
-   const [screenHeight, setScreenHeight] = useState(window.innerHeight);
+  const [screenWidth, setScreenWidth] = useState(window.innerWidth);
+  const [screenHeight, setScreenHeight] = useState(window.innerHeight);
 
-   // Update screen size on window resize
-   const handleResize = () => {
-     setScreenWidth(window.innerWidth);
-     setScreenHeight(window.innerHeight);
-   };
+  // Update screen size on window resize
+  const handleResize = () => {
+    setScreenWidth(window.innerWidth);
+    setScreenHeight(window.innerHeight);
+  };
 
-   useEffect(() => {
-     // Add event listener for window resize
-     window.addEventListener('resize', handleResize);
+  useEffect(() => {
+    // Add event listener for window resize
+    window.addEventListener('resize', handleResize);
 
-     // Clean up the event listener on component unmount
-     return () => {
-       window.removeEventListener('resize', handleResize);
-     };
-   }, []);
-   const canvasRef1 = useRef(null);
-   const canvasRef2 = useRef(null);
+    // Clean up the event listener on component unmount
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+  const canvasRef1 = useRef(null);
+  const canvasRef2 = useRef(null);
 
-   useEffect(() => {
-     if (canvasRef1.current) {
-       // Generate Code128 barcode for canvasRef1
-       JsBarcode(canvasRef1.current, 'Hello, world!', {
-         format: 'CODE128',
-         displayValue: false,
-         width: screenWidth <= 768 ? 0.5 : 1,
-         height: screenWidth <= 768 ? 25 : 50,
-       });
-     }
-     if (canvasRef2.current) {
-       // Generate Code39 barcode for canvasRef2
-       JsBarcode(canvasRef2.current, '123456', {
-         format: 'CODE39',
-         displayValue: false,
-         width: screenWidth <= 768 ? 1.5 : 2,
-         height: screenWidth <= 768 ? 25 : 30,
-       });
-     }
-   }, []);
- 
+  useEffect(() => {
+    if (canvasRef1.current && ticketsData.length) {
+      // Generate Code128 barcode for canvasRef1
+      JsBarcode(canvasRef1.current, `pas_0000AUfwP92zG9VyiE2sUP`, {
+        format: 'CODE128',
+        displayValue: false,
+        width: screenWidth <= 768 ? 0.5 : 1,
+        height: screenWidth <= 768 ? 25 : 50,
+      });
+    }
+    if (canvasRef2.current && ticketsData.length) {
+      // Generate Code39 barcode for canvasRef2
+      JsBarcode(canvasRef2.current, 'pas_0000AUfwP92zG9VyiE2sUP', {
+        format: 'CODE128',
+        displayValue: false,
+        width: screenWidth <= 768 ? 1.5 : 2,
+        height: screenWidth <= 768 ? 25 : 30,
+      });
+    }
+  }, [ticketsData]);
 
   return (
     <div style={{ width: '100%' }}>
@@ -88,7 +86,7 @@ const FlightTicket = () => {
                   xs={24}
                   sm={24}
                   md={12}
-                  lg={screenWidth === 1024 ? 11 : 7}
+                  lg={screenWidth === 1024 ? 11 : 8}
                   className="flexCenter borderTopLeftRadius smallscreen-borderrighttop dottedBorder"
                 >
                   <img
@@ -112,7 +110,7 @@ const FlightTicket = () => {
                   xs={24}
                   sm={24}
                   md={12}
-                  lg={screenWidth === 1024 ? 11 : 7}
+                  lg={screenWidth === 1024 ? 11 : 8}
                   className="displayCenter Row2BorderCol1Top"
                 >
                   <div>
@@ -137,7 +135,7 @@ const FlightTicket = () => {
                 >
                   <Row justify={'center'} className="rotate hideOnSmallScreens">
                     <Col xs={24} sm={24} md={24} lg={8}>
-                      <div className=" marginLeft10 fontSize20 margin768 fontSizeOn768">
+                      <div className=" invertedDivmarginLeft10 fontSize20 margin768 fontSizeOn768">
                         <span className="headingColor">Passenger</span>
                         <br />
                         <span>
@@ -148,14 +146,14 @@ const FlightTicket = () => {
                       </div>
                     </Col>
                     <Col xs={24} sm={24} md={24} lg={8}>
-                      <div className=" marginLeft10 fontSize20 margin768 fontSizeOn768">
+                      <div className=" invertedDivmarginLeft10 fontSize20 margin768 fontSizeOn768">
                         <span className="headingColor">Gate</span>
                         <br />
                         <span>23A</span>
                       </div>
                     </Col>
                     <Col xs={24} sm={24} md={24} lg={24}>
-                      <div className=" marginLeft10 fontSize20 margin768 fontSizeOn768">
+                      <div className=" invertedDivmarginLeft10 fontSize20 margin768 fontSizeOn768">
                         <span className="headingColor">Departure</span>
                         <br />
                         <span>
@@ -173,7 +171,7 @@ const FlightTicket = () => {
                   xs={24}
                   sm={24}
                   md={12}
-                  lg={screenWidth === 1024 ? 11 : 7}
+                  lg={screenWidth === 1024 ? 11 : 8}
                   className="displayCenter Row2BorderCol1 smallScreen-borderRightBottom"
                 >
                   <div className="footer-div">
