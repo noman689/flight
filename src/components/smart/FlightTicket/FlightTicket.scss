@@ -166,10 +166,22 @@
   .hideOnSmallScreens {
     display: none !important;
   }
-  .smallscreen-borderrighttop{
+  .smallscreen-borderrighttop {
     border-top-right-radius: 25px;
   }
-  .smallScreen-borderRightBottom{
+  .smallScreen-borderRightBottom {
     border-bottom-right-radius: 25px;
   }
+}
+
+.divOverFlow2 {
+  width: 20%;
+  overflow: hidden;
+  margin-right: 10px;
+}
+.divOverFlow1 {
+  width: 90%;
+  margin-left: 13px;
+  overflow: hidden;
+  margin
 }

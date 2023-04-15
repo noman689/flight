@@ -200,7 +200,7 @@ const FlightTicket = () => {
                         </span>
                       </div>
                     </div>
-                    <div>
+                    <div className="divOverFlow2">
                       {/* <Barcode displayValue={false} />
                 <canvas ref={canvasRef} /> */}
                       <canvas ref={canvasRef1} />
@@ -222,7 +222,9 @@ const FlightTicket = () => {
                       lg={24}
                       style={{ textAlign: 'center', marginTop: '20px' }}
                     >
-                      <canvas ref={canvasRef2} />
+                      <div className="divOverFlow1">
+                        <canvas ref={canvasRef2} />
+                      </div>
                     </Col>
                   </Row>
                 </Col>
