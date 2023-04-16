@@ -69,7 +69,7 @@ const FlightTicket = () => {
       JsBarcode(canvasRef2.current, 'pas_0000AUfwP92zG9VyiE2sUP', {
         format: 'CODE128',
         displayValue: false,
-        width: screenWidth <= 768 ? 1.5 : 2,
+        width: screenWidth <= 768 ? 1.5 : 1,
         height: screenWidth <= 768 ? 25 : 30,
       });
     }
