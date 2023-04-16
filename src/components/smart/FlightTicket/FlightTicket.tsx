@@ -12,10 +12,10 @@ const FlightTicket = () => {
   const [ticketsData, setTicketsData] = useState([]);
 
   useEffect(() => {
-    const encodedData = window.location.href.split('=')[1];
-    const meta = JSON.parse(decodeURIComponent(encodedData));
+    const offerInfoString = localStorage.getItem("offerInfo");
+    const meta = JSON.parse(offerInfoString);
     if (!isEmpty(meta)) {
-      console.log('id', meta);
+
       const dataObj = meta.confirmationDetails.data.offer?.data;
 
       dataObj.passengers.map((value) => {

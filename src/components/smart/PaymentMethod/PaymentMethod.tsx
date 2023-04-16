@@ -94,14 +94,21 @@ const PaymentMethod = () => {
           },
         };
         const create = await createOrderAPI(payload);
+        localStorage.setItem("offerInfo", JSON.stringify({
+          confirmationDetails: create,
+          selectedSlice: selectedSlice,
+        }))
         history.push(
-          `/flight-ticket?data=${encodeURIComponent(
-            JSON.stringify({
-              confirmationDetails: create,
-              selectedSlice: selectedSlice,
-            }),
-          )}`,
+          `/flight-ticket`
         );
+        // history.push(
+        //   `/flight-ticket?data=${encodeURIComponent(
+        //     JSON.stringify({
+        //       confirmationDetails: create,
+        //       selectedSlice: selectedSlice,
+        //     }),
+        //   )}`,
+        // );
       }
     } catch (e) {
       openNotification(getFriendlyErrorMessage(e));
