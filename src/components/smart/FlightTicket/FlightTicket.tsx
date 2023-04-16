@@ -5,8 +5,7 @@ import planeImageBlack from '../../../assets/ticketBlack.svg';
 import './FlightTicket.scss';
 import { isEmpty } from 'ramda';
 import moment from 'moment';
-// import Barcode from 'react-barcode';
-import JsBarcode from 'jsbarcode';
+import Barcode from 'react-barcode';
 
 const FlightTicket = () => {
   const [ticketsData, setTicketsData] = useState([]);
@@ -51,29 +50,7 @@ const FlightTicket = () => {
       window.removeEventListener('resize', handleResize);
     };
   }, []);
-  const canvasRef1 = useRef(null);
-  const canvasRef2 = useRef(null);
 
-  useEffect(() => {
-    if (canvasRef1.current && ticketsData.length) {
-      // Generate Code128 barcode for canvasRef1
-      JsBarcode(canvasRef1.current, `pas_0000AUfwP92zG9VyiE2sUP`, {
-        format: 'CODE128',
-        displayValue: false,
-        width: screenWidth <= 768 ? 0.5 : 1,
-        height: screenWidth <= 768 ? 25 : 50,
-      });
-    }
-    if (canvasRef2.current && ticketsData.length) {
-      // Generate Code39 barcode for canvasRef2
-      JsBarcode(canvasRef2.current, 'pas_0000AUfwP92zG9VyiE2sUP', {
-        format: 'CODE128',
-        displayValue: false,
-        width: screenWidth <= 768 ? 1.5 : 1,
-        height: screenWidth <= 768 ? 25 : 30,
-      });
-    }
-  }, [ticketsData]);
 
   return (
     <div style={{ width: '100%' }}>
@@ -81,7 +58,7 @@ const FlightTicket = () => {
         ticketsData.map((item, index) => {
           return (
             <React.Fragment key={index}>
-              <Row className="main" justify={'center'}>
+              <Row className="main" justify={'center'} >
                 <Col
                   xs={24}
                   sm={24}
@@ -105,7 +82,7 @@ const FlightTicket = () => {
                 ></Col>
               </Row>
 
-              <Row justify={'center'} className="RowHeight">
+              <Row justify={'center'} className="RowHeight mt10">
                 <Col
                   xs={24}
                   sm={24}
@@ -133,12 +110,12 @@ const FlightTicket = () => {
                   lg={screenWidth === 1024 ? 7 : 4}
                   className="Row2BorderCol2Top"
                 >
-                  <Row justify={'center'} className="rotate hideOnSmallScreens">
+                  <Row justify={'center'} className="rotate hideOnSmallScreens" align='bottom'>
                     <Col xs={24} sm={24} md={24} lg={8}>
                       <div className=" invertedDivmarginLeft10 fontSize20 margin768 fontSizeOn768">
                         <span className="headingColor">Passenger</span>
                         <br />
-                        <span>
+                        <span className='text-capitalize'>
                           {item.passenger.given_name +
                             ' ' +
                             item.passenger.family_name}
@@ -166,7 +143,7 @@ const FlightTicket = () => {
                   </Row>
                 </Col>
               </Row>
-              <Row justify={'center'}>
+              <Row justify={'center'} align={'bottom'} >
                 <Col
                   xs={24}
                   sm={24}
@@ -175,37 +152,48 @@ const FlightTicket = () => {
                   className="displayCenter Row2BorderCol1 smallScreen-borderRightBottom"
                 >
                   <div className="footer-div">
-                    <div className="dFlex fontSize20 size768">
-                      <div className=" marginLeft10">
-                        <span className="headingColor">Passenger</span>
-                        <br />
-                        <span>
-                          {item.passenger.given_name +
-                            ' ' +
-                            item.passenger.family_name}
-                        </span>
+                    <Row dir='col' justify={'center'}>
+                      <div className="divOverFlow2">
+                        <Col xs={24}
+                          sm={24}
+                          md={24}
+                          lg={24}>
+                          <Barcode value={item} displayValue={false} width={1} height={30} />
+                        </Col>
                       </div>
-                      <div className=" marginLeft10">
-                        <span className="headingColor">Gate</span>
-                        <br />
-                        <span>23A</span>
-                      </div>
-                      <div className=" marginLeft10">
-                        <span className="headingColor">Departure</span>
-                        <br />
-                        <span>
-                          {moment(item.slice.segments[0].departing_at).format(
-                            'HH:mm:ss YYYY-MM-DD',
-                          )}
-                        </span>
-                      </div>
-                    </div>
-                    <div className="divOverFlow2">
-                      {/* <Barcode displayValue={false} />
-                <canvas ref={canvasRef} /> */}
-                      <canvas ref={canvasRef1} />
-                    </div>
+                      <Col xs={24}
+                        sm={24}
+                        md={24}
+                        lg={24}>
+                        <div className="dFlex fontSize20 size768" >
+                          <div className=" marginLeft10">
+                            <span className="headingColor">Passenger</span>
+                            <br />
+                            <span className='text-capitalize'>
+                              {item.passenger.given_name +
+                                ' ' +
+                                item.passenger.family_name}
+                            </span>
+                          </div>
+                          <div className=" marginLeft10">
+                            <span className="headingColor">Gate</span>
+                            <br />
+                            <span>23A</span>
+                          </div>
+                          <div className=" marginLeft10">
+                            <span className="headingColor">Departure</span>
+                            <br />
+                            <span>
+                              {moment(item.slice.segments[0].departing_at).format(
+                                'HH:mm:ss YYYY-MM-DD',
+                              )}
+                            </span>
+                          </div>
+                        </div>
+                      </Col>
+                    </Row>
                   </div>
+
                 </Col>
                 <Col
                   xs={24}
@@ -223,7 +211,8 @@ const FlightTicket = () => {
                       style={{ textAlign: 'center', marginTop: '20px' }}
                     >
                       <div className="divOverFlow1">
-                        <canvas ref={canvasRef2} />
+
+                        <Barcode value={item} displayValue={false} width={1} height={30} />
                       </div>
                     </Col>
                   </Row>

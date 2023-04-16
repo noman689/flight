@@ -49,7 +49,9 @@ const MainLayout = () => {
             />
           </Switch>
         </Content>
-        <Footer />
+        <div style={{ marginTop: '50px' }}>
+          <Footer />
+        </div>
       </Router>
     </Layout>
   );
