@@ -40,6 +40,9 @@
   justify-content: center;
   display: flex;
   align-items: center;
+  a {
+    color: #701644;
+  }
 }
 
 .placeCenter {
@@ -112,6 +115,9 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  :hover {
+    color: #a8a8a8;
+  }
 }
 .flight-details {
   width: max-content;
