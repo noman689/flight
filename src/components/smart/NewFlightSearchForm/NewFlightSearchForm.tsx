@@ -43,7 +43,6 @@ const NewFlightSearchForm = ({
     child: 0,
   });
   const [cabinClassValue, setCabinClassValue] = useState<any>('economy');
-  // const ticketType = [{ value: 'One Way' }, { value: 'return' }];
   const [ticketType, setTicketType] = useState('one way')
   const [hideFilter, setHideFilter] = useState(false);
   const [adult, setAdult] = useState(1)
