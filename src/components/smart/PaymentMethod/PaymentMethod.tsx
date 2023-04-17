@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useHistory, useParams } from 'react-router';
 import { CardPayment } from '@duffel/components';
 import {
   confirmPaymentAPI,
@@ -6,11 +7,26 @@ import {
 } from '@client/services/paymentService';
 import Spin from '@client/components/presentational/Spin';
 import { createOrderAPI } from '@client/services/createOrderService';
+import { getFriendlyErrorMessage } from './ErrorHandling';
+import { notification, Space, Card } from 'antd';
 
 const PaymentMethod = () => {
   const [clientToken, setClientToken] = useState('');
   const [clientId, setClientId] = useState('');
   const [loading, setLoading] = useState(false);
+  const [selectedSlice, setSelectedSlice] = useState({});
+  const history = useHistory();
+  const [api, contextHolder] = notification.useNotification();
+
+  const openNotification = (alertMessage) => {
+    const placement = 'topRight';
+    api.error({
+      message: `${alertMessage}`,
+      // description: `${alertDescription}`,
+      placement,
+    });
+  };
+
   const calculateTotalAmount = (offerData, passengerData) => {
     const parentObjKeys = Object.keys(passengerData);
     const nestedKeys = Object.keys(passengerData[parentObjKeys[0]]);
@@ -36,10 +52,12 @@ const PaymentMethod = () => {
         setLoading(true);
         const encodedData = window.location.href.split('=')[1];
         const meta = JSON.parse(decodeURIComponent(encodedData));
+        setSelectedSlice(meta.selectedSlice);
         const total_amount = calculateTotalAmount(
           meta.offerDetails,
           meta.passengerDetails,
         );
+
         const { data } = await paymentIntentAPI({
           total_amount: total_amount,
           total_currency: 'USD',
@@ -57,14 +75,9 @@ const PaymentMethod = () => {
   const successfulPaymentHandlerFn = async () => {
     try {
       const { data } = await confirmPaymentAPI(clientId);
-      console.log("testing",data)
       if (data.offer?.data) {
         const encodedData = window.location.href.split('=')[1];
         const meta = JSON.parse(decodeURIComponent(encodedData));
-        const total_amount = calculateTotalAmount(
-          meta.offerDetails,
-          meta.passengerDetails,
-        );
         const payload = {
           type: 'instant',
           selected_offers: [meta.offerDetails.id],
@@ -72,7 +85,7 @@ const PaymentMethod = () => {
             {
               type: 'balance',
               currency: 'USD',
-              amount: total_amount,
+              amount: meta.offerDetails.total_amount,
             },
           ],
           passengers: [...meta.passengerData],
@@ -81,9 +94,25 @@ const PaymentMethod = () => {
           },
         };
         const create = await createOrderAPI(payload);
-        console.log("create",create)
+        localStorage.setItem("offerInfo", JSON.stringify({
+          confirmationDetails: create,
+          selectedSlice: selectedSlice,
+        }))
+        history.push(
+          `/flight-ticket`
+        );
+        // history.push(
+        //   `/flight-ticket?data=${encodeURIComponent(
+        //     JSON.stringify({
+        //       confirmationDetails: create,
+        //       selectedSlice: selectedSlice,
+        //     }),
+        //   )}`,
+        // );
       }
     } catch (e) {
+      openNotification(getFriendlyErrorMessage(e));
+      console.log(getFriendlyErrorMessage(e));
       console.log('e', e);
     }
   };
@@ -92,19 +121,22 @@ const PaymentMethod = () => {
     // Show error page
   };
   return (
-    <div>
-      {loading ? (
-        <Spin />
-      ) : (
-        <CardPayment
-          duffelPaymentIntentClientToken={
-            clientToken ||
-            'eyJjbGllbnRfc2VjcmV0IjoicGlfMUl5YTBiQW5rMVRkeXJvRE1iWkJPN0ZSX3NlY3JldF9TbGFrYnJjYnFHZGZha2VrcjdCNE5jZWVyIiwicHVibGlzaGFibGVfa2V5IjoicGtfbGl2ZV81MUl0Q3YwQW5rMUdkeXJvRFlFU3M3RnBTUEdrNG9kbDhneDF3Y1RBNVEzaUcyWEFWVEhxdFlKSVhWMUxoSU5GQUtFMjA1dFdmRGVIcXhwUVdnYkIzTkVFbzAwMmdVY1hzR0YifQ=='
-          }
-          successfulPaymentHandler={successfulPaymentHandlerFn}
-          errorPaymentHandler={errorPaymentHandlerFn}
-        />
-      )}
+    <div className="my-4">
+      <Card title="Payment Info" bordered={false}>
+        {contextHolder}
+        {loading ? (
+          <Spin />
+        ) : (
+          <CardPayment
+            duffelPaymentIntentClientToken={
+              clientToken ||
+              'eyJjbGllbnRfc2VjcmV0IjoicGlfMUl5YTBiQW5rMVRkeXJvRE1iWkJPN0ZSX3NlY3JldF9TbGFrYnJjYnFHZGZha2VrcjdCNE5jZWVyIiwicHVibGlzaGFibGVfa2V5IjoicGtfbGl2ZV81MUl0Q3YwQW5rMUdkeXJvRFlFU3M3RnBTUEdrNG9kbDhneDF3Y1RBNVEzaUcyWEFWVEhxdFlKSVhWMUxoSU5GQUtFMjA1dFdmRGVIcXhwUVdnYkIzTkVFbzAwMmdVY1hzR0YifQ=='
+            }
+            successfulPaymentHandler={successfulPaymentHandlerFn}
+            errorPaymentHandler={errorPaymentHandlerFn}
+          />
+        )}
+      </Card>
     </div>
   );
 };

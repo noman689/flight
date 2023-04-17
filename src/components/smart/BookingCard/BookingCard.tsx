@@ -10,6 +10,7 @@ import {
 
 import './BookingCard.scss';
 import FlightSearchForm from '../FlightSearchForm/FlightSearchForm';
+import NewFlightSearchForm from '../NewFlightSearchForm/NewFlightSearchForm';
 
 const SearchFlightCard = () => {
   const [screenSize, setScreenSize] = useState({
@@ -41,7 +42,7 @@ const SearchFlightCard = () => {
         </span>
       ),
       key: 'book',
-      children: <FlightSearchForm />,
+      children: <NewFlightSearchForm />,
     },
     {
       label: (

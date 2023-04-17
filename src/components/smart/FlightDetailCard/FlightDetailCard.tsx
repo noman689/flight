@@ -1,8 +1,10 @@
-import { Row, Col, Divider } from 'antd';
+import { Row, Col, Divider, Button } from 'antd';
 import moment from 'moment';
-
+// @ts-ignore
+import planeImageBlack from '../../../assets/ticketBlack.svg';
 import './FlightDetailCard.scss';
 import { useHistory } from 'react-router-dom';
+import { CloudFilled, LockFilled, LockOutlined } from '@ant-design/icons';
 
 const FlightDetailCard = ({
   fromDate,
@@ -22,47 +24,73 @@ const FlightDetailCard = ({
   return (
     <div className="flight-detail-card-item">
       <div className="flightDetails">
-        <Col xs={24} sm={24} md={23} lg={23} style={{ padding: '20px' }}>
+        <Col xs={24} sm={24} md={23} lg={24} style={{ padding: '20px' }}>
           <Row justify={'space-between'}>
-            <Col xs={24} sm={24} md={24} lg={10}>
-              <div className="flight-date">
-                {moment(fromDate).format('MMM Do YY')}
+            <Col xs={24} sm={24} md={24} lg={2} className="placeCenter">
+              <img
+                src={
+                  'https://assets.duffel.com/img/airlines/for-light-background/full-color-logo/ZZ.svg'
+                }
+                style={{ height: 40, width: 40 }}
+              />
+              <div>
+                <p
+                  className="dullWhite"
+                  style={{ fontSize: 12, marginLeft: 20 }}
+                >
+                  Basic- Duffel Airways
+                </p>
               </div>
+            </Col>
+            <Col xs={24} sm={24} md={24} lg={13}>
               <div className="cardFirstPart">
                 <span>{moment(fromDate).format('hh:m')}</span>
                 <Divider>
-                  <img src="https://www.qatarairways.com/content/dam/images/icons/flight/ic_nav_qatar_airways.svg" />
+                  <img
+                    src={planeImageBlack}
+                    style={{ height: 20, width: 20 }}
+                  />
                 </Divider>
                 <span>{moment(toDate).format('hh:m')}</span>
               </div>
               <div className="cardSecondPart dullWhite">
                 <span>{departureSub}</span>
+                {/* ============DURATION============= */}
+                <span>8 Hrs</span>
+                {/* ============DURATION============= */}
                 <span>{destinationSub}</span>
               </div>
-
-              <div className="lower-div mt-none mt-50">
-                <span className="hideAbove768">Fare ${fareAmount}</span>
-              </div>
             </Col>
-            <Col
-              xs={24}
-              sm={24}
-              md={24}
-              lg={12}
-              className="thirdPart hide-card-part"
-            >
-              <div className="card">
+            <Col xs={24} sm={24} md={24} lg={2} className="placeCenter">
+              <div className="stops">Non Stop</div>
+            </Col>
+            <Col xs={24} sm={24} md={24} lg={4} className="placeCenter ">
+              <div className="bookingButtons">
+                <h6>Fare: ${fareAmount}</h6>
                 <div>
-                  <span className="cardhead">Fare</span>
-                  <br />
-                  <span style={{ fontSize: '30px' }}>${fareAmount}</span>
+                  <p className="alignitems">
+                    <LockFilled size={7} />
+                    Hold&nbsp;<a href="#">Price</a>&nbsp;&&nbsp;
+                    <a href="#">Specs</a>
+                  </p>
+                  <p className="alignitems">
+                    <CloudFilled size={7} />
+                    78kg
+                    <span>
+                      &nbsp;CO
+                      <sub>2</sub>
+                    </span>
+                  </p>
                 </div>
+                <Button className="book-button" onClick={(e) => handleClick(e)}>
+                  Book Now
+                </Button>
               </div>
             </Col>
-            <div className="book-now">
-              <span onClick={(e) => handleClick(e)}>Book Now</span>
-            </div>
           </Row>
+          <div className="flight-details">
+            <h6>Flight Details</h6>
+          </div>
         </Col>
       </div>
     </div>

@@ -15,6 +15,7 @@ const SeatSelectionComp = () => {
   const [offerMeta, setOfferMeta] = useState(null);
   const [passengerData, setPassengerData] = useState([]);
   const [passengerInfo, setPassengerInfo] = useState([]);
+  const [selectedSlice, setSelectedSlice] = useState({})
   const history = useHistory();
   // @ts-ignore
   const { id } = params;
@@ -26,11 +27,13 @@ const SeatSelectionComp = () => {
         const { data: sliceData } = await getSelectedOfferDetailsAPI(id);
         setSeatMap(data?.offer);
         setOfferMeta(sliceData?.offer?.data);
-        const encodedData = window.location.href.split('=')[1];
-        const parsedData = JSON.parse(decodeURIComponent(encodedData));
-        console.log("parsedData",parsedData)
+        const offerInfoString = localStorage.getItem("passengerDetail");
+        const parsedData = JSON.parse(offerInfoString);
+
+
         setPassengerData([...parsedData.passengerDataForSeatSelection]);
         setPassengerInfo([...parsedData.passengerInfo]);
+        setSelectedSlice([parsedData.selectedSlice])
         setLoading(false);
       } catch (error) {
         console.log('error', error);
@@ -43,11 +46,12 @@ const SeatSelectionComp = () => {
   const onSubmitFn = (values) => {
     try {
       history.push(
-        `/payment-method?data=${encodeURIComponent(
+        `/payment-method?meta=${encodeURIComponent(
           JSON.stringify({
             passengerDetails: values,
             offerDetails: offerMeta,
             passengerData: passengerInfo,
+            selectedSlice: selectedSlice
           }),
         )}`,
       );
@@ -55,7 +59,7 @@ const SeatSelectionComp = () => {
       console.log('error', e);
     }
   };
-
+  console.log(offerMeta)
   return (
     <div className="seat-component">
       {loading ? (

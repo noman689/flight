@@ -13,6 +13,8 @@ import HomePage from '../smart/HomePage/HomePage';
 import HeaderFlightDetails from './HeaderFlightDetails/HeaderFlightDetails';
 import SeatSelectionComp from '../smart/SeatSelection/SeatSelection';
 import PaymentMethod from '../smart/PaymentMethod/PaymentMethod';
+import FlightTicket from '../smart/FlightTicket/FlightTicket';
+import FlightTicketTest from '../smart/FlightTicketTest/FlightTicketTest';
 import { Switch } from 'react-router-dom/cjs/react-router-dom.min';
 
 const { Content } = Layout;
@@ -38,9 +40,18 @@ const MainLayout = () => {
               component={SeatSelectionComp}
             />
             <Route exact path="/payment-method" component={PaymentMethod} />
+
+            <Route exact path="/flight-ticket" component={FlightTicket} />
+            <Route
+              exact
+              path="/234"
+              component={FlightTicketTest}
+            />
           </Switch>
         </Content>
-        <Footer />
+        <div style={{ marginTop: '50px' }}>
+          <Footer />
+        </div>
       </Router>
     </Layout>
   );
