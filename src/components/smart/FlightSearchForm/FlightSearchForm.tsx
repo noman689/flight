@@ -116,6 +116,7 @@ const FlightSearchForm = ({ isStickyNav = false }: FlightSearchFormProps) => {
     try {
       setIsSearching(true);
       const result = await searchPlacesAPI(value);
+      console.log("result",result)
       type == 'origin'
         ? setDepartureCities(result?.data?.offer?.data)
         : setDestinationCities(result?.data?.offer?.data);

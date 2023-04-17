@@ -22,8 +22,8 @@ const MainLayout = () => {
   return (
     <Layout className="bg-cloud">
       <Router>
-        <HeaderComponent />
-        <StickyNavBar />
+        {/* <HeaderComponent /> */}
+        {/* <StickyNavBar /> */}
         <Content>
           <Switch>
             <Route exact path="/" component={HomePage} />
@@ -43,7 +43,7 @@ const MainLayout = () => {
             <Route exact path="/flight-ticket" component={FlightTicket} />
           </Switch>
         </Content>
-        <Footer />
+        {/* <Footer /> */}
       </Router>
     </Layout>
   );

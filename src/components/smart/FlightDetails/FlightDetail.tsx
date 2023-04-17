@@ -18,8 +18,8 @@ const FlightDetail = () => {
     const getOfers = async () => {
       try {
         setLoading(true);
-        const data = await getFlightOffersAPI(id);
-        setOffersArray(data.data?.offer);
+        const { data } = await getFlightOffersAPI(id);
+        setOffersArray(data.offer?.data);
 
         setLoading(false);
       } catch (e) {
@@ -40,19 +40,22 @@ const FlightDetail = () => {
         </Row>
       ) : (
         <>
-          {!isEmpty(offersArray.slices) && offersArray.slices?.map((item) => {
-            return (
-              <FlightDetailCard
-                fromDate={item.segments[0].departing_at}
-                toDate={item.segments[0].arriving_at}
-                departureSub={item.segments[0].origin.iata_city_code}
-                destinationSub={item.segments[0].destination.iata_city_code}
-                sliceId={item.id}
-                fareAmount={offersArray.total_amount}
-                offerId={offersArray.id}
-              ></FlightDetailCard>
-            );
-          })}
+          {offersArray?.length &&
+            offersArray?.map((offer) => {
+              return offer?.slices?.map((item) => {
+                return (
+                  <FlightDetailCard
+                    fromDate={item.segments[0].departing_at}
+                    toDate={item.segments[0].arriving_at}
+                    departureSub={item.segments[0].origin.iata_city_code}
+                    destinationSub={item.segments[0].destination.iata_city_code}
+                    sliceId={item.id}
+                    fareAmount={offersArray.total_amount}
+                    offerId={offersArray.id}
+                  ></FlightDetailCard>
+                );
+              });
+            })}
         </>
       )}
     </div>
