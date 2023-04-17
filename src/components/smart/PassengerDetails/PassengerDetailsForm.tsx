@@ -39,14 +39,14 @@ const PassengerDetailsForm: FC<PassengerFormProps> = ({
   };
 
   const handleClick = () => {
+    localStorage.setItem("passengerDetail", JSON.stringify({
+      passengerDataForSeatSelection: passengerDataForSeatSelection,
+      passengerInfo: formValues,
+      selectedSlice: summaryData
+    }))
+
     history.push(
-      `/seat-selection/${offerId}?meta=${encodeURIComponent(
-        JSON.stringify({
-          passengerDataForSeatSelection: passengerDataForSeatSelection,
-          passengerInfo: formValues,
-          selectedSlice: summaryData
-        }),
-      )}`,
+      `/seat-selection/${offerId}`
     );
   };
 

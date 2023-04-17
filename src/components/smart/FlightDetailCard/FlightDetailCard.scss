@@ -36,7 +36,21 @@
     }
   }
 }
+.alignitems {
+  justify-content: center;
+  display: flex;
+  align-items: center;
+  a {
+    color: #701644;
+  }
+}
 
+.placeCenter {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
 .cardFirstPart {
   display: flex;
   align-items: center;
@@ -90,32 +104,41 @@
   color: rgb(111, 20, 68);
   text-decoration: underline;
 }
-.book-now {
-  display: flex;
-  align-items: flex-end;
-  justify-content: flex-end;
-  width: 100%;
-  span {
-    font-size: 20px;
-    padding: 10px 16px;
-    background: rgb(111, 20, 68);
-    color: #8e8e8e;
-    border-radius: 10px;
-    &:hover {
-      color: #fff;
-      cursor: pointer;
-    }
-  }
+
+.book-button {
+  background: rgb(111, 20, 68);
+  color: #a8a8a8;
 }
 
-@media (max-width: 768px) {
-  .book-now {
-    margin-top: 22px;
-    span {
-      font-size: 12px;
-      padding: 10px 24px;
-    }
+.bookingButtons {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  :hover {
+    color: #a8a8a8;
   }
+}
+.flight-details {
+  width: max-content;
+  font-weight: 600;
+  font-style: italic;
+  font-size: larger;
+  cursor: pointer;
+}
+@media (max-width: 991px) {
+  .bookingButtons {
+    flex-direction: row;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+  }
+  .stops {
+    margin: 10px 0;
+  }
+}
+@media (max-width: 768px) {
   .hide-card-part {
     display: none;
   }
@@ -140,7 +163,6 @@
     font-size: 13px !important;
   }
   .font-size {
-    // margin-top: 15px;
     font-size: 13px !important;
   }
 }

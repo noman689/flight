@@ -27,8 +27,10 @@ const SeatSelectionComp = () => {
         const { data: sliceData } = await getSelectedOfferDetailsAPI(id);
         setSeatMap(data?.offer);
         setOfferMeta(sliceData?.offer?.data);
-        const encodedData = window.location.href.split('=')[1];
-        const parsedData = JSON.parse(decodeURIComponent(encodedData));
+        const offerInfoString = localStorage.getItem("passengerDetail");
+        const parsedData = JSON.parse(offerInfoString);
+
+
         setPassengerData([...parsedData.passengerDataForSeatSelection]);
         setPassengerInfo([...parsedData.passengerInfo]);
         setSelectedSlice([parsedData.selectedSlice])

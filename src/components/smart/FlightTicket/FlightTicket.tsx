@@ -1,20 +1,35 @@
-import React, { useState, useEffect } from 'react';
-import { Row, Col } from 'antd';
+import React, { useState, useEffect, useRef } from 'react';
+import { Row, Col, Button } from 'antd';
 // @ts-ignore
 import planeImageBlack from '../../../assets/ticketBlack.svg';
 import './FlightTicket.scss';
 import { isEmpty } from 'ramda';
 import moment from 'moment';
 import Barcode from 'react-barcode';
+import { PDFDownloadLink } from '@react-pdf/renderer';
+import FlightTicketPdf from '../FlightTicketPdf/FlightTicketPdf';
 
 const FlightTicket = () => {
+  const flightDetails = {
+    from: 'Lahore',
+    to: 'Dubai',
+    airline: 'Qatar',
+    flightNumber: '12212',
+    departureTerminal: 'Lahore',
+    arrivalTerminal: 'Dubai',
+    departureDate: '12 Aug Tues 2021',
+    departureTime: '12:40',
+    arrivalDate: '12 Aug Tues 2021',
+    arrivalTime: '15:40',
+    seatClass: 'Economy',
+    seatNumber: '56',
+  };
   const [ticketsData, setTicketsData] = useState([]);
 
   useEffect(() => {
-    const encodedData = window.location.href.split('=')[1];
-    const meta = JSON.parse(decodeURIComponent(encodedData));
+    const offerInfoString = localStorage.getItem('offerInfo');
+    const meta = JSON.parse(offerInfoString);
     if (!isEmpty(meta)) {
-      console.log('id', meta);
       const dataObj = meta.confirmationDetails.data.offer?.data;
 
       dataObj.passengers.map((value) => {
@@ -32,6 +47,22 @@ const FlightTicket = () => {
     }
   }, [window.location.href]);
 
+  const [screenWidth, setScreenWidth] = useState(window.innerWidth);
+  const [screenHeight, setScreenHeight] = useState(window.innerHeight);
+
+  const handleResize = () => {
+    setScreenWidth(window.innerWidth);
+    setScreenHeight(window.innerHeight);
+  };
+
+  useEffect(() => {
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
   return (
     <div style={{ width: '100%' }}>
       {ticketsData.length &&
@@ -43,7 +74,7 @@ const FlightTicket = () => {
                   xs={24}
                   sm={24}
                   md={12}
-                  lg={10}
+                  lg={screenWidth === 1024 ? 11 : 8}
                   className="flexCenter borderTopLeftRadius smallscreen-borderrighttop dottedBorder"
                 >
                   <img
@@ -57,17 +88,17 @@ const FlightTicket = () => {
                   xs={24}
                   sm={24}
                   md={9}
-                  lg={6}
+                  lg={screenWidth === 1024 ? 7 : 4}
                   className="flexCenter borderTopRightRadius hideOnSmallScreens"
                 ></Col>
               </Row>
 
-              <Row justify={'center'} className="RowHeight">
+              <Row justify={'center'} className="RowHeight mt10">
                 <Col
                   xs={24}
                   sm={24}
                   md={12}
-                  lg={10}
+                  lg={screenWidth === 1024 ? 11 : 8}
                   className="displayCenter Row2BorderCol1Top"
                 >
                   <div>
@@ -87,15 +118,19 @@ const FlightTicket = () => {
                   xs={24}
                   sm={24}
                   md={9}
-                  lg={6}
+                  lg={screenWidth === 1024 ? 7 : 4}
                   className="Row2BorderCol2Top"
                 >
-                  <Row justify={'center'} className="rotate hideOnSmallScreens">
+                  <Row
+                    justify={'center'}
+                    className="rotate hideOnSmallScreens"
+                    align="bottom"
+                  >
                     <Col xs={24} sm={24} md={24} lg={8}>
-                      <div className=" marginLeft10 fontSize20 margin768 fontSizeOn768">
+                      <div className=" invertedDivmarginLeft10 fontSize20 margin768 fontSizeOn768">
                         <span className="headingColor">Passenger</span>
                         <br />
-                        <span>
+                        <span className="text-capitalize">
                           {item.passenger.given_name +
                             ' ' +
                             item.passenger.family_name}
@@ -103,14 +138,14 @@ const FlightTicket = () => {
                       </div>
                     </Col>
                     <Col xs={24} sm={24} md={24} lg={8}>
-                      <div className=" marginLeft10 fontSize20 margin768 fontSizeOn768">
+                      <div className=" invertedDivmarginLeft10 fontSize20 margin768 fontSizeOn768">
                         <span className="headingColor">Gate</span>
                         <br />
                         <span>23A</span>
                       </div>
                     </Col>
                     <Col xs={24} sm={24} md={24} lg={24}>
-                      <div className=" marginLeft10 fontSize20 margin768 fontSizeOn768">
+                      <div className=" invertedDivmarginLeft10 fontSize20 margin768 fontSizeOn768">
                         <span className="headingColor">Departure</span>
                         <br />
                         <span>
@@ -123,64 +158,99 @@ const FlightTicket = () => {
                   </Row>
                 </Col>
               </Row>
-              <Row justify={'center'}>
+              <Row justify={'center'} align={'bottom'}>
                 <Col
                   xs={24}
                   sm={24}
                   md={12}
-                  lg={10}
+                  lg={screenWidth === 1024 ? 11 : 8}
                   className="displayCenter Row2BorderCol1 smallScreen-borderRightBottom"
                 >
                   <div className="footer-div">
-                    <div className="dFlex fontSize20 size768">
-                      <div className=" marginLeft10">
-                        <span className="headingColor">Passenger</span>
-                        <br />
-                        <span>
-                          {item.passenger.given_name +
-                            ' ' +
-                            item.passenger.family_name}
-                        </span>
+                    <Row dir="col" justify={'center'}>
+                      <div className="divOverFlow2">
+                        <Col xs={24} sm={24} md={24} lg={24}>
+                          <Barcode
+                            value={item}
+                            displayValue={false}
+                            width={1}
+                            height={30}
+                          />
+                        </Col>
                       </div>
-                      <div className=" marginLeft10">
-                        <span className="headingColor">Gate</span>
-                        <br />
-                        <span>23A</span>
-                      </div>
-                      <div className=" marginLeft10">
-                        <span className="headingColor">Departure</span>
-                        <br />
-                        <span>
-                          {moment(item.slice.segments[0].departing_at).format(
-                            'HH:mm:ss YYYY-MM-DD',
-                          )}
-                        </span>
-                      </div>
-                    </div>
-                    <div>
-                      <Barcode value={item} displayValue={false} />
-                    </div>
+                      <Col xs={24} sm={24} md={24} lg={24}>
+                        <div className="dFlex fontSize20 size768">
+                          <div className=" marginLeft10">
+                            <span className="headingColor">Passenger</span>
+                            <br />
+                            <span className="text-capitalize">
+                              {item.passenger.given_name +
+                                ' ' +
+                                item.passenger.family_name}
+                            </span>
+                          </div>
+                          <div className=" marginLeft10">
+                            <span className="headingColor">Gate</span>
+                            <br />
+                            <span>23A</span>
+                          </div>
+                          <div className=" marginLeft10">
+                            <span className="headingColor">Departure</span>
+                            <br />
+                            <span>
+                              {moment(
+                                item.slice.segments[0].departing_at,
+                              ).format('HH:mm:ss YYYY-MM-DD')}
+                            </span>
+                          </div>
+                        </div>
+                      </Col>
+                    </Row>
                   </div>
                 </Col>
                 <Col
                   xs={24}
                   sm={24}
                   md={9}
-                  lg={6}
+                  lg={screenWidth === 1024 ? 7 : 4}
                   className="Row2BorderCol2 hideOnSmallScreens"
                 >
                   <Row>
-                    <Col xs={24} sm={24} md={5} lg={15}></Col>
-                    <Col xs={24} sm={24} md={5} lg={5}>
-                      <Barcode value={item} displayValue={false} />
+                    <Col
+                      xs={24}
+                      sm={24}
+                      md={24}
+                      lg={24}
+                      style={{ textAlign: 'center', marginTop: '20px' }}
+                    >
+                      <div className="divOverFlow1">
+                        <Barcode
+                          value={item}
+                          displayValue={false}
+                          width={1}
+                          height={30}
+                        />
+                      </div>
                     </Col>
                   </Row>
                 </Col>
               </Row>
+              <Row justify={'center'} style={{ marginTop: 40 }}>
+                <Button style={{ borderColor: '#701644' }}>
+                  <PDFDownloadLink
+                    document={<FlightTicketPdf {...flightDetails} />}
+                    fileName="e-ticket.pdf"
+                    style={{ textDecoration: 'none', color: '#701644' }}
+                  >
+                    {({ loading }) =>
+                      loading ? 'Loading document...' : 'Download PDF'
+                    }
+                  </PDFDownloadLink>
+                </Button>
+              </Row>
             </React.Fragment>
           );
         })}
-
     </div>
   );
 };
