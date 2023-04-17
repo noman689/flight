@@ -647,8 +647,8 @@ const NewFlightSearchForm = ({
                           defaultValue={[0, 23]}
                         />
                       </div>
-                      <div>
-                        <Button>Confirm</Button>
+                      <div className="dflexFlexEnd">
+                        <Button className="btnConfirm">Confirm</Button>
                       </div>
                     </div>
                   }
@@ -711,8 +711,8 @@ const NewFlightSearchForm = ({
                           defaultValue={[0, 23]}
                         />
                       </div>
-                      <div>
-                        <Button>Confirm</Button>
+                      <div className="dflexFlexEnd">
+                        <Button className="btnConfirm">Confirm</Button>
                       </div>
                     </div>
                   }
