@@ -339,7 +339,7 @@ const NewFlightSearchForm = ({
                         </div>
                       }
                     >
-                      <div style={{ marginBottom: '30px', borderRadius: '20px', display: 'flex' }}>
+                      <div className='containerBtn'>
                         <span className="btnAnyTime" onClick={() => setDepartureVisibility(!departureVisibility)}>At any time</span>
                         <span style={{ color: '#985eaf' }}><DownOutlined /></span>
                       </div>
@@ -406,7 +406,7 @@ const NewFlightSearchForm = ({
                         </div>
                       }
                     >
-                      <div style={{ marginBottom: '30px', borderRadius: '20px', display: 'flex' }}>
+                      <div className='containerBtn'>
                         <span className="btnAnyTime" onClick={() => setReturnVisibility(!returnVisibility)}>At any time</span>
                         <span style={{ color: '#985eaf' }}><DownOutlined /></span>
                       </div>
@@ -478,7 +478,7 @@ const NewFlightSearchForm = ({
                     >
 
                     </Popover>
-                    <div style={{ marginBottom: '30px', borderRadius: '20px', display: 'flex' }}>
+                    <div className='containerBtn'>
                       <span className="btnAnyTime" onClick={() => setDepartureVisibility(!departureVisibility)}>At any time</span>
                       <span style={{ color: '#985eaf' }}><DownOutlined /></span>
                     </div>
@@ -500,14 +500,14 @@ const NewFlightSearchForm = ({
                     trigger="click"
                     content={
                       <>
-                        <div style={{ padding: '15px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', }}>
-                          <div style={{ marginRight: '30px', display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
+                        <div className='agePopover'>
+                          <div className='ageTitle'>
                             <span className="fontSize20">Adults</span>
                             <span className="">18+</span>
                           </div>
                           <Row align={'middle'}>
                             <Button onClick={() => handleCount("adult", "subtract")} style={{ background: 'gray' }}>
-                              <span style={{ color: 'white', fontSize: '16px' }}>-</span>
+                              <span className='ageIcon'>-</span>
 
                             </Button>
 
@@ -515,14 +515,14 @@ const NewFlightSearchForm = ({
                               <span style={{ marginInline: '10px', }}>{adult}</span>
                             </div>
                             <Button onClick={() => handleCount("adult", "add")} style={{ background: 'black' }}>
-                              <span style={{ color: 'white', fontSize: '16px' }}>+</span>
+                              <span className='ageIcon'>+</span>
 
                             </Button>
                           </Row>
                         </div>
 
-                        <div style={{ padding: '15px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                          <div style={{ marginRight: '30px', display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
+                        <div className='agePopover'>
+                          <div className='ageTitle'>
                             <div style={{ minWidth: '20px' }}>
                               <span className="fontSize20">Children</span>
                             </div>
@@ -530,13 +530,13 @@ const NewFlightSearchForm = ({
                           </div>
                           <Row align={'middle'}>
                             <Button onClick={() => handleCount("children", "subtract")} style={{ background: 'gray' }}>
-                              <span style={{ color: 'white', fontSize: '16px' }}>-</span>
+                              <span className='ageIcon'>-</span>
 
                             </Button>
 
                             <span style={{ marginInline: '10px' }}>{children}</span>
                             <Button onClick={() => handleCount("children", "add")} style={{ background: 'black' }}>
-                              <span style={{ color: 'white', fontSize: '16px' }}>+</span>
+                              <span className='ageIcon'>+</span>
                             </Button>
                           </Row>
                         </div>
