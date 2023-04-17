@@ -440,6 +440,7 @@ const FlightSearchForm = ({ isStickyNav = false }: FlightSearchFormProps) => {
                   </Popover>
                 </Form.Item>
               </Col>
+
               <Col
                 xs={24}
                 sm={24}
