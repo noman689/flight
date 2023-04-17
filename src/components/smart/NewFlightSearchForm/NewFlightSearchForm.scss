@@ -60,7 +60,7 @@
   .btnSearchFlight {
     background-color: #ffa903;
     color: black;
-    // width: 190px;
+    width: 99%;
     height: 55px;
     font-size: 18px;
     // margin-left: 20px;
@@ -96,7 +96,7 @@
   }
 
   .ant-popover-inner {
-    width: 300px;
+    // width: 300px;
   }
   .fontSize20 {
     font-size: 20px;
@@ -231,7 +231,7 @@
 }
 
 .ant-popover-inner {
-  width: 300px !important;
+  //   width: 300px !important;
 }
 
 .form {
@@ -334,10 +334,83 @@
   }
 }
 
-
 .MainRow {
+  padding: 20px;
   .ant-radio-wrapper .ant-radio-checked .ant-radio-inner {
     border-color: #6cc04e;
     background-color: #37bc0d;
   }
+  .space-between {
+    display: flex;
+    justify-content: space-between;
+  }
+  .createNewOrder {
+    font-size: 29px;
+    margin-bottom: 29px;
+  }
+  .radioHeading {
+    font-size: 17px;
+  }
+  .ant-select-selector {
+    border-radius: 8px !important;
+  }
+  .ant-picker {
+    border-radius: 8px !important;
+  }
+  .ant-input {
+    border-radius: 8px !important;
+  }
+  .ant-radio {
+    margin-bottom: 6px;
+  }
+  .dflexFlexEnd {
+    display: flex;
+    justify-content: end;
+    .fontSize {
+      font-size: 15px;
+    }
+    .padding-right10 {
+      padding-right: 10px;
+    }
+    .fontSize:hover {
+      color: #415aae;
+      cursor: pointer;
+    }
+  }
+}
+.ant-popover-inner {
+  width: 100% !important;
+}
+
+.ant-input-number-in-form-item {
+  width: 100% !important;
+}
+
+.Airline {
+  .ant-select {
+    width: 99%;
+    margin-top: 20px;
+    margin-bottom: 25px;
+  }
+}
+
+.centerBtn {
+  display: flex;
+  justify-content: center;
+}
+
+.btnAnyTime {
+  border-radius: 20px;
+}
+
+.popover-anyTime {
+  .ant-popover-inner .ant-popover-content {
+    width: 280px !important;
+  }
+}
+
+.planeLogo {
+  padding-left: 10px;
+  padding-right: 10px;
+  width: 40px;
 }

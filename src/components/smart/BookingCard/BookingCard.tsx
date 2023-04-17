@@ -10,6 +10,7 @@ import {
 
 import './BookingCard.scss';
 import FlightSearchForm from '../FlightSearchForm/FlightSearchForm';
+import NewFlightSearchForm from '../NewFlightSearchForm/NewFlightSearchForm';
 
 const SearchFlightCard = () => {
   const [screenSize, setScreenSize] = useState({
@@ -41,7 +42,7 @@ const SearchFlightCard = () => {
         </span>
       ),
       key: 'book',
-      children: <FlightSearchForm />,
+      children: <NewFlightSearchForm />,
     },
     {
       label: (
@@ -51,7 +52,7 @@ const SearchFlightCard = () => {
         </span>
       ),
       key: 'trip',
-      children: <span className='textColor'>Comming Soon..!</span>,
+      children: <span className="textColor">Comming Soon..!</span>,
     },
     {
       label: (
@@ -61,7 +62,7 @@ const SearchFlightCard = () => {
         </span>
       ),
       key: 'checkIn',
-      children: <span className='textColor'>Comming Soon..!</span>,
+      children: <span className="textColor">Comming Soon..!</span>,
     },
     screenSize.width > 768 && {
       label: (
@@ -71,7 +72,7 @@ const SearchFlightCard = () => {
         </span>
       ),
       key: 'flightStatus',
-      children: <span className='textColor'>Comming Soon..!</span>,
+      children: <span className="textColor">Comming Soon..!</span>,
     },
   ];
   return (
