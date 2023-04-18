@@ -38,7 +38,7 @@ const disabledDate: RangePickerProps['disabledDate'] = (current) => {
   return current && current < dayjs().endOf('day');
 };
 
-const NewFlightSearchForm = ({}: FlightSearchFormProps) => {
+const NewFlightSearchForm = ({ }: FlightSearchFormProps) => {
   const history = useHistory();
   const [form] = Form.useForm();
   const [isLoading, setIsLoading] = useState(false);
@@ -290,6 +290,7 @@ const NewFlightSearchForm = ({}: FlightSearchFormProps) => {
                               max={23}
                               range={{ draggableTrack: true }}
                               defaultValue={[0, 23]}
+                              marks={marks}
                             />
                           </div>
                           <br />
@@ -306,6 +307,7 @@ const NewFlightSearchForm = ({}: FlightSearchFormProps) => {
                               max={23}
                               range={{ draggableTrack: true }}
                               defaultValue={[0, 23]}
+                              marks={marks}
                             />
                           </div>
                           <div className="dflexFlexEnd">
