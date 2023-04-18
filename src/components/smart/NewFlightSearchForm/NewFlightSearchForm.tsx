@@ -38,7 +38,7 @@ const disabledDate: RangePickerProps['disabledDate'] = (current) => {
   return current && current < dayjs().endOf('day');
 };
 
-const NewFlightSearchForm = ({}: FlightSearchFormProps) => {
+const NewFlightSearchForm = ({ }: FlightSearchFormProps) => {
   const history = useHistory();
   const [form] = Form.useForm();
   const [isLoading, setIsLoading] = useState(false);
