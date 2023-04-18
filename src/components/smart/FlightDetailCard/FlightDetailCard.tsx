@@ -7,19 +7,13 @@ import { useHistory } from 'react-router-dom';
 import { CloudFilled, LockFilled, LockOutlined } from '@ant-design/icons';
 
 const FlightDetailCard = ({
-  fromDate,
-  toDate,
-  departureSub,
-  destinationSub,
-  fareAmount,
-  offerId,
-  sliceId,
+  data
 }) => {
   const history = useHistory();
 
   const handleClick = (e) => {
     e.stopPropagation();
-    history.push(`/offer-details/${offerId}/${sliceId}`);
+    // history.push(`/offer-details/${offerId}/${sliceId}`);
   };
   return (
     <div className="flight-detail-card-item">
@@ -44,21 +38,25 @@ const FlightDetailCard = ({
             </Col>
             <Col xs={24} sm={24} md={24} lg={13}>
               <div className="cardFirstPart">
-                <span>{moment(fromDate).format('hh:m')}</span>
+                {/* <span>{moment(fromDate).format('hh:m')}</span> */}
+                <span>00:00</span>
                 <Divider>
                   <img
                     src={planeImageBlack}
                     style={{ height: 20, width: 20 }}
                   />
                 </Divider>
-                <span>{moment(toDate).format('hh:m')}</span>
+                <span>00:00</span>
+                {/* <span>{moment(toDate).format('hh:m')}</span> */}
               </div>
               <div className="cardSecondPart dullWhite">
-                <span>{departureSub}</span>
+              <span>TT</span>
+                {/* <span>{departureSub}</span> */}
                 {/* ============DURATION============= */}
                 <span>8 Hrs</span>
                 {/* ============DURATION============= */}
-                <span>{destinationSub}</span>
+              <span>TT</span>
+                {/* <span>{destinationSub}</span> */}
               </div>
             </Col>
             <Col xs={24} sm={24} md={24} lg={2} className="placeCenter">
@@ -66,7 +64,8 @@ const FlightDetailCard = ({
             </Col>
             <Col xs={24} sm={24} md={24} lg={4} className="placeCenter ">
               <div className="bookingButtons">
-                <h6>Fare: ${fareAmount}</h6>
+                <h6>1200</h6>
+                {/* <h6>Fare: ${fareAmount}</h6> */}
                 <div>
                   <p className="alignitems">
                     <LockFilled size={7} />

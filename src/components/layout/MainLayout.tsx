@@ -23,8 +23,8 @@ const MainLayout = () => {
   return (
     <Layout className="bg-cloud">
       <Router>
-        <HeaderComponent />
-        <StickyNavBar />
+        {/* <HeaderComponent /> */}
+        {/* <StickyNavBar /> */}
         <Content>
           <Switch>
             <Route exact path="/" component={HomePage} />
@@ -49,9 +49,9 @@ const MainLayout = () => {
             />
           </Switch>
         </Content>
-        <div style={{ marginTop: '50px' }}>
+        {/* <div style={{ marginTop: '50px' }}>
           <Footer />
-        </div>
+        </div> */}
       </Router>
     </Layout>
   );

@@ -8,8 +8,8 @@ const HomePage = () => {
   return (
     <div className='content-section'>
       <SearchFlightCard />
-      <DisplayCards />
-      <DestinationsFlicker/>
+      {/* <DisplayCards /> */}
+      {/* <DestinationsFlicker/> */}
     </div>
   );
 };
