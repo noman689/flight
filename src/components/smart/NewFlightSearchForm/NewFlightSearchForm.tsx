@@ -389,7 +389,7 @@ const NewFlightSearchForm = ({ }: FlightSearchFormProps) => {
                         }
                       >
                         <span className="btnAnyTime">At any time</span>
-                        <span style={{ color: '#985eaf' }}>
+                        <span className="icon-styling">
                           <DownOutlined />
                         </span>
                       </div>
@@ -496,7 +496,7 @@ const NewFlightSearchForm = ({ }: FlightSearchFormProps) => {
                         >
                           At any time
                         </span>
-                        <span style={{ color: '#985eaf' }}>
+                        <span className="icon-styling">
                           <DownOutlined />
                         </span>
                       </div>
@@ -608,7 +608,7 @@ const NewFlightSearchForm = ({ }: FlightSearchFormProps) => {
                       >
                         At any time
                       </span>
-                      <span style={{ color: '#985eaf' }}>
+                      <span className="icon-styling">
                         <DownOutlined />
                       </span>
                     </div>
@@ -643,7 +643,7 @@ const NewFlightSearchForm = ({ }: FlightSearchFormProps) => {
                               <span className="ageIcon">-</span>
                             </Button>
 
-                            <div style={{ minWidth: '20px' }}>
+                            <div className='textContainer'>
                               <span style={{ marginInline: '10px' }}>
                                 {adult}
                               </span>
@@ -659,9 +659,9 @@ const NewFlightSearchForm = ({ }: FlightSearchFormProps) => {
 
                         <div className="agePopover">
                           <div className="ageTitle">
-                            <div style={{ minWidth: '20px' }}>
-                              <span className="fontSize20">Children</span>
-                            </div>
+
+                            <span className="fontSize20">Children</span>
+
                             <span className="">0--17</span>
                           </div>
                           <Row align={'middle'}>
@@ -673,10 +673,11 @@ const NewFlightSearchForm = ({ }: FlightSearchFormProps) => {
                             >
                               <span className="ageIcon">-</span>
                             </Button>
-
-                            <span style={{ marginInline: '10px' }}>
-                              {children}
-                            </span>
+                            <div className='textContainer'>
+                              <span style={{ marginInline: '10px' }}>
+                                {children}
+                              </span>
+                            </div>
                             <Button
                               onClick={() => handleCount('children', 'add')}
                               style={{ background: '#701644' }}

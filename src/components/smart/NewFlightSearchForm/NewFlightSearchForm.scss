@@ -455,10 +455,38 @@
   cursor: pointer !important;
 }
 
+.ant-slider .ant-slider-track,
+.ant-slider .ant-slider-handle::after,
+.ant-slider .ant-slider-dot-active,
+.ant-slider:hover .ant-slider-track {
+  background-color: #985eaf;
+  // opacity: 0.3;
+
+}
+
+.ant-slider .ant-slider-dot-active,
+.ant-slider:hover .ant-slider-dot-active {
+  border-color: #985eaf;
+  // opacity: 0.3;
+}
+
+.ant-slider .ant-slider-handle::after,
+.ant-slider .ant-slider-dot-active {
+  box-shadow: 0 0 0 2px #985eaf !important;
+}
+
+
 .containerBtn {
   margin-bottom: 30px;
   border-radius: 20px;
   display: flex;
+}
+
+.icon-styling {
+  color: #985eaf;
+  margin: -2px 0px 0px 3px;
+  cursor: pointer;
+  font-weight: 500;
 }
 
 .agePopover {
@@ -483,6 +511,13 @@
 .ageIcon {
   color: white;
   font-size: 16px;
+}
+
+.textContainer {
+  min-width: 35px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 // .ant-select-item .ant-select-item-option .custom-option .ant-select-item-option-active {
