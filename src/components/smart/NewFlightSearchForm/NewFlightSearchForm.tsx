@@ -54,6 +54,12 @@ const NewFlightSearchForm = ({}: FlightSearchFormProps) => {
   const [hideFilter, setHideFilter] = useState(false);
   const [adult, setAdult] = useState(1);
   const [children, setChildren] = useState(0);
+  const [rangeValues, setRangeValues] = useState({
+    to_departure: [],
+    from_departure: [],
+    to_arrival: [],
+    from_arrival: [],
+  });
   const cabinClass = [
     { label: 'Economy', value: 'economy' },
     { label: 'Premium Economy', value: 'premium_economy' },
@@ -70,6 +76,8 @@ const NewFlightSearchForm = ({}: FlightSearchFormProps) => {
     { label: 'Sky Ways', value: '5' },
     { label: 'Qatar Airways', value: '6' },
   ];
+
+  console.log('rangeValues', rangeValues);
 
   const onFinish = async (values) => {
     const passengers = [
@@ -88,6 +96,7 @@ const NewFlightSearchForm = ({}: FlightSearchFormProps) => {
       return_date: values.return_date?.toISOString(),
       cabin_class: values.cabin_class,
       passengers: passengers,
+      rangeValues:rangeValues,
       return_offer: ticketType == 'return' ? true : false,
     };
     try {
@@ -143,6 +152,31 @@ const NewFlightSearchForm = ({}: FlightSearchFormProps) => {
       }
     }
   }
+
+  const showRange = (value) => {
+    if (value?.[0] > 0 && value?.[1] == 23) {
+      return (
+        <span>
+          after <b>{Math.trunc(value[0])}:00</b>
+        </span>
+      );
+    } else if (value?.[1] < 23 && value?.[0] == 0) {
+      return (
+        <span>
+          before <b>{Math.trunc(value[1])}:00</b>
+        </span>
+      );
+    } else if (value?.[0] > 0 && value?.[1] < 23) {
+      return (
+        <span>
+          <b>{Math.trunc(value[0])}:00</b>-<b>{Math.trunc(value[1])}:00</b>
+        </span>
+      );
+    } else {
+      return <></>;
+    }
+  };
+
   return (
     <>
       <div className="flight-search-form">
@@ -278,34 +312,58 @@ const NewFlightSearchForm = ({}: FlightSearchFormProps) => {
                       content={
                         <div style={{ width: '280px' }}>
                           <div>
-                            <span>
-                              <img
-                                className="planeLogo"
-                                src="https://www.svgrepo.com/show/57834/takeoff-the-plane.svg"
-                              />
-                              Take Off
-                            </span>
+                            <div className="range-header">
+                              <span>
+                                <img
+                                  className="planeLogo"
+                                  src="https://www.svgrepo.com/show/57834/takeoff-the-plane.svg"
+                                />
+                                Take Off
+                              </span>
+                              <span>
+                                {showRange(rangeValues.from_departure)}
+                              </span>
+                            </div>
                             <Slider
                               min={0}
                               max={23}
                               range={{ draggableTrack: true }}
                               defaultValue={[0, 23]}
+                              marks={marks}
+                              tooltip={{ open: false }}
+                              onChange={(value) =>
+                                setRangeValues({
+                                  ...rangeValues,
+                                  from_departure: value,
+                                })
+                              }
                             />
                           </div>
                           <br />
                           <div>
-                            <span>
-                              <img
-                                className="planeLogo"
-                                src="https://www.svgrepo.com/show/122269/plane-landing.svg"
-                              />
-                              Landing
-                            </span>
+                            <div className="range-header">
+                              <span>
+                                <img
+                                  className="planeLogo"
+                                  src="https://www.svgrepo.com/show/122269/plane-landing.svg"
+                                />
+                                Landing
+                              </span>
+                              <span>{showRange(rangeValues.to_departure)}</span>
+                            </div>
                             <Slider
                               min={0}
                               max={23}
                               range={{ draggableTrack: true }}
                               defaultValue={[0, 23]}
+                              marks={marks}
+                              tooltip={{ open: false }}
+                              onChange={(value) =>
+                                setRangeValues({
+                                  ...rangeValues,
+                                  to_departure: value,
+                                })
+                              }
                             />
                           </div>
                           <div className="dflexFlexEnd">
@@ -356,36 +414,56 @@ const NewFlightSearchForm = ({}: FlightSearchFormProps) => {
                       content={
                         <div style={{ width: '300px' }}>
                           <div>
-                            <span>
-                              <img
-                                className="planeLogo"
-                                src="https://www.svgrepo.com/show/57834/takeoff-the-plane.svg"
-                              />
-                              Take Off
-                            </span>
+                            <div className="range-header">
+                              <span>
+                                <img
+                                  className="planeLogo"
+                                  src="https://www.svgrepo.com/show/57834/takeoff-the-plane.svg"
+                                />
+                                Take Off
+                              </span>
+                              <span>{showRange(rangeValues.from_arrival)}</span>
+                            </div>
                             <Slider
                               min={0}
                               max={23}
                               range={{ draggableTrack: true }}
                               defaultValue={[0, 23]}
                               marks={marks}
+                              tooltip={{ open: false }}
+                              onChange={(value) =>
+                                setRangeValues({
+                                  ...rangeValues,
+                                  from_arrival: value,
+                                })
+                              }
                             />
                           </div>
                           <br />
                           <div>
-                            <span>
-                              <img
-                                className="planeLogo"
-                                src="https://www.svgrepo.com/show/122269/plane-landing.svg"
-                              />
-                              Landing
-                            </span>
+                            <div className="range-header">
+                              <span>
+                                <img
+                                  className="planeLogo"
+                                  src="https://www.svgrepo.com/show/122269/plane-landing.svg"
+                                />
+                                Landing
+                              </span>
+                              <span>{showRange(rangeValues.to_arrival)}</span>
+                            </div>
                             <Slider
                               min={0}
                               max={23}
                               range={{ draggableTrack: true }}
                               defaultValue={[0, 23]}
                               marks={marks}
+                              tooltip={{ open: false }}
+                              onChange={(value) =>
+                                setRangeValues({
+                                  ...rangeValues,
+                                  to_arrival: value,
+                                })
+                              }
                             />
                           </div>
                           <div className="dflexFlexEnd">
@@ -439,36 +517,60 @@ const NewFlightSearchForm = ({}: FlightSearchFormProps) => {
                       content={
                         <div style={{ width: '300px' }}>
                           <div>
-                            <span>
-                              <img
-                                className="planeLogo"
-                                src="https://www.svgrepo.com/show/57834/takeoff-the-plane.svg"
-                              />
-                              Take Off
-                            </span>
+                            <div className="range-header">
+                              <span>
+                                <img
+                                  className="planeLogo"
+                                  src="https://www.svgrepo.com/show/57834/takeoff-the-plane.svg"
+                                />
+                                Take Off
+                              </span>
+                              <span>
+                                {showRange(rangeValues.from_departure)}
+                              </span>
+                            </div>
                             <Slider
                               min={0}
                               max={23}
                               range={{ draggableTrack: true }}
                               defaultValue={[0, 23]}
                               marks={marks}
+                              tooltip={{ open: false }}
+                              onChange={(value) =>
+                                setRangeValues({
+                                  ...rangeValues,
+                                  from_departure: value,
+                                })
+                              }
                             />
                           </div>
                           <br />
                           <div>
-                            <span>
-                              <img
-                                className="planeLogo"
-                                src="https://www.svgrepo.com/show/122269/plane-landing.svg"
-                              />
-                              Landing
-                            </span>
+                            <div className="range-header">
+                              <span>
+                                <img
+                                  className="planeLogo"
+                                  src="https://www.svgrepo.com/show/122269/plane-landing.svg"
+                                />
+                                Landing
+                              </span>
+                              <span>
+                                {showRange(rangeValues.to_departure)}
+                              </span>
+                            </div>
                             <Slider
                               min={0}
                               max={23}
                               range={{ draggableTrack: true }}
                               defaultValue={[0, 23]}
                               marks={marks}
+                              tooltip={{ open: false }}
+                              onChange={(value) =>
+                                setRangeValues({
+                                  ...rangeValues,
+                                  to_departure: value,
+                                })
+                              }
                             />
                           </div>
                           <div className="dflexFlexEnd">
