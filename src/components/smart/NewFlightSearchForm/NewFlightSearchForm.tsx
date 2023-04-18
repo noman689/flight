@@ -54,6 +54,38 @@ const NewFlightSearchForm = ({ }: FlightSearchFormProps) => {
   const [hideFilter, setHideFilter] = useState(false);
   const [adult, setAdult] = useState(1);
   const [children, setChildren] = useState(0);
+  const [departureTime, setDepartureTime] = useState({
+    takeOff:
+      [[0, 23]]
+    ,
+    landing:
+      [[0.23]]
+    ,
+  });
+  const [returnTime, setReturnTime] = useState({
+    takeOff:
+      [[0, 23]]
+    ,
+    landing:
+      [[0, 23]]
+    ,
+  });
+  useEffect(() => {
+    setDepartureTime({
+      takeOff: [[0, 23]],
+      landing: [[0, 23]],
+    });
+    setReturnTime({
+      takeOff: [[0, 23]],
+      landing: [[0, 23]],
+    });
+  }, [ticketType]);
+
+  useEffect(() => {
+    console.log(departureTime, 'departureTime');
+    console.log(returnTime, 'retrurnTime');
+  }, [departureTime, returnTime]);
+
   const cabinClass = [
     { label: 'Economy', value: 'economy' },
     { label: 'Premium Economy', value: 'premium_economy' },
@@ -276,41 +308,67 @@ const NewFlightSearchForm = ({ }: FlightSearchFormProps) => {
                       trigger="click"
                       open={departureVisibility}
                       content={
-                        <div style={{ width: '280px' }}>
+                        <div className="popup-container">
                           <div>
-                            <span>
-                              <img
-                                className="planeLogo"
-                                src="https://www.svgrepo.com/show/57834/takeoff-the-plane.svg"
-                              />
-                              Take Off
-                            </span>
+                            <Row justify={'space-between'}>
+                              <span>
+                                <img
+                                  className="planeLogo"
+                                  src="https://www.svgrepo.com/show/57834/takeoff-the-plane.svg"
+                                />
+                                Take Off
+                              </span>
+
+                              <span>
+                                {departureTime.takeOff[0][0] === 0 && departureTime.takeOff[0][1] === 23
+                                  ? "any time"
+                                  : `${departureTime.takeOff[0][0]} - ${departureTime.takeOff[0][1]}`}
+                              </span>
+                            </Row>
                             <Slider
                               min={0}
                               max={23}
                               range={{ draggableTrack: true }}
                               defaultValue={[0, 23]}
                               marks={marks}
-                              onChange={(e) => console.log(e)}
-
+                              onChange={(e) => {
+                                setDepartureTime((prevState) => ({
+                                  ...prevState,
+                                  takeOff: [e],
+                                }));
+                              }}
                             />
                           </div>
                           <br />
                           <div>
-                            <span>
-                              <img
-                                className="planeLogo"
-                                src="https://www.svgrepo.com/show/122269/plane-landing.svg"
-                              />
-                              Landing
-                            </span>
+                            <Row justify={'space-between'}>
+                              <span>
+                                <img
+                                  className="planeLogo"
+                                  src="https://www.svgrepo.com/show/57834/takeoff-the-plane.svg"
+                                />
+                                Landing
+                              </span>
+
+
+                              <span>
+                                {departureTime.landing[0][0] === 0 && departureTime.landing[0][1] === 23
+                                  ? "any time"
+                                  : `${departureTime.landing[0][0]} - ${departureTime.landing[0][1]}`}
+                              </span>
+                            </Row>
                             <Slider
                               min={0}
                               max={23}
                               range={{ draggableTrack: true }}
                               defaultValue={[0, 23]}
                               marks={marks}
-                              onChange={(e) => console.log(e)}
+                              onChange={(e) => {
+                                setDepartureTime((prevState) => ({
+                                  ...prevState,
+                                  landing: [e],
+                                }));
+                              }}
                             />
                           </div>
                           <div className="dflexFlexEnd">
@@ -359,40 +417,65 @@ const NewFlightSearchForm = ({ }: FlightSearchFormProps) => {
                       trigger="click"
                       open={returnVisibility}
                       content={
-                        <div style={{ width: '300px' }}>
+                        <div className="popup-container">
                           <div>
-                            <span>
-                              <img
-                                className="planeLogo"
-                                src="https://www.svgrepo.com/show/57834/takeoff-the-plane.svg"
-                              />
-                              Take Off
-                            </span>
+                            <Row justify={'space-between'}>
+                              <span>
+                                <img
+                                  className="planeLogo"
+                                  src="https://www.svgrepo.com/show/57834/takeoff-the-plane.svg"
+                                />
+                                Take Off
+                              </span>
+                              <span>
+                                {returnTime.takeOff[0][0] === 0 && returnTime.takeOff[0][1] === 23
+                                  ? "any time"
+                                  : `${returnTime.takeOff[0][0]} - ${returnTime.takeOff[0][1]}`}
+                              </span>
+
+                            </Row>
                             <Slider
                               min={0}
                               max={23}
                               range={{ draggableTrack: true }}
                               defaultValue={[0, 23]}
                               marks={marks}
-                              onChange={(e) => console.log(e)}
+                              onChange={(e) => {
+                                setReturnTime((prevState) => ({
+                                  ...prevState,
+                                  takeOff: [e],
+                                }));
+                              }}
                             />
                           </div>
                           <br />
                           <div>
-                            <span>
-                              <img
-                                className="planeLogo"
-                                src="https://www.svgrepo.com/show/122269/plane-landing.svg"
-                              />
-                              Landing
-                            </span>
+                            <Row justify={'space-between'}>
+                              <span>
+                                <img
+                                  className="planeLogo"
+                                  src="https://www.svgrepo.com/show/122269/plane-landing.svg"
+                                />
+                                Landing
+                              </span>
+                              <span>
+                                {returnTime.landing[0][0] === 0 && returnTime.landing[0][1] === 23
+                                  ? "any time"
+                                  : `${returnTime.landing[0][0]} - ${returnTime.landing[0][1]}`}
+                              </span>
+                            </Row>
                             <Slider
                               min={0}
                               max={23}
                               range={{ draggableTrack: true }}
                               defaultValue={[0, 23]}
                               marks={marks}
-                              onChange={(e) => console.log(e)}
+                              onChange={(e) => {
+                                setReturnTime((prevState) => ({
+                                  ...prevState,
+                                  landing: [e],
+                                }));
+                              }}
                             />
                           </div>
                           <div className="dflexFlexEnd">
@@ -444,40 +527,65 @@ const NewFlightSearchForm = ({ }: FlightSearchFormProps) => {
                       placement={`bottom`}
                       trigger="click"
                       content={
-                        <div style={{ width: '300px' }}>
+                        <div className="popup-container">
                           <div>
-                            <span>
-                              <img
-                                className="planeLogo"
-                                src="https://www.svgrepo.com/show/57834/takeoff-the-plane.svg"
-                              />
-                              Take Off
-                            </span>
+                            <Row justify={'space-between'}>
+                              <span>
+                                <img
+                                  className="planeLogo"
+                                  src="https://www.svgrepo.com/show/57834/takeoff-the-plane.svg"
+                                />
+                                Landing
+                              </span>
+                              <span>
+                                {departureTime.takeOff[0][0] === 0 && departureTime.takeOff[0][1] === 23
+                                  ? "any time"
+                                  : `${departureTime.takeOff[0][0]} - ${departureTime.takeOff[0][1]}`}
+                              </span>
+
+                            </Row>
                             <Slider
                               min={0}
                               max={23}
                               range={{ draggableTrack: true }}
                               defaultValue={[0, 23]}
                               marks={marks}
-                              onChange={(e) => console.log(e)}
+                              onChange={(e) => {
+                                setDepartureTime((prevState) => ({
+                                  ...prevState,
+                                  takeOff: [e],
+                                }));
+                              }}
                             />
                           </div>
                           <br />
                           <div>
-                            <span>
-                              <img
-                                className="planeLogo"
-                                src="https://www.svgrepo.com/show/122269/plane-landing.svg"
-                              />
-                              Landing
-                            </span>
+                            <Row justify={'space-between'}>
+                              <span>
+                                <img
+                                  className="planeLogo"
+                                  src="https://www.svgrepo.com/show/57834/takeoff-the-plane.svg"
+                                />
+                                Landing
+                              </span>
+                              <span>
+                                {departureTime.landing[0][0] === 0 && departureTime.landing[0][1] === 23
+                                  ? "any time"
+                                  : `${departureTime.landing[0][0]} - ${departureTime.landing[0][1]}`}
+                              </span>
+                            </Row>
                             <Slider
                               min={0}
                               max={23}
                               range={{ draggableTrack: true }}
                               defaultValue={[0, 23]}
                               marks={marks}
-                              onChange={(e) => console.log(e)}
+                              onChange={(e) => {
+                                setDepartureTime((prevState) => ({
+                                  ...prevState,
+                                  landing: [e],
+                                }));
+                              }}
                             />
                           </div>
                           <div className="dflexFlexEnd">

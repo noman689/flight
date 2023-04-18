@@ -14,9 +14,7 @@
     justify-content: space-around;
     margin: 10px 0px;
 
-    :where(.css-dev-only-do-not-override-1km3mtt).ant-select-single
-      .ant-select-selector
-      .ant-select-selection-search {
+    :where(.css-dev-only-do-not-override-1km3mtt).ant-select-single .ant-select-selector .ant-select-selection-search {
       display: flex;
       align-items: center;
     }
@@ -102,8 +100,7 @@
     }
   }
 
-  @media (max-width: 425px) {
-  }
+  @media (max-width: 425px) {}
 
   .ant-picker-dropdown .ant-picker-panel-container .ant-picker-panels {
     display: flex !important;
@@ -198,11 +195,7 @@
   font-size: 14px;
 }
 
-.ant-select
-  .ant-select-auto-complete
-  .css-dev-only-do-not-override-1km3mtt
-  .ant-select-single
-  .ant-select-show-search {
+.ant-select .ant-select-auto-complete .css-dev-only-do-not-override-1km3mtt .ant-select-single .ant-select-show-search {
   width: 100% !important;
 }
 
@@ -475,6 +468,11 @@
   justify-content: space-between;
 }
 
+.popup-container {
+  min-width: 280px;
+  padding: 15px;
+}
+
 .ageTitle {
   margin-right: 30px;
   display: flex;
@@ -527,22 +525,27 @@
   display: flex;
   justify-content: end;
 }
+
 .mar-b {
   margin-bottom: 12px;
 }
+
 .flex-item {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
   gap: 12px;
+
   .trip-label {
     font-weight: 400;
   }
 }
+
 .ant-slider-mark-text {
   font-size: 12px !important;
 }
+
 .ant-select-selector .ant-select-selection-search-input {
   height: 100% !important;
 }
