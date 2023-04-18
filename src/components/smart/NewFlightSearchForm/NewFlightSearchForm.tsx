@@ -291,6 +291,8 @@ const NewFlightSearchForm = ({ }: FlightSearchFormProps) => {
                               range={{ draggableTrack: true }}
                               defaultValue={[0, 23]}
                               marks={marks}
+                              onChange={(e) => console.log(e)}
+
                             />
                           </div>
                           <br />
@@ -308,6 +310,7 @@ const NewFlightSearchForm = ({ }: FlightSearchFormProps) => {
                               range={{ draggableTrack: true }}
                               defaultValue={[0, 23]}
                               marks={marks}
+                              onChange={(e) => console.log(e)}
                             />
                           </div>
                           <div className="dflexFlexEnd">
@@ -371,6 +374,7 @@ const NewFlightSearchForm = ({ }: FlightSearchFormProps) => {
                               range={{ draggableTrack: true }}
                               defaultValue={[0, 23]}
                               marks={marks}
+                              onChange={(e) => console.log(e)}
                             />
                           </div>
                           <br />
@@ -388,6 +392,7 @@ const NewFlightSearchForm = ({ }: FlightSearchFormProps) => {
                               range={{ draggableTrack: true }}
                               defaultValue={[0, 23]}
                               marks={marks}
+                              onChange={(e) => console.log(e)}
                             />
                           </div>
                           <div className="dflexFlexEnd">
@@ -454,6 +459,7 @@ const NewFlightSearchForm = ({ }: FlightSearchFormProps) => {
                               range={{ draggableTrack: true }}
                               defaultValue={[0, 23]}
                               marks={marks}
+                              onChange={(e) => console.log(e)}
                             />
                           </div>
                           <br />
@@ -471,6 +477,7 @@ const NewFlightSearchForm = ({ }: FlightSearchFormProps) => {
                               range={{ draggableTrack: true }}
                               defaultValue={[0, 23]}
                               marks={marks}
+                              onChange={(e) => console.log(e)}
                             />
                           </div>
                           <div className="dflexFlexEnd">
