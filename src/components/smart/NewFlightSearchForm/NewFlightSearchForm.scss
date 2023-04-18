@@ -437,6 +437,7 @@
 
 .ant-popover-inner {
   width: 100% !important;
+  padding: 15px 20px 15px 20px !important;
 }
 
 .ant-input-number-in-form-item {
@@ -545,4 +546,8 @@
 }
 .ant-select-selector .ant-select-selection-search-input {
   height: 100% !important;
+}
+
+.anyTimeText {
+  color: #a8a8a8;
 }

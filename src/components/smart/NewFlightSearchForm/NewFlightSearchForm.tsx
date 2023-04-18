@@ -38,7 +38,7 @@ const disabledDate: RangePickerProps['disabledDate'] = (current) => {
   return current && current < dayjs().endOf('day');
 };
 
-const NewFlightSearchForm = ({ }: FlightSearchFormProps) => {
+const NewFlightSearchForm = ({}: FlightSearchFormProps) => {
   const history = useHistory();
   const [form] = Form.useForm();
   const [isLoading, setIsLoading] = useState(false);
@@ -54,6 +54,19 @@ const NewFlightSearchForm = ({ }: FlightSearchFormProps) => {
   const [hideFilter, setHideFilter] = useState(false);
   const [adult, setAdult] = useState(1);
   const [children, setChildren] = useState(0);
+  const [departureTime, setDepartureTime] = useState({
+    takeOff: [],
+    landing: [],
+  });
+  const [returnTime, setReturnTime] = useState({
+    takeOff: [],
+    landing: [],
+  });
+
+  useEffect(() => {
+    console.log(departureTime, 'departureTime');
+  }, [departureTime]);
+
   const cabinClass = [
     { label: 'Economy', value: 'economy' },
     { label: 'Premium Economy', value: 'premium_economy' },
@@ -278,21 +291,38 @@ const NewFlightSearchForm = ({ }: FlightSearchFormProps) => {
                       content={
                         <div style={{ width: '280px' }}>
                           <div>
-                            <span>
-                              <img
-                                className="planeLogo"
-                                src="https://www.svgrepo.com/show/57834/takeoff-the-plane.svg"
-                              />
-                              Take Off
-                            </span>
+                            <div
+                              style={{
+                                display: 'flex',
+                                justifyContent: 'space-between',
+                              }}
+                            >
+                              <span>
+                                <img
+                                  className="planeLogo"
+                                  src="https://www.svgrepo.com/show/57834/takeoff-the-plane.svg"
+                                />
+                                Take Off
+                              </span>
+
+                              <span className="anyTimeText">
+                                {departureTime.takeOff.length === 1
+                                  ? 'After' + departureTime.takeOff + ':00'
+                                  : 'At any time'}
+                              </span>
+                            </div>
                             <Slider
                               min={0}
                               max={23}
                               range={{ draggableTrack: true }}
                               defaultValue={[0, 23]}
                               marks={marks}
-                              onChange={(e) => console.log(e)}
-
+                              onChange={(e) => {
+                                setDepartureTime((prevState) => ({
+                                  ...prevState,
+                                  takeOff: [e],
+                                }));
+                              }}
                             />
                           </div>
                           <br />
@@ -310,7 +340,12 @@ const NewFlightSearchForm = ({ }: FlightSearchFormProps) => {
                               range={{ draggableTrack: true }}
                               defaultValue={[0, 23]}
                               marks={marks}
-                              onChange={(e) => console.log(e)}
+                              onChange={(e) => {
+                                setReturnTime((prevState) => ({
+                                  ...prevState,
+                                  landing: [e[1]],
+                                }));
+                              }}
                             />
                           </div>
                           <div className="dflexFlexEnd">
@@ -477,7 +512,13 @@ const NewFlightSearchForm = ({ }: FlightSearchFormProps) => {
                               range={{ draggableTrack: true }}
                               defaultValue={[0, 23]}
                               marks={marks}
-                              onChange={(e) => console.log(e)}
+                              onChange={(e) => {
+                                setDepartureTime((prevState) => ({
+                                  ...prevState,
+                                  takeOff: [e[0]],
+                                  landing: [e[1]],
+                                }));
+                              }}
                             />
                           </div>
                           <div className="dflexFlexEnd">
