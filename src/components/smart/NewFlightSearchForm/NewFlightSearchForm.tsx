@@ -101,9 +101,9 @@ const NewFlightSearchForm = ({ }: FlightSearchFormProps) => {
     };
     try {
       setIsLoading(true);
-      const response = await searchFlightAPI(payload);
+      const {data} = await searchFlightAPI(payload);
       setIsLoading(false);
-      history.push(`/flight-details/${response.data?.offer_id}`);
+      history.push(`/flight-details/${data?.offer?.id}?trip_type=${data?.offer?.slices?.length==1 ? 'oneWay': 'return'}`);
     } catch (error) {
       setIsLoading(false);
     }

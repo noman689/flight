@@ -18,7 +18,7 @@ const FlightDetail = () => {
     const getOfers = async () => {
       try {
         setLoading(true);
-        const {data} = await getFlightOffersAPI(id);
+        const { data } = await getFlightOffersAPI(id);
         setOffersArray(data?.offer);
 
         setLoading(false);
@@ -40,16 +40,10 @@ const FlightDetail = () => {
         </Row>
       ) : (
         <>
-          {!isEmpty(offersArray.data) && offersArray.data?.map((offer) => {
-            return offer?.slices?.map((item)=>{
-              return (
-                <FlightDetailCard
-                  data={item}
-                ></FlightDetailCard>
-              );
-            })
-            
-          })}
+          {!isEmpty(offersArray.data) &&
+            offersArray.data?.map((offer) => {
+              return <FlightDetailCard data={offer}></FlightDetailCard>;
+            })}
         </>
       )}
     </div>

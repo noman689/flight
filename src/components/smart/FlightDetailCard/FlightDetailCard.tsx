@@ -6,6 +6,7 @@ import './FlightDetailCard.scss';
 import { useHistory } from 'react-router-dom';
 import { CloudFilled, LockFilled } from '@ant-design/icons';
 import { useState } from 'react';
+import { getAircraftDate, getDuration, getStops } from '@client/utils/helper';
 
 const info = () => {
   Modal.info({
@@ -67,122 +68,98 @@ const FlightDetailCard = ({ data }) => {
     e.stopPropagation();
     // history.push(`/offer-details/${offerId}/${sliceId}`);
   };
+
+  const tripType = window.location.search.split('=')[1];
+  console.log('tripType', tripType);
+  console.log('data', data);
   return (
     <>
       <Col xs={24} sm={24} md={23} lg={24} className="flightDetails">
         <Col xs={24} sm={24} md={24} lg={20}>
-          <div className="leftSection">
-            <Col xs={24} sm={24} md={24} lg={2} className="flexColumn">
-              <img
-                src={
-                  'https://assets.duffel.com/img/airlines/for-light-background/full-color-logo/ZZ.svg'
-                }
-                style={{ height: 40, width: 40 }}
-              />
-              <div>
-                <p
-                  className="dullWhite"
-                  style={{ fontSize: 12, marginLeft: 20 }}
-                >
-                  Basic- Duffel Airways
-                </p>
-              </div>
-            </Col>
-            <Col xs={24} sm={24} md={24} lg={12}>
-              <div className="cardFirstPart">
-                {/* <span>{moment(fromDate).format('hh:m')}</span> */}
-                <span>00:00</span>
-                <Divider>
+          {data?.slices.map((item) => {
+            return (
+              <div className="leftSection">
+                <Col xs={24} sm={24} md={24} lg={2} className="flexColumn">
                   <img
-                    src={planeImageBlack}
-                    style={{ height: 20, width: 20 }}
+                    src={data.owner?.logo_symbol_url}
+                    style={{ height: 40, width: 40 }}
                   />
-                </Divider>
-                <span>00:00</span>
-                {/* <span>{moment(toDate).format('hh:m')}</span> */}
+                  <div>
+                    <p
+                      className="dullWhite"
+                      style={{ fontSize: 12, marginLeft: 20 }}
+                    >
+                      {data.owner?.name}
+                    </p>
+                  </div>
+                </Col>
+                <Col xs={24} sm={24} md={24} lg={12}>
+                  <div className="cardFirstPart">
+                    <span>
+                      {moment(getAircraftDate(item.segments, 'from')).format(
+                        'hh:mm',
+                      )}
+                    </span>
+                    <Divider>
+                      <img
+                        src={planeImageBlack}
+                        style={{ height: 20, width: 20 }}
+                      />
+                    </Divider>
+                    <span>
+                      {moment(getAircraftDate(item.segments, 'to')).format(
+                        'hh:mm',
+                      )}
+                    </span>
+                  </div>
+                  <div className="cardSecondPart dullWhite">
+                    <span>{item.origin.iata_city_code}</span>
+                    {/* <span>{departureSub}</span> */}
+                    {/* ============DURATION============= */}
+                    <span>
+                      {getDuration(
+                        getAircraftDate(item.segments, 'from'),
+                        getAircraftDate(item.segments, 'to'),
+                      )}
+                    </span>
+                    {/* ============DURATION============= */}
+                    <span>{item.destination.iata_city_code}</span>
+                    {/* <span>{destinationSub}</span> */}
+                  </div>
+                </Col>
+                <Col xs={24} sm={24} md={24} lg={2} className="placeCenter">
+                  <div className="stops">
+                    {getStops(item.segments).stopLength} Stop
+                  </div>
+                  {getStops(item.segments).stops.length ? (
+                    getStops(item.segments).stops.map((stop, index) => {
+                      return <span>{stop[index]}</span>;
+                    })
+                  ) : (
+                    <></>
+                  )}
+                </Col>
               </div>
-              <div className="cardSecondPart dullWhite">
-                <span>TT</span>
-                {/* <span>{departureSub}</span> */}
-                {/* ============DURATION============= */}
-                <span>8 Hrs</span>
-                {/* ============DURATION============= */}
-                <span>TT</span>
-                {/* <span>{destinationSub}</span> */}
-              </div>
-            </Col>
-            <Col xs={24} sm={24} md={24} lg={2} className="placeCenter">
-              <div className="stops">Non Stop</div>
-            </Col>
-          </div>
+            );
+          })}
 
           <Col xs={24} sm={24} md={24} lg={4} className="lowerLeftSection">
-            <Button className="mybutton" type="text" onClick={info}>
+            <Button
+              className="mybutton"
+              type="text"
+              onClick={info}
+              disabled={true}
+            >
               Flight Details
             </Button>
-            {/* <Modal
-              centered
-              open={modal2Open}
-              onOk={() => setModal2Open(false)}
-              onCancel={() => setModal2Open(false)}
-            >
-              <div>
-                <h3 className="drawer-top-heading">Flight Details</h3>
-                <h5> Friday, Mar 10</h5>
-                <div>
-                  <Timeline
-                    className="info-timeline"
-                    mode={'left'}
-                    items={[
-                      {
-                        label: '03:14',
-                        color: 'green',
-                        children: (
-                          <>
-                            <p>city name</p>
-                            <span>city code</span>
-                          </>
-                        ),
-                      },
-                      {
-                        label: '4h',
-                        color: 'gray',
-                        children: (
-                          <>
-                            <p>plane Name</p>
-                            <span>Operated by Duffle Airways</span>
-                          </>
-                        ),
-                      },
-                      {
-                        label: '05:15',
-                        color: 'green',
-                        children: (
-                          <>
-                            <p>destination</p>
-                            <span>destination code</span>
-                          </>
-                        ),
-                      },
-                    ]}
-                  />
-                </div>
-              </div>
-            </Modal> */}
           </Col>
         </Col>
         <Col xs={24} sm={24} md={24} lg={4} className="rightSection">
           <div className="alignitems">
-            <h6>1200</h6>
-            {/* <h6>Fare: ${fareAmount}</h6> */}
-            <p className="alignContent">
-              <LockFilled size={7} />
-              Hold&nbsp;<a href="#">Price</a>&nbsp;&&nbsp;
-              <a href="#">Specs</a>
-            </p>
+            <h6>Fare: ${data.total_amount}</h6>
             <p className="alignContent">
               <CloudFilled size={7} />
-              78kg
+              {data.total_emissions_kg}g
               <span>
                 &nbsp;CO
                 <sub>2</sub>
