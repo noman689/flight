@@ -18,7 +18,7 @@ export const getDuration = (start, end) => {
   const minutes = difference - hours * 60;
   return minutes > 0 ? `${hours}h ${minutes}m` : `${hours}h`;
 };
-export const getStops = (segment) => {
+export const getStops = (segment: any, showAirportName?: boolean) => {
   let stops = [];
   if (segment?.length > 1) {
     for (let i = 0; i < segment.length - 1; i++) {
@@ -26,8 +26,15 @@ export const getStops = (segment) => {
         segment[i].departing_at,
         segment[i + 1].departing_at,
       );
+
       stops.push({
-        [i]: `${stopDuration} ${segment[i + 1].origin.iata_code} `,
+        [i]: `${stopDuration} ${
+          showAirportName
+            ? `${segment[i + 1].origin.name}(${
+                segment[i + 1].origin.iata_code
+              })`
+            : segment[i + 1].origin.iata_code
+        } `,
       });
     }
   }

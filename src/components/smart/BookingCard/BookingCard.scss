@@ -4,7 +4,7 @@
     0 4px 11px -3px rgb(0 0 0 / 25%);
   width: 1000px;
   border-radius: 20px;
-
+  margin-top: 200px;
   .ant-tabs-nav {
     border-radius: 40px;
     padding-left: 0px;
@@ -13,6 +13,8 @@
   @media (max-width: 821px) {
     margin: 20px auto;
     height: max-content;
+    margin-top: 300px;
+
     width: 95%;
   }
 
@@ -37,9 +39,7 @@
     background-color: white !important;
     color: #701644 !important;
   }
-  :where(.css-dev-only-do-not-override-1km3mtt).ant-tabs
-    .ant-tabs-tab.ant-tabs-tab-active
-    .ant-tabs-tab-btn {
+  .ant-tabs .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
     color: #701644 !important;
   }
   .ant-card-body {
@@ -49,15 +49,12 @@
     width: 100% !important;
   }
 }
-
-// :where(.css-dev-only-do-not-override-htwhyh).ant-tabs-card
-//   > .ant-tabs-nav
-//   .ant-tabs-tab {
-//   border-right: 1px solid white !important;
-//   border-left: none !important;
-//   border-top: none !important;
-//   border-bottom: none !important;
-// }
+.ant-tabs-nav .ant-tabs-tab {
+  border-right: 1px solid white !important;
+  border-left: none !important;
+  border-top: none !important;
+  border-bottom: none !important;
+}
 .child {
   position: absolute;
   bottom: 23%;
@@ -80,16 +77,6 @@
 .tab-container .ant-tabs-nav {
   position: relative;
 }
-
-// :where(.css-dev-only-do-not-override-htwhyh).ant-tabs .ant-tabs-tab-btn {
-//   display: flex;
-//   align-items: center;
-// }
-// :where(.css-dev-only-do-not-override-htwhyh).ant-tabs
-//   > .ant-tabs-nav
-//   .ant-tabs-nav-list {
-//   overflow-x: auto;
-//   scrollbar-width: none;
-//   -ms-overflow-style: none;
-//   -webkit-overflow-scrolling: touch;
-// }
+.ant-tabs-nav-operations {
+  display: none !important;
+}

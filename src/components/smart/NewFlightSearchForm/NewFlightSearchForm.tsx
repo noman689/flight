@@ -103,7 +103,7 @@ const NewFlightSearchForm = ({ }: FlightSearchFormProps) => {
       setIsLoading(true);
       const {data} = await searchFlightAPI(payload);
       setIsLoading(false);
-      history.push(`/flight-details/${data?.offer?.id}?trip_type=${data?.offer?.slices?.length==1 ? 'oneWay': 'return'}`);
+      history.push(`/flight-details/${data?.offer?.id}`);
     } catch (error) {
       setIsLoading(false);
     }

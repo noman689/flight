@@ -4,73 +4,69 @@ import moment from 'moment';
 import planeImageBlack from '../../../assets/ticketBlack.svg';
 import './FlightDetailCard.scss';
 import { useHistory } from 'react-router-dom';
-import { CloudFilled, LockFilled } from '@ant-design/icons';
+import { CloudFilled } from '@ant-design/icons';
 import { useState } from 'react';
 import { getAircraftDate, getDuration, getStops } from '@client/utils/helper';
+import FlightInfoModal from '../FlightInfoModal/FlightInfoModal';
 
-const info = () => {
-  Modal.info({
-    centered: true,
-    title: 'Flight Details',
-    content: (
-      <div>
-        <h5> Friday, Mar 10</h5>
-        <div>
-          <Timeline
-            className="info-timeline"
-            mode={'left'}
-            items={[
-              {
-                label: '03:14',
-                color: 'green',
-                children: (
-                  <>
-                    <p>city name</p>
-                    <span>city code</span>
-                  </>
-                ),
-              },
-              {
-                label: '4h',
-                color: 'gray',
-                children: (
-                  <>
-                    <p>plane Name</p>
-                    <span>Operated by Duffle Airways</span>
-                  </>
-                ),
-              },
-              {
-                label: '05:15',
-                color: 'green',
-                children: (
-                  <>
-                    <p>destination</p>
-                    <span>destination code</span>
-                  </>
-                ),
-              },
-            ]}
-          />
-        </div>
-      </div>
-    ),
-    onOk() {},
-  });
-};
+// const info = () => {
+//   Modal.info({
+//     centered: true,
+//     title: 'Flight Details',
+//     content: (
+//       <div>
+//         <h5> Friday, Mar 10</h5>
+//         <div>
+//           <Timeline
+//             className="info-timeline"
+//             mode={'left'}
+//             items={[
+//               {
+//                 label: '03:14',
+//                 color: 'green',
+//                 children: (
+//                   <>
+//                     <p>city name</p>
+//                     <span>city code</span>
+//                   </>
+//                 ),
+//               },
+//               {
+//                 label: '4h',
+//                 color: 'gray',
+//                 children: (
+//                   <>
+//                     <p>plane Name</p>
+//                     <span>Operated by Duffle Airways</span>
+//                   </>
+//                 ),
+//               },
+//               {
+//                 label: '05:15',
+//                 color: 'green',
+//                 children: (
+//                   <>
+//                     <p>destination</p>
+//                     <span>destination code</span>
+//                   </>
+//                 ),
+//               },
+//             ]}
+//           />
+//         </div>
+//       </div>
+//     ),
+//     onOk() {},
+//   });
+// };
 
 const FlightDetailCard = ({ data }) => {
-  const [modal2Open, setModal2Open] = useState(false);
-
   const history = useHistory();
-
+  const [showModal, setShowModal] = useState(false);
   const handleClick = (e) => {
     e.stopPropagation();
     // history.push(`/offer-details/${offerId}/${sliceId}`);
   };
-
-  const tripType = window.location.search.split('=')[1];
-  console.log('tripType', tripType);
   console.log('data', data);
   return (
     <>
@@ -124,7 +120,6 @@ const FlightDetailCard = ({ data }) => {
                     </span>
                     {/* ============DURATION============= */}
                     <span>{item.destination.iata_city_code}</span>
-                    {/* <span>{destinationSub}</span> */}
                   </div>
                 </Col>
                 <Col xs={24} sm={24} md={24} lg={2} className="placeCenter">
@@ -147,8 +142,7 @@ const FlightDetailCard = ({ data }) => {
             <Button
               className="mybutton"
               type="text"
-              onClick={info}
-              disabled={true}
+              onClick={() => setShowModal(true)}
             >
               Flight Details
             </Button>
@@ -171,6 +165,7 @@ const FlightDetailCard = ({ data }) => {
           </Button>
         </Col>
       </Col>
+      <FlightInfoModal show={showModal} setShow={setShowModal} data={data} />
     </>
   );
 };
