@@ -546,15 +546,24 @@
 .ant-select-selector .ant-select-selection-search-input {
   height: 100% !important;
 }
-.ant-slider .ant-slider-track{
+.ant-slider .ant-slider-track {
   background-color: #701644;
 }
-.range-header{
+.range-header {
   width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
-.ant-popover .ant-popover-inner{
+.ant-popover .ant-popover-inner {
   padding: 16px;
-} 
+}
+.ant-slider .ant-slider-dot-active,
+.ant-slider:hover .ant-slider-dot-active {
+  border-color: #985eaf;
+}
+
+.ant-slider .ant-slider-handle::after,
+.ant-slider .ant-slider-dot-active {
+  box-shadow: 0 0 0 2px #985eaf !important;
+}
