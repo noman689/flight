@@ -1,4 +1,4 @@
-import { Row, Col, Divider, Button, Modal, Timeline } from 'antd';
+import { Col, Divider, Button } from 'antd';
 import moment from 'moment';
 // @ts-ignore
 import planeImageBlack from '../../../assets/ticketBlack.svg';
@@ -8,57 +8,6 @@ import { CloudFilled } from '@ant-design/icons';
 import { useState } from 'react';
 import { getAircraftDate, getDuration, getStops } from '@client/utils/helper';
 import FlightInfoModal from '../FlightInfoModal/FlightInfoModal';
-
-// const info = () => {
-//   Modal.info({
-//     centered: true,
-//     title: 'Flight Details',
-//     content: (
-//       <div>
-//         <h5> Friday, Mar 10</h5>
-//         <div>
-//           <Timeline
-//             className="info-timeline"
-//             mode={'left'}
-//             items={[
-//               {
-//                 label: '03:14',
-//                 color: 'green',
-//                 children: (
-//                   <>
-//                     <p>city name</p>
-//                     <span>city code</span>
-//                   </>
-//                 ),
-//               },
-//               {
-//                 label: '4h',
-//                 color: 'gray',
-//                 children: (
-//                   <>
-//                     <p>plane Name</p>
-//                     <span>Operated by Duffle Airways</span>
-//                   </>
-//                 ),
-//               },
-//               {
-//                 label: '05:15',
-//                 color: 'green',
-//                 children: (
-//                   <>
-//                     <p>destination</p>
-//                     <span>destination code</span>
-//                   </>
-//                 ),
-//               },
-//             ]}
-//           />
-//         </div>
-//       </div>
-//     ),
-//     onOk() {},
-//   });
-// };
 
 const FlightDetailCard = ({ data }) => {
   const history = useHistory();
@@ -71,22 +20,19 @@ const FlightDetailCard = ({ data }) => {
   return (
     <>
       <Col xs={24} sm={24} md={23} lg={24} className="flightDetails">
-        <Col xs={24} sm={24} md={24} lg={20}>
+        <Col xs={24} sm={24} md={24} lg={19}>
           {data?.slices.map((item) => {
             return (
               <div className="leftSection">
-                <Col xs={24} sm={24} md={24} lg={2} className="flexColumn">
-                  <img
-                    src={data.owner?.logo_symbol_url}
-                    style={{ height: 40, width: 40 }}
-                  />
+                <Col xs={24} sm={24} md={24} lg={4} className="flexColumn ">
                   <div>
-                    <p
-                      className="dullWhite"
-                      style={{ fontSize: 12, marginLeft: 20 }}
-                    >
-                      {data.owner?.name}
-                    </p>
+                    <img
+                      src={data.owner?.logo_symbol_url}
+                      style={{ objectFit: 'cover', height: 40, width: 40 }}
+                    />
+                  </div>
+                  <div>
+                    <p className="dullWhite fontsize12">{data.owner?.name}</p>
                   </div>
                 </Col>
                 <Col xs={24} sm={24} md={24} lg={12}>
@@ -110,19 +56,17 @@ const FlightDetailCard = ({ data }) => {
                   </div>
                   <div className="cardSecondPart dullWhite">
                     <span>{item.origin.iata_city_code}</span>
-                    {/* <span>{departureSub}</span> */}
-                    {/* ============DURATION============= */}
+
                     <span>
                       {getDuration(
                         getAircraftDate(item.segments, 'from'),
                         getAircraftDate(item.segments, 'to'),
                       )}
                     </span>
-                    {/* ============DURATION============= */}
                     <span>{item.destination.iata_city_code}</span>
                   </div>
                 </Col>
-                <Col xs={24} sm={24} md={24} lg={2} className="placeCenter">
+                <Col xs={24} sm={24} md={24} lg={2} className="stopsParent">
                   <div className="stops">
                     {getStops(item.segments).stopLength} Stop
                   </div>
@@ -148,9 +92,9 @@ const FlightDetailCard = ({ data }) => {
             </Button>
           </Col>
         </Col>
-        <Col xs={24} sm={24} md={24} lg={4} className="rightSection">
+        <Col xs={24} sm={24} md={24} lg={5} className="rightSection">
           <div className="alignitems">
-            <h6>Fare: ${data.total_amount}</h6>
+            <h6 className="fare">${data.total_amount}</h6>
             <p className="alignContent">
               <CloudFilled size={7} />
               {data.total_emissions_kg}g
