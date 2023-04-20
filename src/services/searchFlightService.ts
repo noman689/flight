@@ -15,10 +15,10 @@ export const searchFlightAPI = async (payload) => {
   });
 };
 
-export const getFlightOffersAPI = async (id) => {
+export const getFlightOffersAPI = async (id,after) => {
   return await axios({
     method: 'GET',
-    url: `${SERVER_URL}/api/getOffers/${id}`,
+    url: `${SERVER_URL}/api/getOffers/${id}?after=${after}`,
     headers: {
       'Content-Type': 'application/json',
       'Access-Control-Allow-Origin': `${window.location.origin}/`,

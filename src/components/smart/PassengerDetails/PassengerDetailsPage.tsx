@@ -8,23 +8,23 @@ import Spin from '@client/components/presentational/Spin';
 import { isEmpty } from 'ramda';
 
 const PassengerDetailsPage: React.FC = () => {
-  const [selectedSlice, setSelectedSlice] = useState(null);
+  const [selectedOffer, setSelectedOffer] = useState(null);
   const [passengerData, setPassengerData] = useState(0);
   const [fare, setFare] = useState('');
   const [loading, setLoading] = useState(false);
   const params = useParams();
   // @ts-ignore
-  const { id, sliceId } = params;
+  const { id } = params;
   useEffect(() => {
     const selectedOfferDetails = async () => {
       try {
         setLoading(true);
         const { data } = await getSelectedOfferDetailsAPI(id);
-        const selectedSliceItem = !isEmpty(data.slices) && data?.offer?.data?.slices?.find(
-          (item) => item.id == sliceId,
-        );
+        // const selectedSliceItem = !isEmpty(data.slices) && data?.offer?.data?.slices?.find(
+        //   (item) => item.id == sliceId,
+        // );
         setFare(data?.offer?.data?.total_amount);
-        setSelectedSlice(selectedSliceItem);
+        setSelectedOffer(data?.offer);
         setPassengerData(data?.offer?.data?.passengers);
         setLoading(false);
       } catch (error) {
@@ -41,10 +41,14 @@ const PassengerDetailsPage: React.FC = () => {
       ) : (
         <Fragment>
           <div className="form-section">
-            <PassengerDetailsForm passengerData={passengerData} offerId={id} summaryData={selectedSlice} />
+            <PassengerDetailsForm
+              passengerData={passengerData}
+              offerId={id}
+              summaryData={selectedOffer}
+            />
           </div>
           <div className="summary-section">
-            <FlightSummary summaryData={selectedSlice} fare={fare} />
+            <FlightSummary summaryData={selectedOffer} fare={fare} />
           </div>
         </Fragment>
       )}

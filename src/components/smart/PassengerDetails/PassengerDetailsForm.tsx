@@ -14,12 +14,13 @@ interface PassengerFormProps {
 const PassengerDetailsForm: FC<PassengerFormProps> = ({
   passengerData = [],
   offerId,
-  summaryData
+  summaryData,
 }) => {
   const [currentForm, setCurrentForm] = useState(1);
   const [formValues, setFormValues] = useState<any>([]);
   const [passengerDataForSeatSelection, setPassengerDataForSeatSelection] =
     useState([]);
+  const [passengersFormData, setPassengersFormData] = useState({});
   const history = useHistory();
   const onFinish = (values, passengerId) => {
     setFormValues((prev) => [
@@ -39,31 +40,33 @@ const PassengerDetailsForm: FC<PassengerFormProps> = ({
   };
 
   const handleClick = () => {
-    localStorage.setItem("passengerDetail", JSON.stringify({
-      passengerDataForSeatSelection: passengerDataForSeatSelection,
-      passengerInfo: formValues,
-      selectedSlice: summaryData
-    }))
-
-    history.push(
-      `/seat-selection/${offerId}`
-    );
+    history.push(`/seat-selection/${offerId}`);
   };
+
+  const handleDataChange = (key, value, index) => {
+    setPassengersFormData({
+      ...passengersFormData,
+      [index]: {
+        ...passengersFormData[index],
+        [key]: value,
+      },
+    });
+  };
+  console.log('passengersData', passengerData);
 
   const passengerForms =
     passengerData?.length &&
     passengerData?.map((item, index) => {
       return (
         <Panel
-          header={`Passenger ${index + 1}`}
+          header={item.type.toUpperCase()}
           key={`passenger-${index + 1}`}
           className="active-form"
         >
           <Form
-            onFinish={(values) => {
-              onFinish(values, item.id);
-              setCurrentForm(currentForm + 1);
-            }}
+          // onFinish={(values) => {
+          //   onFinish(values, item.id);
+          // }}
           >
             <Row gutter={[16, 16]}>
               <Col span={24}>
@@ -80,7 +83,11 @@ const PassengerDetailsForm: FC<PassengerFormProps> = ({
                       },
                     ]}
                   >
-                    <Radio.Group>
+                    <Radio.Group
+                      onChange={(e) =>
+                        handleDataChange('title', e.target.value, index)
+                      }
+                    >
                       <Row className="radio-group">
                         <div className="radio-box">
                           <Radio value={'mr'}>Mr</Radio>
@@ -100,37 +107,6 @@ const PassengerDetailsForm: FC<PassengerFormProps> = ({
             <Row gutter={[16, 16]}>
               <Col xs={24} sm={24} md={24} lg={12} xl={12}>
                 <Form.Item
-                  name="email"
-                  rules={[
-                    {
-                      required: true,
-                      message: 'Please input passenger email!',
-                    },
-                  ]}
-                >
-                  <Input placeholder="email" />
-                </Form.Item>
-              </Col>
-              <Col xs={24} sm={24} md={24} lg={12} xl={12}>
-                <Form.Item
-                  name="phone_number"
-                  rules={[
-                    {
-                      required: true,
-                      message: 'Please select passenger phone number!',
-                    },
-                  ]}
-                >
-                  <Input
-                    placeholder="enter passenger phone number"
-                    type="text"
-                  />
-                </Form.Item>
-              </Col>
-            </Row>
-            <Row gutter={[16, 16]}>
-              <Col xs={24} sm={24} md={24} lg={12} xl={12}>
-                <Form.Item
                   name="given_name"
                   rules={[
                     {
@@ -139,7 +115,12 @@ const PassengerDetailsForm: FC<PassengerFormProps> = ({
                     },
                   ]}
                 >
-                  <Input placeholder="First Name / Middle Name" />
+                  <Input
+                    placeholder="First Name / Middle Name"
+                    onChange={(e) =>
+                      handleDataChange('given_name', e.target.value, index)
+                    }
+                  />
                 </Form.Item>
               </Col>
               <Col xs={24} sm={24} md={24} lg={12} xl={12}>
@@ -152,7 +133,12 @@ const PassengerDetailsForm: FC<PassengerFormProps> = ({
                     },
                   ]}
                 >
-                  <Input placeholder="Last Name" />
+                  <Input
+                    placeholder="Last Name"
+                    onChange={(e) =>
+                      handleDataChange('family_name', e.target.value, index)
+                    }
+                  />
                 </Form.Item>
               </Col>
             </Row>
@@ -167,7 +153,13 @@ const PassengerDetailsForm: FC<PassengerFormProps> = ({
                     },
                   ]}
                 >
-                  <Input placeholder="DD/MM/YYYY" type="date" />
+                  <Input
+                    placeholder="DD/MM/YYYY"
+                    type="date"
+                    onChange={(e) =>
+                      handleDataChange('born_on', e.target.value, index)
+                    }
+                  />
                 </Form.Item>
               </Col>
               <Col xs={24} sm={24} md={24} lg={12} xl={12}>
@@ -181,7 +173,11 @@ const PassengerDetailsForm: FC<PassengerFormProps> = ({
                       },
                     ]}
                   >
-                    <Radio.Group>
+                    <Radio.Group
+                      onChange={(e) =>
+                        handleDataChange('gender', e.target.value, index)
+                      }
+                    >
                       <Row className="radio-group">
                         <div className="radio-box">
                           <Radio value={'m'}>Male</Radio>
@@ -195,15 +191,6 @@ const PassengerDetailsForm: FC<PassengerFormProps> = ({
                 </div>
               </Col>
             </Row>
-            <Row justify={'center'}>
-              <Button
-                type="primary"
-                htmlType="submit"
-                className="form-submit-button"
-              >
-                NEXT
-              </Button>
-            </Row>
           </Form>
         </Panel>
       );
@@ -211,10 +198,10 @@ const PassengerDetailsForm: FC<PassengerFormProps> = ({
 
   return (
     <div className="passenger-details-form">
-      <Collapse accordion activeKey={`passenger-${currentForm}`}>
+      <Collapse bordered={false} defaultActiveKey={`passenger-${currentForm}`}>
         {passengerForms}
       </Collapse>
-      <Row justify={'center'}>
+      <Row justify={'center'} style={{ marginTop: '30px' }}>
         <Button
           type="primary"
           className={
@@ -225,10 +212,42 @@ const PassengerDetailsForm: FC<PassengerFormProps> = ({
           onClick={handleClick}
           disabled={formValues?.length != passengerData?.length}
         >
-          Select Seats
+          Confirm
         </Button>
       </Row>
     </div>
   );
 };
 export default PassengerDetailsForm;
+
+// <Row gutter={[16, 16]}>
+// <Col xs={24} sm={24} md={24} lg={12} xl={12}>
+//   <Form.Item
+//     name="email"
+//     rules={[
+//       {
+//         required: true,
+//         message: 'Please input passenger email!',
+//       },
+//     ]}
+//   >
+//     <Input placeholder="email" />
+//   </Form.Item>
+// </Col>
+// <Col xs={24} sm={24} md={24} lg={12} xl={12}>
+//   <Form.Item
+//     name="phone_number"
+//     rules={[
+//       {
+//         required: true,
+//         message: 'Please select passenger phone number!',
+//       },
+//     ]}
+//   >
+//     <Input
+//       placeholder="enter passenger phone number"
+//       type="text"
+//     />
+//   </Form.Item>
+// </Col>
+// </Row>

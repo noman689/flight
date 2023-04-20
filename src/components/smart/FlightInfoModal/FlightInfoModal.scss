@@ -21,7 +21,10 @@
     border-radius: unset !important;
   }
   .ant-tabs-tab:first-child {
-    border-top-left-radius: unset !important;
+    border-top-left-radius: 8px !important;
+  }
+  .ant-tabs-tab:nth-child(2){
+    border-top-right-radius: 8px !important;
   }
   .heading-color {
     color: #000000;

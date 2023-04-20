@@ -36,3 +36,34 @@
     margin: 0px 6px;
   }
 }
+.cards-section {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 80%;
+  height: max-content;
+  margin-left: 250px;
+  overflow-x: hidden;
+  max-height: 93vh;
+  margin-top: 20px
+
+}
+@media (max-width: 821px) {
+  .cards-section  {
+    margin-left: unset;
+    max-height: unset;
+    width: 100%;
+  }
+  
+}
+.cards-section::-webkit-scrollbar {
+  width: 4px; /* Width of the scrollbar */
+}
+
+.cards-section::-webkit-scrollbar-track {
+  background-color: #f1f1f1; /* Color of the scrollbar track */
+}
+
+.cards-section::-webkit-scrollbar-thumb {
+  background-color: #bfc1d4; /* Color of the scrollbar thumb */
+}

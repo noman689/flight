@@ -14,7 +14,7 @@ const FlightDetailCard = ({ data }) => {
   const [showModal, setShowModal] = useState(false);
   const handleClick = (e) => {
     e.stopPropagation();
-    // history.push(`/offer-details/${offerId}/${sliceId}`);
+    history.push(`/offer-details/${data.id}`);
   };
   console.log('data', data);
   return (

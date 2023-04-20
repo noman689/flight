@@ -23,6 +23,10 @@ import { getAllAirlinesAPI } from '@client/services/airlineServices';
 import { SliderMarks } from 'antd/es/slider';
 import { RangePickerProps } from 'antd/es/date-picker';
 import dayjs from 'dayjs';
+// @ts-ignore
+import planeTakeOffImage from '../../../assets/takeoff-the-plane.svg';
+// @ts-ignore
+import planeLandingImage from '../../../assets/plane-landing.svg';
 interface FlightSearchFormProps {
   isStickyNav?: boolean;
 }
@@ -38,7 +42,7 @@ const disabledDate: RangePickerProps['disabledDate'] = (current) => {
   return current && current < dayjs().endOf('day');
 };
 
-const NewFlightSearchForm = ({ }: FlightSearchFormProps) => {
+const NewFlightSearchForm = ({}: FlightSearchFormProps) => {
   const history = useHistory();
   const [form] = Form.useForm();
   const [isLoading, setIsLoading] = useState(false);
@@ -96,12 +100,12 @@ const NewFlightSearchForm = ({ }: FlightSearchFormProps) => {
       return_date: values.return_date?.toISOString(),
       cabin_class: values.cabin_class,
       passengers: passengers,
-      rangeValues:rangeValues,
+      rangeValues: rangeValues,
       return_offer: ticketType == 'return' ? true : false,
     };
     try {
       setIsLoading(true);
-      const {data} = await searchFlightAPI(payload);
+      const { data } = await searchFlightAPI(payload);
       setIsLoading(false);
       history.push(`/flight-details/${data?.offer?.id}`);
     } catch (error) {
@@ -316,7 +320,7 @@ const NewFlightSearchForm = ({ }: FlightSearchFormProps) => {
                               <span>
                                 <img
                                   className="planeLogo"
-                                  src="https://www.svgrepo.com/show/57834/takeoff-the-plane.svg"
+                                  src={planeTakeOffImage}
                                 />
                                 Take Off
                               </span>
@@ -345,7 +349,7 @@ const NewFlightSearchForm = ({ }: FlightSearchFormProps) => {
                               <span>
                                 <img
                                   className="planeLogo"
-                                  src="https://www.svgrepo.com/show/122269/plane-landing.svg"
+                                  src={planeLandingImage}
                                 />
                                 Landing
                               </span>
@@ -418,7 +422,7 @@ const NewFlightSearchForm = ({ }: FlightSearchFormProps) => {
                               <span>
                                 <img
                                   className="planeLogo"
-                                  src="https://www.svgrepo.com/show/57834/takeoff-the-plane.svg"
+                                  src={planeTakeOffImage}
                                 />
                                 Take Off
                               </span>
@@ -445,7 +449,7 @@ const NewFlightSearchForm = ({ }: FlightSearchFormProps) => {
                               <span>
                                 <img
                                   className="planeLogo"
-                                  src="https://www.svgrepo.com/show/122269/plane-landing.svg"
+                                  src={planeLandingImage}
                                 />
                                 Landing
                               </span>
@@ -521,7 +525,7 @@ const NewFlightSearchForm = ({ }: FlightSearchFormProps) => {
                               <span>
                                 <img
                                   className="planeLogo"
-                                  src="https://www.svgrepo.com/show/57834/takeoff-the-plane.svg"
+                                  src={planeTakeOffImage}
                                 />
                                 Take Off
                               </span>
@@ -550,13 +554,11 @@ const NewFlightSearchForm = ({ }: FlightSearchFormProps) => {
                               <span>
                                 <img
                                   className="planeLogo"
-                                  src="https://www.svgrepo.com/show/122269/plane-landing.svg"
+                                  src={planeLandingImage}
                                 />
                                 Landing
                               </span>
-                              <span>
-                                {showRange(rangeValues.to_departure)}
-                              </span>
+                              <span>{showRange(rangeValues.to_departure)}</span>
                             </div>
                             <Slider
                               min={0}

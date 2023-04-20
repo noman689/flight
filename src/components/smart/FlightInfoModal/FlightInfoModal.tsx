@@ -3,8 +3,13 @@ import { getStops } from '@client/utils/helper';
 import { Modal, Tabs, Timeline } from 'antd';
 import moment from 'moment';
 import React from 'react';
+// @ts-ignore
+import planeTakeOffImage from '../../../assets/takeoff-the-plane.svg';
+// @ts-ignore
+import planeLandingImage from '../../../assets/plane-landing.svg';
+// @ts-ignore
+import stopImage from '../../../assets/stop-svg.svg';
 import './FlightInfoModal.scss';
-// dot: <ClockCircleOutlined />,
 
 const FlightInfoModal = ({ show, setShow, data }) => {
   const getTimeLine = (payload) => {
@@ -13,12 +18,14 @@ const FlightInfoModal = ({ show, setShow, data }) => {
     for (let i = 0; i < payload.segments.length; i++) {
       if (i >= 1) {
         itemsArray.push({
+          dot: <img src={stopImage} width={15} />,
           color: 'grey',
           children: <div className="stop-section">{stops[i - 1][i - 1]}</div>,
         });
       }
       itemsArray.push({
         color: 'black',
+        dot: <img src={planeTakeOffImage} width={15} />,
         children: (
           <>
             <p>
@@ -35,6 +42,7 @@ const FlightInfoModal = ({ show, setShow, data }) => {
       });
       itemsArray.push({
         color: 'black',
+        dot: <img src={planeLandingImage} width={15} />,
         children: (
           <>
             <p>

@@ -31,7 +31,7 @@ const MainLayout = () => {
             <Route exact path="/flight-details/:id" component={FlightDetail} />
             <Route
               exact
-              path="/offer-details/:id/:sliceId"
+              path="/offer-details/:id"
               component={PassengerDetailsPage}
             />
             <Route
