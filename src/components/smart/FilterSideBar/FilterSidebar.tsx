@@ -102,16 +102,16 @@ const FilterSidebar = ({ data = [], collapsed, setCollapsed }) => {
             </div>
             <div className="date-section">
               <span>
-                {moment(flightInfo.startDate).format('MMM Do YY')} -{' '}
-                {moment(flightInfo.endDate).format('MMM Do YY')}
+                {moment(flightInfo?.startDate).format('MMM Do YY')} -{' '}
+                {moment(flightInfo?.endDate).format('MMM Do YY')}
               </span>
             </div>
             <div className="other-info-section">
               <span className="child-section">
-                {flightInfo.cabinClass.toUpperCase()}
+                {flightInfo?.cabinClass.toUpperCase()}
               </span>
               <span className="child-section">
-                Passengers {flightInfo.passengerCount}
+                Passengers {flightInfo?.passengerCount}
               </span>
             </div>
             <div className="sort-section">

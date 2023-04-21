@@ -5,7 +5,6 @@
   margin: 20px 50px;
   .form-section {
     width: 50%;
-    background: #ffffff;
     margin-top: 17px;
     @media screen and (max-width: 810px) {
       width: 100%;
@@ -92,4 +91,12 @@
   align-items: center;
   gap: 16px;
   margin: 20px 0px;
+}
+.error-message{
+  font-size: 12px;
+  font-family: unset;
+  color: red;
+  svg{
+    margin-bottom: 5px;
+  }
 }

@@ -43,3 +43,6 @@ export const getStops = (segment: any, showAirportName?: boolean) => {
     stops,
   };
 };
+export const timeOutFunc = () => {
+  setTimeout(() => {}, 1000);
+};

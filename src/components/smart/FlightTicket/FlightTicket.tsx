@@ -40,7 +40,7 @@ const FlightTicket = () => {
             airline: dataObj.owner,
             currency: dataObj.total_currency,
             amount: dataObj.total_amount,
-            slice: meta.selectedSlice[0],
+            slice: meta.selectedSlice?.[0],
           },
         ]);
       });

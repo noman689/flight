@@ -20,10 +20,10 @@ const FlightDetail = () => {
   const params = useParams();
   // @ts-ignore
   const { id } = params;
-  const getOfers = async (after?: any) => {
+  const getOfers = async (after?: any,before?:any) => {
     try {
       setLoading(true);
-      const { data } = await getFlightOffersAPI(id, after);
+      const { data } = await getFlightOffersAPI(id, after,before);
       setOffersArray(data);
 
       setLoading(false);
@@ -71,13 +71,13 @@ const FlightDetail = () => {
                   return <FlightDetailCard data={offer}></FlightDetailCard>;
                 })}
               <div>
-                {/* {offersArray?.offer?.meta?.after && (
-                <button
-                  onClick={() => getOfers(offersArray?.offer?.meta?.after)}
-                >
-                  Next
-                </button>
-              )} */}
+                {offersArray?.offer?.meta?.after && (
+                  <button
+                    onClick={() => getOfers(offersArray?.offer?.meta?.after,offersArray?.offer?.meta?.before)}
+                  >
+                    Next
+                  </button>
+                )}
               </div>
             </div>
           </div>

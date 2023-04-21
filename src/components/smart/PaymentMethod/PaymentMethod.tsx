@@ -50,9 +50,8 @@ const PaymentMethod = () => {
     const getPaymentIntent = async () => {
       try {
         setLoading(true);
-        const encodedData = window.location.href.split('=')[1];
-        const meta = JSON.parse(decodeURIComponent(encodedData));
-        setSelectedSlice(meta.selectedSlice);
+        const meta = JSON.parse(localStorage.getItem('seatData'));
+        setSelectedSlice(meta.offerDetails);
         const total_amount = calculateTotalAmount(
           meta.offerDetails,
           meta.passengerDetails,
@@ -76,8 +75,7 @@ const PaymentMethod = () => {
     try {
       const { data } = await confirmPaymentAPI(clientId);
       if (data.offer?.data) {
-        const encodedData = window.location.href.split('=')[1];
-        const meta = JSON.parse(decodeURIComponent(encodedData));
+        const meta = JSON.parse(localStorage.getItem('seatData'));
         const payload = {
           type: 'instant',
           selected_offers: [meta.offerDetails.id],
@@ -94,13 +92,14 @@ const PaymentMethod = () => {
           },
         };
         const create = await createOrderAPI(payload);
-        localStorage.setItem("offerInfo", JSON.stringify({
-          confirmationDetails: create,
-          selectedSlice: selectedSlice,
-        }))
-        history.push(
-          `/flight-ticket`
+        localStorage.setItem(
+          'offerInfo',
+          JSON.stringify({
+            confirmationDetails: create,
+            selectedSlice: selectedSlice,
+          }),
         );
+        history.push(`/flight-ticket`);
         // history.push(
         //   `/flight-ticket?data=${encodeURIComponent(
         //     JSON.stringify({

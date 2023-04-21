@@ -5,7 +5,6 @@ import { getSelectedOfferDetailsAPI } from '@client/services/searchFlightService
 import { useParams } from 'react-router';
 import './PassengerDetailsPage.scss';
 import Spin from '@client/components/presentational/Spin';
-import { isEmpty } from 'ramda';
 
 const PassengerDetailsPage: React.FC = () => {
   const [selectedOffer, setSelectedOffer] = useState(null);
@@ -20,9 +19,6 @@ const PassengerDetailsPage: React.FC = () => {
       try {
         setLoading(true);
         const { data } = await getSelectedOfferDetailsAPI(id);
-        // const selectedSliceItem = !isEmpty(data.slices) && data?.offer?.data?.slices?.find(
-        //   (item) => item.id == sliceId,
-        // );
         setFare(data?.offer?.data?.total_amount);
         setSelectedOffer(data?.offer);
         setPassengerData(data?.offer?.data?.passengers);
@@ -41,11 +37,7 @@ const PassengerDetailsPage: React.FC = () => {
       ) : (
         <Fragment>
           <div className="form-section">
-            <PassengerDetailsForm
-              passengerData={passengerData}
-              offerId={id}
-              summaryData={selectedOffer}
-            />
+            <PassengerDetailsForm passengerData={passengerData} offerId={id} />
           </div>
           <div className="summary-section">
             <FlightSummary summaryData={selectedOffer} fare={fare} />

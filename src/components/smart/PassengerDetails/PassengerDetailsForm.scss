@@ -1,5 +1,4 @@
 .passenger-details-form {
-  margin-top: 24px;
   width: 100%;
   padding: 0 10px;
   input[type='date']::-webkit-inner-spin-button,
@@ -19,7 +18,9 @@
     font-size: 1.2rem;
   }
   .ant-collapse-header-text {
-    color: #000;
+    color: #8e2157;
+    font-weight: 600;
+    font-size: 16px;
   }
   .ant-collapse-expand-icon {
     svg {
@@ -58,6 +59,7 @@
   .radio-group {
     display: flex;
   }
+
   .radio-box {
     border: 1px solid #d9d9d9;
     padding: 8px 20px;
@@ -80,10 +82,11 @@
 
   .form-submit-button {
     margin-top: 24px;
-    height: 40px;
-    width: 60%;
-    border-radius: 15px;
+    height: 60px;
+    width: 140px;
+    border-radius: 10px;
     color: #ffff;
+    font-weight: 500;
     background-color: #520c30;
     &:hover {
       background: #520c30;
@@ -102,4 +105,50 @@
 
 .disabled {
   opacity: 0.5;
+}
+.header-panel {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.panels-section {
+  background: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+  padding: 16px 0px;
+  margin-top: 12px;
+  margin-bottom: 31px;
+}
+.btns-section {
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+  gap: 32px;
+}
+.toltip-overlay {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  inset: 0;
+  z-index: 2;
+}
+.personal-info {
+  color: #000;
+  font-size: 22px;
+  font-weight: 600;
+  margin-left: 10px;
+}
+.contact-form-heading {
+  padding-top: 22px !important;
+}
+.contact-form {
+  padding: 30px 16px !important;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  width: 100%;
+  gap: 12px;
+  div {
+    width: 50%;
+  }
 }

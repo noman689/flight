@@ -1,14 +1,11 @@
 const initialState = {
-  offer: null,
-  selectedDates: {},
+  info: [],
 };
 
 const combineReducer = (state = initialState, action) => {
   switch (action.type) {
-    case 'SELECTED_OFFER':
-      return { ...state, offer: action.payload };
-    case 'SELECTED_DATE':
-      return { ...state, selectedDate: action.payload };
+    case 'PASSENGERS_INFO':
+      return { ...state, info: action.payload };
     default:
       return state;
   }

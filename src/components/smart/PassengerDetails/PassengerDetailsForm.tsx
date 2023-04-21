@@ -1,5 +1,10 @@
-import { Form, Input, Button, Collapse, Row, Col, Radio } from 'antd';
+import { ExclamationCircleOutlined } from '@ant-design/icons';
+import { passengersInfo } from '@client/store/app/action';
+import { timeOutFunc } from '@client/utils/helper';
+import { Form, Input, Button, Collapse, Row, Col, Radio, Tooltip } from 'antd';
 import { FC, useState } from 'react';
+import { isError } from 'react-query';
+import { useDispatch } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
 import './PassengerDetailsForm.scss';
 
@@ -8,39 +13,129 @@ const { Panel } = Collapse;
 interface PassengerFormProps {
   passengerData: any;
   offerId: string;
-  summaryData: any;
 }
 
 const PassengerDetailsForm: FC<PassengerFormProps> = ({
   passengerData = [],
   offerId,
-  summaryData,
 }) => {
-  const [currentForm, setCurrentForm] = useState(1);
-  const [formValues, setFormValues] = useState<any>([]);
-  const [passengerDataForSeatSelection, setPassengerDataForSeatSelection] =
-    useState([]);
   const [passengersFormData, setPassengersFormData] = useState({});
+  const [showTooltip, setShowToolTip] = useState({
+    seat: false,
+    pay: false,
+  });
+  const [contactInfo, setContactInfo] = useState({
+    email: '',
+    phone_number: '',
+  });
+  const dispatch: any = useDispatch();
   const history = useHistory();
-  const onFinish = (values, passengerId) => {
-    setFormValues((prev) => [
-      ...prev,
-      {
-        ...values,
-        id: passengerId,
-      },
-    ]);
-    setPassengerDataForSeatSelection((prev) => [
-      ...prev,
-      {
-        id: passengerId,
-        name: `${values.given_name} ${values.family_name}`,
-      },
-    ]);
+  const verify = () => {
+    let temp = passengersFormData;
+    let isVerifeid = true;
+    let isError = false;
+    const formItems = Object.keys(passengersFormData);
+    if (formItems.length < passengerData?.length) {
+      isVerifeid = false;
+    } else {
+      for (let i = 0; i < formItems.length; i++) {
+        const selectedItem = passengersFormData[formItems[i]];
+        const selectedItemKeys = Object.keys(selectedItem);
+        if (
+          selectedItemKeys.includes('status')
+            ? selectedItemKeys.length < 6
+            : selectedItemKeys.length < 5
+        ) {
+          temp = {
+            ...temp,
+            [formItems[i]]: {
+              ...temp[formItems[i]],
+              ['status']: 'error',
+            },
+          };
+          timeOutFunc();
+        } else {
+          for (let j = 0; j < selectedItemKeys.length; j++) {
+            if (!selectedItem[selectedItemKeys[j]]?.length) {
+              isError = true;
+            }
+          }
+          if (isError) {
+            temp = {
+              ...temp,
+              [formItems[i]]: {
+                ...temp[formItems[i]],
+                ['status']: 'error',
+              },
+            };
+          } else {
+            temp = {
+              ...temp,
+              [formItems[i]]: {
+                ...temp[formItems[i]],
+                ['status']: 'success',
+              },
+            };
+          }
+        }
+      }
+      setPassengersFormData({
+        ...temp,
+      });
+    }
+    return isVerifeid && !isError;
   };
 
-  const handleClick = () => {
-    history.push(`/seat-selection/${offerId}`);
+  const parsedPassengerData = () => {
+    let tempArray = [];
+    let seatPlanArray = [];
+    let dataArray: any = Object.values(passengersFormData);
+    for (let i = 0; i < dataArray.length; i++) {
+      tempArray.push({
+        ...dataArray[i],
+        id: passengerData[i]?.id,
+        email:contactInfo.email,
+        phone_number:contactInfo.phone_number
+      });
+      seatPlanArray.push({
+        name: `${dataArray[i].given_name} ${dataArray[i].family_name}`,
+        id: passengerData[i]?.id,
+      });
+    }
+    return {
+      passengerInfo: tempArray,
+      seatPlanArray,
+    };
+  };
+
+  const handleClick = (btnTag) => {
+    const result = verify();
+    if (btnTag == 'seat') {
+      setShowToolTip({
+        ...showTooltip,
+        [btnTag]:
+          !result ||
+          !contactInfo.email?.length ||
+          !contactInfo.phone_number?.length,
+      });
+    } else {
+      setShowToolTip({
+        ...showTooltip,
+        [btnTag]:
+          !result ||
+          !contactInfo.email?.length ||
+          !contactInfo.phone_number?.length,
+      });
+    }
+    if (
+      result &&
+      contactInfo.email?.length &&
+      contactInfo.phone_number?.length
+    ) {
+      const paersedData = parsedPassengerData();
+      localStorage.setItem('passengerData', JSON.stringify(paersedData));
+      history.push(`/seat-selection/${offerId}`);
+    }
   };
 
   const handleDataChange = (key, value, index) => {
@@ -52,22 +147,28 @@ const PassengerDetailsForm: FC<PassengerFormProps> = ({
       },
     });
   };
-  console.log('passengersData', passengerData);
 
   const passengerForms =
     passengerData?.length &&
     passengerData?.map((item, index) => {
       return (
         <Panel
-          header={item.type.toUpperCase()}
-          key={`passenger-${index + 1}`}
+          header={
+            <div className="header-panel">
+              <span>{item.type.toUpperCase()}</span>
+              {passengersFormData?.[index]?.status == 'error' ? (
+                <span className="error-message">
+                  Kindly fill in all fields <ExclamationCircleOutlined />
+                </span>
+              ) : (
+                <></>
+              )}
+            </div>
+          }
+          key={(index + 1).toString()}
           className="active-form"
         >
-          <Form
-          // onFinish={(values) => {
-          //   onFinish(values, item.id);
-          // }}
-          >
+          <Form>
             <Row gutter={[16, 16]}>
               <Col span={24}>
                 <Row>
@@ -197,57 +298,88 @@ const PassengerDetailsForm: FC<PassengerFormProps> = ({
     });
 
   return (
-    <div className="passenger-details-form">
-      <Collapse bordered={false} defaultActiveKey={`passenger-${currentForm}`}>
-        {passengerForms}
-      </Collapse>
-      <Row justify={'center'} style={{ marginTop: '30px' }}>
-        <Button
-          type="primary"
-          className={
-            formValues?.length != passengerData?.length
-              ? 'form-submit-button disabled'
-              : 'form-submit-button'
+    <>
+      {showTooltip.pay || showTooltip.seat ? (
+        <div
+          className="toltip-overlay"
+          onClick={() =>
+            setShowToolTip({
+              pay: false,
+              seat: false,
+            })
           }
-          onClick={handleClick}
-          disabled={formValues?.length != passengerData?.length}
-        >
-          Confirm
-        </Button>
-      </Row>
-    </div>
+        ></div>
+      ) : (
+        <></>
+      )}
+      <span className="personal-info">Personal Information</span>
+      <div className="passenger-details-form">
+        <div className="panels-section">
+          <Collapse bordered={false} defaultActiveKey={'1'}>
+            {passengerForms}
+          </Collapse>
+        </div>
+        <span className="personal-info contact-form-heading">
+          Contact Information
+        </span>
+        <div className="panels-section contact-form">
+          <div>
+            <Input
+              placeholder="email"
+              type="email"
+              value={contactInfo.email}
+              onChange={(e) =>
+                setContactInfo({
+                  ...contactInfo,
+                  email: e.target.value,
+                })
+              }
+            />
+          </div>
+          <div>
+            <Input
+              placeholder="enter passenger phone number"
+              type="text"
+              value={contactInfo.phone_number}
+              onChange={(e) =>
+                setContactInfo({
+                  ...contactInfo,
+                  phone_number: e.target.value,
+                })
+              }
+            />
+          </div>
+        </div>
+        <div className="btns-section">
+          <Tooltip
+            placement="topLeft"
+            title={'Kindly Fill the Form Data to continue'}
+            open={showTooltip.seat}
+          >
+            <Button
+              type="primary"
+              className={'form-submit-button'}
+              onClick={() => handleClick('seat')}
+            >
+              Select Seats
+            </Button>
+          </Tooltip>
+          <Tooltip
+            placement="topLeft"
+            title={'Kindly Fill the Form Data to continue'}
+            open={showTooltip.pay}
+          >
+            <Button
+              type="primary"
+              className={'form-submit-button'}
+              onClick={() => handleClick('pay')}
+            >
+              Checkout
+            </Button>
+          </Tooltip>
+        </div>
+      </div>
+    </>
   );
 };
 export default PassengerDetailsForm;
-
-// <Row gutter={[16, 16]}>
-// <Col xs={24} sm={24} md={24} lg={12} xl={12}>
-//   <Form.Item
-//     name="email"
-//     rules={[
-//       {
-//         required: true,
-//         message: 'Please input passenger email!',
-//       },
-//     ]}
-//   >
-//     <Input placeholder="email" />
-//   </Form.Item>
-// </Col>
-// <Col xs={24} sm={24} md={24} lg={12} xl={12}>
-//   <Form.Item
-//     name="phone_number"
-//     rules={[
-//       {
-//         required: true,
-//         message: 'Please select passenger phone number!',
-//       },
-//     ]}
-//   >
-//     <Input
-//       placeholder="enter passenger phone number"
-//       type="text"
-//     />
-//   </Form.Item>
-// </Col>
-// </Row>
