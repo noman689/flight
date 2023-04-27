@@ -9,18 +9,7 @@ import {
 } from '@react-pdf/renderer';
 
 interface FlightDetailsProps {
-  from: string;
-  to: string;
-  airline: string;
-  flightNumber: string;
-  departureTerminal: string;
-  arrivalTerminal: string;
-  departureTime: string;
-  arrivalTime: string;
-  seatClass: string;
-  seatNumber: string;
-  departureDate: string;
-  arrivalDate: string;
+  details:any
 }
 
 const styles = StyleSheet.create({
@@ -136,18 +125,7 @@ const styles = StyleSheet.create({
 });
 
 const FlightDetailsPdf: React.FC<FlightDetailsProps> = ({
-  from,
-  to,
-  airline,
-  flightNumber,
-  departureTerminal,
-  arrivalTerminal,
-  departureTime,
-  arrivalTime,
-  departureDate,
-  arrivalDate,
-  seatClass,
-  seatNumber,
+  details
 }) => {
   return (
     <Document>

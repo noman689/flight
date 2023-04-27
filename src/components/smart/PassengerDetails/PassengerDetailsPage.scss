@@ -145,3 +145,15 @@
   cursor: pointer;
   border-radius: 10px;
 }
+.conform-modal-content{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 22px;
+  margin-top: 12px;
+  .success-message{
+    font-size: 22px;
+    font-weight: 500;
+    color: #8e2157;
+  }
+}

@@ -7,7 +7,10 @@ import {
 } from '@client/services/paymentService';
 import Spin from '@client/components/presentational/Spin';
 import { createOrderAPI } from '@client/services/createOrderService';
-import { notification, Card, Modal } from 'antd';
+import { notification, Card, Modal, Button } from 'antd';
+import { PDFDownloadLink } from '@react-pdf/renderer';
+import FlightTicketPdf from '../FlightTicketPdf/FlightTicketPdf';
+import { CheckOutlined } from '@ant-design/icons';
 
 const PaymentMethod = ({ offerMeta, selectedSeatsData, passengersData }) => {
   const [clientToken, setClientToken] = useState('');
@@ -18,7 +21,8 @@ const PaymentMethod = ({ offerMeta, selectedSeatsData, passengersData }) => {
   const [totalSeatCosts, setTotalSeatsCost] = useState(0);
   const [showPaymentModal, setShowPaymentModal] = useState(false);
   const [isPlacingOrder, setIsPlacingOrder] = useState(false);
-
+  const [showConformModal, setConformModal] = useState(false);
+  const [createdOrderDetails, setCreatedOrderDetails] = useState(null);
   const openNotification = (alertMessage) => {
     const placement = 'topRight';
     api.error({
@@ -76,6 +80,7 @@ const PaymentMethod = ({ offerMeta, selectedSeatsData, passengersData }) => {
     setTotalSeatsCost(result);
   }, [selectedSeatsData]);
 
+
   const successfulPaymentHandlerFn = async () => {
     try {
       setIsPlacingOrder(true);
@@ -97,10 +102,12 @@ const PaymentMethod = ({ offerMeta, selectedSeatsData, passengersData }) => {
             payment_intent_id: clientId,
           },
         };
-        await createOrderAPI(payload);
-        openNotification('Flight Bookes Successfully');
+        const { data: order } = await createOrderAPI(payload);
+        setCreatedOrderDetails(order?.offer?.data);
+        openNotification('Flight Booked Successfully');
         setIsPlacingOrder(false);
         setShowPaymentModal(false);
+        setConformModal(true)
       }
     } catch (e) {
       setIsPlacingOrder(false);
@@ -112,9 +119,36 @@ const PaymentMethod = ({ offerMeta, selectedSeatsData, passengersData }) => {
     openNotification('Unable to process payment at this time');
     // Show error page
   };
+
+  const handleConformCancel = () => {};
   return (
     <>
       {contextHolder}
+      <Modal
+        open={showConformModal}
+        footer={null}
+        maskClosable={false}
+        onCancel={handleConformCancel}
+      >
+        <div className="conform-modal-content">
+          <div className="success-message">
+            Order Placed Successfully <CheckOutlined />
+          </div>
+          <div className="download-receipt-btn">
+            <Button style={{ borderColor: '#701644' }}>
+              <PDFDownloadLink
+                document={<FlightTicketPdf details={createdOrderDetails} />}
+                fileName="e-ticket.pdf"
+                style={{ textDecoration: 'none', color: '#701644' }}
+              >
+                {({ loading }) =>
+                  loading ? 'Loading Receipt...' : 'Download Receipt'
+                }
+              </PDFDownloadLink>
+            </Button>
+          </div>
+        </div>
+      </Modal>
       <Modal
         open={showPaymentModal}
         onCancel={() => setShowPaymentModal(false)}
