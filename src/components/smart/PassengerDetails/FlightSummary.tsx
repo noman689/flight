@@ -4,6 +4,7 @@ import './PassengerDetailsPage.scss';
 import moment from 'moment';
 // @ts-ignore
 import planeIcon from '../../../assets/ticketBlack.svg';
+import { getDuration } from '@client/utils/helper';
 interface FlightSummaryProps {
   summaryData: any;
   fare: string;
@@ -22,7 +23,7 @@ const FlightSummary: React.FC<FlightSummaryProps> = ({ summaryData, fare }) => {
                 <Col>
                   {index == 0 && (
                     <Row justify="space-between">
-                      <div className='about-flight-heading'>
+                      <div className="about-flight-heading">
                         {slice.segments[0].origin.iata_city_code}{' '}
                         <img src={planeIcon} width={15} />{' '}
                         {
@@ -42,8 +43,7 @@ const FlightSummary: React.FC<FlightSummaryProps> = ({ summaryData, fare }) => {
                   </Row>
                   <Row className="indicators">
                     <div>
-                      {item?.duration?.slice(2).split('H')[0]}h{' '}
-                      {item?.duration?.slice(2).split('H')[1].split('M')[0]}m
+                      {getDuration(item?.departing_at, item?.arriving_at)}
                     </div>
                     <span className="pathway">
                       <span className="point" />

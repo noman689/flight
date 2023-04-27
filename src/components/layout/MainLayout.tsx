@@ -16,6 +16,7 @@ import PaymentMethod from '../smart/PaymentMethod/PaymentMethod';
 import FlightTicket from '../smart/FlightTicket/FlightTicket';
 import FlightTicketTest from '../smart/FlightTicketTest/FlightTicketTest';
 import { Switch } from 'react-router-dom/cjs/react-router-dom.min';
+import FlightDetailsPdf from '../smart/FlightTicketPdf/FlightTicketPdf';
 
 const { Content } = Layout;
 
@@ -41,7 +42,7 @@ const MainLayout = () => {
             />
             <Route exact path="/payment-method" component={PaymentMethod} />
 
-            <Route exact path="/flight-ticket" component={FlightTicket} />
+            <Route exact path="/flight-ticket" component={FlightDetailsPdf} />
             <Route
               exact
               path="/234"

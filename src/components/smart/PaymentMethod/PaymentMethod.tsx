@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { useHistory, useParams } from 'react-router';
+import { useEffect, useState } from 'react';
+import { useHistory } from 'react-router';
 import { CardPayment } from '@duffel/components';
 import {
   confirmPaymentAPI,
@@ -7,16 +7,17 @@ import {
 } from '@client/services/paymentService';
 import Spin from '@client/components/presentational/Spin';
 import { createOrderAPI } from '@client/services/createOrderService';
-import { getFriendlyErrorMessage } from './ErrorHandling';
-import { notification, Space, Card } from 'antd';
+import { notification, Card, Modal } from 'antd';
 
-const PaymentMethod = () => {
+const PaymentMethod = ({ offerMeta, selectedSeatsData, passengersData }) => {
   const [clientToken, setClientToken] = useState('');
   const [clientId, setClientId] = useState('');
   const [loading, setLoading] = useState(false);
-  const [selectedSlice, setSelectedSlice] = useState({});
   const history = useHistory();
   const [api, contextHolder] = notification.useNotification();
+  const [totalSeatCosts, setTotalSeatsCost] = useState(0);
+  const [showPaymentModal, setShowPaymentModal] = useState(false);
+  const [isPlacingOrder, setIsPlacingOrder] = useState(false);
 
   const openNotification = (alertMessage) => {
     const placement = 'topRight';
@@ -27,116 +28,132 @@ const PaymentMethod = () => {
     });
   };
 
-  const calculateTotalAmount = (offerData, passengerData) => {
-    const parentObjKeys = Object.keys(passengerData);
-    const nestedKeys = Object.keys(passengerData[parentObjKeys[0]]);
-    let seatCosts = 0;
-    for (
-      let i = 0;
-      i < Object.keys(passengerData[parentObjKeys?.[0]])?.length;
-      i++
-    ) {
-      seatCosts += Number(
-        passengerData[parentObjKeys[0]][nestedKeys[i]]?.service?.total_amount,
-      );
+  const getTotalSeatsCost = (data) => {
+    let total_seats_amount = 0;
+    for (let i = 0; i < data.length; i++) {
+      total_seats_amount += Number(data[i].amount);
     }
-    const totalChargedAmount =
-      (seatCosts + Number(offerData.total_amount)) / (1 - 0.029);
+    return total_seats_amount;
+  };
 
+  const calculateTotalAmount = (offerData) => {
+    const totalChargedAmount =
+      (totalSeatCosts + Number(offerData.total_amount)) / (1 - 0.029);
     return totalChargedAmount.toFixed(2).toString();
   };
 
-  useEffect(() => {
-    const getPaymentIntent = async () => {
-      try {
-        setLoading(true);
-        const meta = JSON.parse(localStorage.getItem('seatData'));
-        setSelectedSlice(meta.offerDetails);
-        const total_amount = calculateTotalAmount(
-          meta.offerDetails,
-          meta.passengerDetails,
-        );
+  const getPaymentIntent = async () => {
+    try {
+      setLoading(true);
+      const total_amount = calculateTotalAmount(offerMeta);
+      const { data } = await paymentIntentAPI({
+        total_amount: total_amount,
+        total_currency: 'USD',
+      });
+      setClientToken(data.offer.data.client_token);
+      setClientId(data.offer.data.id);
+      setLoading(false);
+      setShowPaymentModal(true);
+    } catch (error) {
+      console.log('error', error);
+      setLoading(false);
+    }
+  };
 
-        const { data } = await paymentIntentAPI({
-          total_amount: total_amount,
-          total_currency: 'USD',
-        });
-        setClientToken(data.offer.data.client_token);
-        setClientId(data.offer.data.id);
-        setLoading(false);
-      } catch (error) {
-        console.log('error', error);
-        setLoading(false);
-      }
-    };
-    getPaymentIntent();
-  }, []);
+  const getServicesArray = () => {
+    let serviceArray = [];
+    for (let i = 0; i < selectedSeatsData.length; i++) {
+      serviceArray.push({
+        quantity: 1,
+        id: selectedSeatsData[i].serviceId,
+      });
+    }
+    return serviceArray;
+  };
+
+  useEffect(() => {
+    const result = getTotalSeatsCost(selectedSeatsData);
+    setTotalSeatsCost(result);
+  }, [selectedSeatsData]);
+
   const successfulPaymentHandlerFn = async () => {
     try {
+      setIsPlacingOrder(true);
       const { data } = await confirmPaymentAPI(clientId);
       if (data.offer?.data) {
-        const meta = JSON.parse(localStorage.getItem('seatData'));
         const payload = {
           type: 'instant',
-          selected_offers: [meta.offerDetails.id],
+          selected_offers: [offerMeta.id],
           payments: [
             {
               type: 'balance',
               currency: 'USD',
-              amount: meta.offerDetails.total_amount,
+              amount: data.offer.data.net_amount,
             },
           ],
-          passengers: [...meta.passengerData],
+          services: [...getServicesArray()],
+          passengers: [...passengersData.passengerInfo],
           metadata: {
             payment_intent_id: clientId,
           },
         };
-        const create = await createOrderAPI(payload);
-        localStorage.setItem(
-          'offerInfo',
-          JSON.stringify({
-            confirmationDetails: create,
-            selectedSlice: selectedSlice,
-          }),
-        );
-        history.push(`/flight-ticket`);
-        // history.push(
-        //   `/flight-ticket?data=${encodeURIComponent(
-        //     JSON.stringify({
-        //       confirmationDetails: create,
-        //       selectedSlice: selectedSlice,
-        //     }),
-        //   )}`,
-        // );
+        await createOrderAPI(payload);
+        openNotification('Flight Bookes Successfully');
+        setIsPlacingOrder(false);
+        setShowPaymentModal(false);
       }
     } catch (e) {
-      openNotification(getFriendlyErrorMessage(e));
-      console.log(getFriendlyErrorMessage(e));
-      console.log('e', e);
+      setIsPlacingOrder(false);
+      openNotification(e);
     }
   };
 
   const errorPaymentHandlerFn = () => {
+    openNotification('Unable to process payment at this time');
     // Show error page
   };
   return (
-    <div className="my-4">
-      <Card title="Payment Info" bordered={false}>
-        {contextHolder}
-        {loading ? (
-          <Spin />
+    <>
+      {contextHolder}
+      <Modal
+        open={showPaymentModal}
+        onCancel={() => setShowPaymentModal(false)}
+        width={'600px'}
+        footer={null}
+      >
+        {isPlacingOrder ? (
+          'Placing order.....'
         ) : (
-          <CardPayment
-            duffelPaymentIntentClientToken={
-              clientToken ||
-              'eyJjbGllbnRfc2VjcmV0IjoicGlfMUl5YTBiQW5rMVRkeXJvRE1iWkJPN0ZSX3NlY3JldF9TbGFrYnJjYnFHZGZha2VrcjdCNE5jZWVyIiwicHVibGlzaGFibGVfa2V5IjoicGtfbGl2ZV81MUl0Q3YwQW5rMUdkeXJvRFlFU3M3RnBTUEdrNG9kbDhneDF3Y1RBNVEzaUcyWEFWVEhxdFlKSVhWMUxoSU5GQUtFMjA1dFdmRGVIcXhwUVdnYkIzTkVFbzAwMmdVY1hzR0YifQ=='
-            }
-            successfulPaymentHandler={successfulPaymentHandlerFn}
-            errorPaymentHandler={errorPaymentHandlerFn}
-          />
+          <Card title="Payment Info" bordered={false}>
+            <CardPayment
+              duffelPaymentIntentClientToken={
+                clientToken ||
+                'eyJjbGllbnRfc2VjcmV0IjoicGlfMUl5YTBiQW5rMVRkeXJvRE1iWkJPN0ZSX3NlY3JldF9TbGFrYnJjYnFHZGZha2VrcjdCNE5jZWVyIiwicHVibGlzaGFibGVfa2V5IjoicGtfbGl2ZV81MUl0Q3YwQW5rMUdkeXJvRFlFU3M3RnBTUEdrNG9kbDhneDF3Y1RBNVEzaUcyWEFWVEhxdFlKSVhWMUxoSU5GQUtFMjA1dFdmRGVIcXhwUVdnYkIzTkVFbzAwMmdVY1hzR0YifQ=='
+              }
+              successfulPaymentHandler={successfulPaymentHandlerFn}
+              errorPaymentHandler={errorPaymentHandlerFn}
+            />
+          </Card>
         )}
-      </Card>
-    </div>
+      </Modal>
+      <div className="my-4 seatBox f-col">
+        <div className="single-item">
+          <span>Total Price (.inc taxes)</span>
+          <span>${offerMeta.total_amount}</span>
+        </div>
+        {totalSeatCosts > 0 ? (
+          <div className="single-item">
+            <span>Seats Costs</span>
+            <span>${totalSeatCosts}</span>
+          </div>
+        ) : (
+          <></>
+        )}
+        <div onClick={getPaymentIntent} className="pay-btn">
+          {loading ? <Spin /> : 'Pay'}
+        </div>
+      </div>
+    </>
   );
 };
 

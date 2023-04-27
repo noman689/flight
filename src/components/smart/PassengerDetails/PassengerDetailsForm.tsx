@@ -12,12 +12,14 @@ const { Panel } = Collapse;
 
 interface PassengerFormProps {
   passengerData: any;
-  offerId: string;
+  setSeatComponentData: any;
+  setIsFormValidated: any;
 }
 
 const PassengerDetailsForm: FC<PassengerFormProps> = ({
   passengerData = [],
-  offerId,
+  setSeatComponentData,
+  setIsFormValidated,
 }) => {
   const [passengersFormData, setPassengersFormData] = useState({});
   const [showTooltip, setShowToolTip] = useState({
@@ -28,8 +30,6 @@ const PassengerDetailsForm: FC<PassengerFormProps> = ({
     email: '',
     phone_number: '',
   });
-  const dispatch: any = useDispatch();
-  const history = useHistory();
   const verify = () => {
     let temp = passengersFormData;
     let isVerifeid = true;
@@ -94,8 +94,8 @@ const PassengerDetailsForm: FC<PassengerFormProps> = ({
       tempArray.push({
         ...dataArray[i],
         id: passengerData[i]?.id,
-        email:contactInfo.email,
-        phone_number:contactInfo.phone_number
+        email: contactInfo.email,
+        phone_number: contactInfo.phone_number,
       });
       seatPlanArray.push({
         name: `${dataArray[i].given_name} ${dataArray[i].family_name}`,
@@ -133,8 +133,10 @@ const PassengerDetailsForm: FC<PassengerFormProps> = ({
       contactInfo.phone_number?.length
     ) {
       const paersedData = parsedPassengerData();
-      localStorage.setItem('passengerData', JSON.stringify(paersedData));
-      history.push(`/seat-selection/${offerId}`);
+      setSeatComponentData(paersedData);
+      setIsFormValidated(true);
+      // localStorage.setItem('passengerData', JSON.stringify(paersedData));
+      // history.push(`/seat-selection/${offerId}`);
     }
   };
 
@@ -361,20 +363,7 @@ const PassengerDetailsForm: FC<PassengerFormProps> = ({
               className={'form-submit-button'}
               onClick={() => handleClick('seat')}
             >
-              Select Seats
-            </Button>
-          </Tooltip>
-          <Tooltip
-            placement="topLeft"
-            title={'Kindly Fill the Form Data to continue'}
-            open={showTooltip.pay}
-          >
-            <Button
-              type="primary"
-              className={'form-submit-button'}
-              onClick={() => handleClick('pay')}
-            >
-              Checkout
+              Save Changes
             </Button>
           </Tooltip>
         </div>
