@@ -21,7 +21,7 @@ const PaymentMethod = ({ offerMeta, selectedSeatsData, passengersData }) => {
   const [totalSeatCosts, setTotalSeatsCost] = useState(0);
   const [showPaymentModal, setShowPaymentModal] = useState(false);
   const [isPlacingOrder, setIsPlacingOrder] = useState(false);
-  const [showConformModal, setConformModal] = useState(false);
+  const [showConformModal, setConformModal] = useState(true);
   const [createdOrderDetails, setCreatedOrderDetails] = useState(null);
   const openNotification = (alertMessage) => {
     const placement = 'topRight';
@@ -80,7 +80,6 @@ const PaymentMethod = ({ offerMeta, selectedSeatsData, passengersData }) => {
     setTotalSeatsCost(result);
   }, [selectedSeatsData]);
 
-
   const successfulPaymentHandlerFn = async () => {
     try {
       setIsPlacingOrder(true);
@@ -107,7 +106,7 @@ const PaymentMethod = ({ offerMeta, selectedSeatsData, passengersData }) => {
         openNotification('Flight Booked Successfully');
         setIsPlacingOrder(false);
         setShowPaymentModal(false);
-        setConformModal(true)
+        setConformModal(true);
       }
     } catch (e) {
       setIsPlacingOrder(false);

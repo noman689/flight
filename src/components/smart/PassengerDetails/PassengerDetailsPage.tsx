@@ -8,7 +8,6 @@ import SeatSelectionComp from '../SeatSelection/SeatSelection';
 import PaymentMethod from '../PaymentMethod/PaymentMethod';
 import './PassengerDetailsPage.scss';
 
-
 const PassengerDetailsPage: React.FC = () => {
   const [selectedOffer, setSelectedOffer] = useState(null);
   const [passengerData, setPassengerData] = useState(0);
@@ -54,7 +53,7 @@ const PassengerDetailsPage: React.FC = () => {
               <FlightSummary summaryData={selectedOffer} fare={fare} />
             </div>
           </div>
-          {isFormValidated ? (
+          {!isFormValidated ? (
             <>
               <div>
                 <SeatSelectionComp

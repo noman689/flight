@@ -7,9 +7,10 @@ import {
   StyleSheet,
   Image,
 } from '@react-pdf/renderer';
+import moment from 'moment';
 
 interface FlightDetailsProps {
-  details:any
+  details: any;
 }
 
 const styles = StyleSheet.create({
@@ -46,7 +47,7 @@ const styles = StyleSheet.create({
   },
   label: {
     fontWeight: 900,
-    fontSize: 16,
+    fontSize: 14,
     color: '#701644',
     marginBottom: 5,
   },
@@ -86,6 +87,14 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     paddingVertical: 5,
   },
+  row2: {
+    flexDirection: 'row',
+    width: 690,
+    paddingVertical: 5,
+  },
+  asd: {
+    width: 135,
+  },
   listItem: {
     marginLeft: 10,
     marginBottom: 5,
@@ -124,91 +133,111 @@ const styles = StyleSheet.create({
   },
 });
 
-const FlightDetailsPdf: React.FC<FlightDetailsProps> = ({
-  details
-}) => {
+const FlightDetailsPdf: React.FC<FlightDetailsProps> = ({ details }) => {
+  const data = JSON.parse(localStorage.getItem('details'));
+  console.log('Data', data);
   return (
     <Document>
       <Page style={styles.page}>
         <View style={styles.header}>
           <Image
-            source={
-              'https://res.cloudinary.com/crunchbase-production/image/upload/c_lpad,f_auto,q_auto:eco/kqizaebyrlnldyjjkimn'
-            }
+            source={data.owner.logo_symbol_url} //notworkinhg
             style={{ height: 30, width: 30 }}
           />
-          <Text style={styles.title}>Duffle Airways Ticket</Text>
+          <Text style={styles.title}>{data.owner.name}</Text>
         </View>
         <View>
           <View>
             <Text style={styles.label}>Booking Date</Text>
-            <Text style={styles.value}>Tuesday, April 18, 2023</Text>
+            <Text style={styles.value}>{data.created_at}</Text>
           </View>
           <View>
             <Text style={styles.label}>Passenger Name</Text>
-            <Text style={styles.value}>Mr Hello Jee</Text>
+            <Text style={styles.value}>
+              {data.passengers[0].title}
+              {data.passengers[0].given_name}
+              {data.passengers[0].family_name}
+            </Text>
           </View>
         </View>
         <View>
           <Text style={styles.subheading}>Flight Details</Text>
           <Text style={styles.lightLabel}>Route</Text>
           <View style={styles.lineBreak2} />
-          <View style={styles.row}>
-            <View>
+          <View style={styles.row2}>
+            <View style={styles.asd}>
               <Text style={styles.label}>From</Text>
-              <Text style={styles.value}>{from}</Text>
+              <Text style={styles.value}>{data.slices[0].origin.name}</Text>
+              <Text style={styles.value}>
+                {data.slices[0].origin.iata_city_code}
+              </Text>
             </View>
-            <View>
+            <View style={styles.asd}>
               <Text style={styles.label}>Airline</Text>
-              <Text style={styles.value}>{airline}</Text>
+              <Text style={styles.value}>{data.owner.name}</Text>
             </View>
-            <View>
+            <View style={styles.asd}>
               <View>
                 <Text style={styles.label}>Departure Time</Text>
               </View>
-              <View>
-                <Text style={styles.subvalue}>{departureDate}</Text>
-                <Text style={styles.subvalue}>{departureTime}</Text>
+              <View style={styles.asd}>
+                <Text style={styles.subvalue}>
+                  {data.slices[0].segments[0].departure_at}
+                </Text>
+                <Text style={styles.subvalue}>
+                  {data.slices[0].segments[0].departing_at}
+                </Text>
               </View>
             </View>
-            <View>
+            <View style={styles.asd}>
               <View>
                 <Text style={styles.label}>Arrival Time</Text>
               </View>
               <View>
-                <Text style={styles.subvalue}>{arrivalDate}</Text>
-                <Text style={styles.subvalue}>{arrivalTime}</Text>
+                <Text style={styles.subvalue}>
+                  {data.slices[0].segments[0].arriving_at}
+                </Text>
+                <Text style={styles.subvalue}>
+                  {data.slices[0].segments[0].arriving_at}
+                </Text>
               </View>
             </View>
           </View>
           <View style={styles.lineBreak} />
-          <View style={styles.row}>
-            <View>
+          <View style={styles.row2}>
+            <View style={styles.asd}>
               <Text style={styles.label}>To</Text>
-              <Text style={styles.value}>{to}</Text>
+              <Text style={styles.value}>
+                {data.slices[0].destination.name}
+              </Text>
+              <Text style={styles.value}>
+                {data.slices[0].destination.iata_city_code}
+              </Text>
             </View>
-            <View>
+            <View style={styles.asd}>
               <View>
                 <Text style={styles.label}>Flight Number</Text>
               </View>
               <View>
-                <Text style={styles.value}>{flightNumber}</Text>
+                <Text style={styles.value}>E56</Text>
               </View>
             </View>
-            <View>
+            <View style={styles.asd}>
               <View>
                 <Text style={styles.label}>Departure Terminal</Text>
               </View>
               <View>
-                <Text style={styles.value}>{departureTerminal}</Text>
+                <Text style={styles.value}>{data.slices[0].origin.name}</Text>
               </View>
             </View>
-            <View>
+            <View style={styles.asd}>
               <View>
                 <Text style={styles.label}>Arrival Terminal</Text>
               </View>
               <View>
-                <Text style={styles.value}>{arrivalTerminal}</Text>
+                <Text style={styles.value}>
+                  {data.slices[0].destination.name}
+                </Text>
               </View>
             </View>
           </View>
@@ -216,11 +245,11 @@ const FlightDetailsPdf: React.FC<FlightDetailsProps> = ({
           <View style={styles.row}>
             <View>
               <Text style={styles.label}>Seat Class</Text>
-              <Text style={styles.value}>{seatClass}</Text>
+              <Text style={styles.value}>ECONOMY</Text>
             </View>
             <View>
               <Text style={styles.label}>Seat Number</Text>
-              <Text style={styles.value}>{seatNumber}</Text>
+              <Text style={styles.value}>56</Text>
             </View>
           </View>
         </View>
