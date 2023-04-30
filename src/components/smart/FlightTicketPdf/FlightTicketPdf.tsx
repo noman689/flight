@@ -7,9 +7,10 @@ import {
   StyleSheet,
   Image,
 } from '@react-pdf/renderer';
+import moment from 'moment';
 
 interface FlightDetailsProps {
-  details:any
+  data: any;
 }
 
 const styles = StyleSheet.create({
@@ -45,8 +46,8 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   label: {
-    fontWeight: 900,
-    fontSize: 16,
+    fontWeight: 700,
+    fontSize: 14,
     color: '#701644',
     marginBottom: 5,
   },
@@ -59,10 +60,10 @@ const styles = StyleSheet.create({
   value: {
     color: '#4f4f4f',
     marginBottom: 15,
+    fontWeight:300,
+    fontSize:12
   },
-  subvalue: {
-    color: '#4f4f4f',
-  },
+
   simpleText: {
     color: '#4f4f4f',
     marginBottom: 10,
@@ -80,6 +81,9 @@ const styles = StyleSheet.create({
     borderBottomStyle: 'solid',
     borderBottomColor: 'gray',
     alignSelf: 'center',
+  },
+  cell:{
+    width: '100%',
   },
   row: {
     flexDirection: 'row',
@@ -124,106 +128,261 @@ const styles = StyleSheet.create({
   },
 });
 
-const FlightDetailsPdf: React.FC<FlightDetailsProps> = ({
-  details
-}) => {
+const FlightDetailsPdf: React.FC<FlightDetailsProps> = ({data}) => {
+  // localStorage.setItem('details',JSON.stringify(details))
   return (
     <Document>
+      {data.passengers?.map((item) => {
+        return (
+          <Page style={styles.page}>
+            <View style={styles.header}>
+              <Image
+                source={data.owner.logo_symbol_url}
+                style={{ height: 30, width: 30 }}
+              />
+              <Text style={styles.title}>{data.owner.name}</Text>
+            </View>
+            <View>
+              <View>
+                <Text style={styles.label}>Booking Date</Text>
+                <Text style={styles.value}>
+                  {moment(data.created_at).format('DD-MM-YYYY')}
+                </Text>
+              </View>
+              <View>
+                <Text style={styles.label}>Passenger Name</Text>
+                <Text
+                  style={styles.value}
+                >{`${item.given_name} ${item.family_name}`}</Text>
+              </View>
+            </View>
+            <View>
+              <Text style={styles.subheading}>Flight Details</Text>
+              <Text style={styles.lightLabel}>Route</Text>
+              {data.slices?.map((item) => {
+                return (
+                  <>
+                    <View style={styles.lineBreak2} />
+                    {item.segments.length &&
+                      item.segments.map((segment) => {
+                        return (
+                          <>
+                            <View style={styles.row}>
+                              <View style={styles.cell}>
+                                <Text style={styles.label}>From</Text>
+                                <Text style={styles.value}>
+                                  {segment.origin.name}
+                                </Text>
+                              </View>
+                              <View>
+                                <Text style={styles.label}>To</Text>
+                                <Text style={styles.value}>
+                                  {segment.destination.name}
+                                </Text>
+                              </View>
+                              <View>
+                                  <Text style={styles.label}>
+                                    Departure Time
+                                  </Text>
+                                  <Text style={styles.value}>
+                                    {moment(segment.departing_at).format(
+                                      'DD-MM-YYYY',
+                                    )}
+                                  </Text>
+                                  <Text style={styles.value}>
+                                    {moment(segment.departing_at).format(
+                                      'hh:mm A',
+                                    )}
+                                  </Text>
+                              </View>
+                              <View>
+                                  <Text style={styles.label}>
+                                    Departure Terminal
+                                  </Text>
+                                  <Text style={styles.value}>
+                                    {segment.departure_terminal}
+                                  </Text>
+                              </View>
+                              <View>
+                                  <Text style={styles.label}>Arrival Time</Text>
+                                  <Text style={styles.value}>
+                                    {moment(segment.arriving_at).format(
+                                      'DD-MM-YYYY',
+                                    )}
+                                  </Text>
+                                  <Text style={styles.value}>
+                                    {moment(segment.arriving_at).format(
+                                      'hh:mm A',
+                                    )}
+                                  </Text>
+                              </View>
+                              <View>
+                                  <Text style={styles.label}>
+                                    Departure Terminal
+                                  </Text>
+                                  <Text style={styles.value}>
+                                    {segment.departure_terminal}
+                                  </Text>
+                              </View>
+                            </View>
+                            <View style={styles.lineBreak} />
+                            {/* <View style={styles.row}>
+                      <View>
+                        <Text style={styles.label}>To</Text>
+                        <Text style={styles.value}>
+                          {segment.destination.name}
+                        </Text>
+                      </View>
+                      <View>
+                        <View>
+                          <Text style={styles.label}>Flight Number</Text>
+                        </View>
+                        <View>
+                          <Text style={styles.value}>
+                            {data.booking_reference}
+                          </Text>
+                        </View>
+                      </View>
+                      <View>
+                        <View>
+                          <Text style={styles.label}>
+                            Departure Terminal
+                          </Text>
+                        </View>
+                        <View>
+                          <Text style={styles.value}>
+                            {segment.departure_terminal}
+                          </Text>
+                        </View>
+                      </View>
+                      <View>
+                        <View>
+                          <Text style={styles.label}>Arrival Terminal</Text>
+                        </View>
+                        <View>
+                          <Text style={styles.value}>
+                            {segment.arrival_terminal}
+                          </Text>
+                        </View>
+                      </View>
+                    </View> */}
+                            {/* <View style={styles.lineBreak} /> */}
+                          </>
+                        );
+                      })}
+                  </>
+                );
+              })}
+
+              {/* <View style={styles.row}>
+        <View>
+          <Text style={styles.label}>Seat Class</Text>
+          <Text style={styles.value}>{seatClass}</Text>
+        </View>
+        <View>
+          <Text style={styles.label}>Seat Number</Text>
+          <Text style={styles.value}>{seatNumber}</Text>
+        </View>
+      </View> */}
+            </View>
+          </Page>
+        );
+      })}
       <Page style={styles.page}>
-        <View style={styles.header}>
-          <Image
-            source={
-              'https://res.cloudinary.com/crunchbase-production/image/upload/c_lpad,f_auto,q_auto:eco/kqizaebyrlnldyjjkimn'
-            }
-            style={{ height: 30, width: 30 }}
-          />
-          <Text style={styles.title}>Duffle Airways Ticket</Text>
+        {/* <View style={styles.header}>
+      <Image
+        source={
+          'https://res.cloudinary.com/crunchbase-production/image/upload/c_lpad,f_auto,q_auto:eco/kqizaebyrlnldyjjkimn'
+        }
+        style={{ height: 30, width: 30 }}
+      />
+      <Text style={styles.title}>Duffle Airways Ticket</Text>
+    </View>
+    <View>
+      <View>
+        <Text style={styles.label}>Booking Date</Text>
+        <Text style={styles.value}>Tuesday, April 18, 2023</Text>
+      </View>
+      <View>
+        <Text style={styles.label}>Passenger Name</Text>
+        <Text style={styles.value}>Mr Hello Jee</Text>
+      </View>
+    </View> */}
+        {/* <View>
+      <Text style={styles.subheading}>Flight Details</Text>
+      <Text style={styles.lightLabel}>Route</Text>
+      <View style={styles.lineBreak2} />
+      <View style={styles.row}>
+        <View>
+          <Text style={styles.label}>From</Text>
+          <Text style={styles.value}>{from}</Text>
+        </View>
+        <View>
+          <Text style={styles.label}>Airline</Text>
+          <Text style={styles.value}>{airline}</Text>
         </View>
         <View>
           <View>
-            <Text style={styles.label}>Booking Date</Text>
-            <Text style={styles.value}>Tuesday, April 18, 2023</Text>
+            <Text style={styles.label}>Departure Time</Text>
           </View>
           <View>
-            <Text style={styles.label}>Passenger Name</Text>
-            <Text style={styles.value}>Mr Hello Jee</Text>
+            <Text style={styles.subvalue}>{departureDate}</Text>
+            <Text style={styles.subvalue}>{departureTime}</Text>
           </View>
         </View>
         <View>
-          <Text style={styles.subheading}>Flight Details</Text>
-          <Text style={styles.lightLabel}>Route</Text>
-          <View style={styles.lineBreak2} />
-          <View style={styles.row}>
-            <View>
-              <Text style={styles.label}>From</Text>
-              <Text style={styles.value}>{from}</Text>
-            </View>
-            <View>
-              <Text style={styles.label}>Airline</Text>
-              <Text style={styles.value}>{airline}</Text>
-            </View>
-            <View>
-              <View>
-                <Text style={styles.label}>Departure Time</Text>
-              </View>
-              <View>
-                <Text style={styles.subvalue}>{departureDate}</Text>
-                <Text style={styles.subvalue}>{departureTime}</Text>
-              </View>
-            </View>
-            <View>
-              <View>
-                <Text style={styles.label}>Arrival Time</Text>
-              </View>
-              <View>
-                <Text style={styles.subvalue}>{arrivalDate}</Text>
-                <Text style={styles.subvalue}>{arrivalTime}</Text>
-              </View>
-            </View>
+          <View>
+            <Text style={styles.label}>Arrival Time</Text>
           </View>
-          <View style={styles.lineBreak} />
-          <View style={styles.row}>
-            <View>
-              <Text style={styles.label}>To</Text>
-              <Text style={styles.value}>{to}</Text>
-            </View>
-            <View>
-              <View>
-                <Text style={styles.label}>Flight Number</Text>
-              </View>
-              <View>
-                <Text style={styles.value}>{flightNumber}</Text>
-              </View>
-            </View>
-            <View>
-              <View>
-                <Text style={styles.label}>Departure Terminal</Text>
-              </View>
-              <View>
-                <Text style={styles.value}>{departureTerminal}</Text>
-              </View>
-            </View>
-            <View>
-              <View>
-                <Text style={styles.label}>Arrival Terminal</Text>
-              </View>
-              <View>
-                <Text style={styles.value}>{arrivalTerminal}</Text>
-              </View>
-            </View>
-          </View>
-          <View style={styles.lineBreak} />
-          <View style={styles.row}>
-            <View>
-              <Text style={styles.label}>Seat Class</Text>
-              <Text style={styles.value}>{seatClass}</Text>
-            </View>
-            <View>
-              <Text style={styles.label}>Seat Number</Text>
-              <Text style={styles.value}>{seatNumber}</Text>
-            </View>
+          <View>
+            <Text style={styles.subvalue}>{arrivalDate}</Text>
+            <Text style={styles.subvalue}>{arrivalTime}</Text>
           </View>
         </View>
+      </View>
+      <View style={styles.lineBreak} />
+      <View style={styles.row}>
+        <View>
+          <Text style={styles.label}>To</Text>
+          <Text style={styles.value}>{to}</Text>
+        </View>
+        <View>
+          <View>
+            <Text style={styles.label}>Flight Number</Text>
+          </View>
+          <View>
+            <Text style={styles.value}>{flightNumber}</Text>
+          </View>
+        </View>
+        <View>
+          <View>
+            <Text style={styles.label}>Departure Terminal</Text>
+          </View>
+          <View>
+            <Text style={styles.value}>{departureTerminal}</Text>
+          </View>
+        </View>
+        <View>
+          <View>
+            <Text style={styles.label}>Arrival Terminal</Text>
+          </View>
+          <View>
+            <Text style={styles.value}>{arrivalTerminal}</Text>
+          </View>
+        </View>
+      </View>
+      <View style={styles.lineBreak} />
+      <View style={styles.row}>
+        <View>
+          <Text style={styles.label}>Seat Class</Text>
+          <Text style={styles.value}>{seatClass}</Text>
+        </View>
+        <View>
+          <Text style={styles.label}>Seat Number</Text>
+          <Text style={styles.value}>{seatNumber}</Text>
+        </View>
+      </View>
+    </View> */}
         <View>
           <View>
             <Text style={styles.subheading}>Total Fare Breakdown</Text>
@@ -236,7 +395,7 @@ const FlightDetailsPdf: React.FC<FlightDetailsProps> = ({
                   <Text style={styles.label}>Base Fare</Text>
                 </View>
                 <View>
-                  <Text style={styles.value}>14</Text>
+                  <Text style={styles.value}>{data.base_amount}</Text>
                 </View>
               </View>
               <View style={styles.row}>
@@ -244,7 +403,7 @@ const FlightDetailsPdf: React.FC<FlightDetailsProps> = ({
                   <Text style={styles.label}>Taxes</Text>
                 </View>
                 <View>
-                  <Text style={styles.value}>12</Text>
+                  <Text style={styles.value}>{data.tax_amount}</Text>
                 </View>
               </View>
               <View style={styles.lineBreak2} />
@@ -253,7 +412,7 @@ const FlightDetailsPdf: React.FC<FlightDetailsProps> = ({
                   <Text style={styles.label}>Total Fare</Text>
                 </View>
                 <View>
-                  <Text style={styles.value}>26</Text>
+                  <Text style={styles.value}>{data.total_amount}</Text>
                 </View>
               </View>
             </View>

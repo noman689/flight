@@ -11,7 +11,6 @@ interface FlightSummaryProps {
 }
 
 const FlightSummary: React.FC<FlightSummaryProps> = ({ summaryData, fare }) => {
-  console.log('summaryData', summaryData);
   return (
     <Card title="Your Trip Summary" className="main-card">
       {summaryData?.data?.slices?.length &&

@@ -80,7 +80,6 @@ const PaymentMethod = ({ offerMeta, selectedSeatsData, passengersData }) => {
     setTotalSeatsCost(result);
   }, [selectedSeatsData]);
 
-
   const successfulPaymentHandlerFn = async () => {
     try {
       setIsPlacingOrder(true);
@@ -107,7 +106,7 @@ const PaymentMethod = ({ offerMeta, selectedSeatsData, passengersData }) => {
         openNotification('Flight Booked Successfully');
         setIsPlacingOrder(false);
         setShowPaymentModal(false);
-        setConformModal(true)
+        setConformModal(true);
       }
     } catch (e) {
       setIsPlacingOrder(false);
@@ -121,6 +120,8 @@ const PaymentMethod = ({ offerMeta, selectedSeatsData, passengersData }) => {
   };
 
   const handleConformCancel = () => {};
+
+  console.log('createdOrderDetails', createdOrderDetails);
   return (
     <>
       {contextHolder}
@@ -137,7 +138,7 @@ const PaymentMethod = ({ offerMeta, selectedSeatsData, passengersData }) => {
           <div className="download-receipt-btn">
             <Button style={{ borderColor: '#701644' }}>
               <PDFDownloadLink
-                document={<FlightTicketPdf details={createdOrderDetails} />}
+                document={<FlightTicketPdf data={createdOrderDetails} />}
                 fileName="e-ticket.pdf"
                 style={{ textDecoration: 'none', color: '#701644' }}
               >
