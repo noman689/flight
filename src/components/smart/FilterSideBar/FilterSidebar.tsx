@@ -8,11 +8,13 @@ import planeIcon from '../../../assets/ticketBlack.svg';
 import './FilterSideBar.scss';
 import moment from 'moment';
 import { Radio, Space } from 'antd';
-import { useHistory } from 'react-router';
+import { useLocation, useHistory } from 'react-router-dom';
 
 const FilterSidebar = ({ data = [], collapsed, setCollapsed }) => {
   console.log('FilterSidebar', data);
-  const history=useHistory()
+  const history = useHistory()
+  const location = useLocation();
+
   const [flightInfo, setFlightInfo] = useState({
     origin: '',
     destination: '',
@@ -22,8 +24,34 @@ const FilterSidebar = ({ data = [], collapsed, setCollapsed }) => {
     startDate: '',
     endDate: '',
   });
-  const [sortBy, setSortBy] = useState('least-expensive');
+  const [sortBy, setSortBy] = useState('');
+  const [stops, setStops] = useState('');
   const [stopsFilter, setStopsFilter] = useState(0);
+
+  useEffect(() => {
+    const searchParams = new URLSearchParams(location.search);
+    setSortBy(searchParams.get('sort_by') || '');
+    setStops(searchParams.get('stops') || '');
+  }, [location.search]);
+
+  function handleSortByChange(e) {
+    const newSortBy = e.target.value;
+    setSortBy(newSortBy);
+
+    const searchParams = new URLSearchParams(location.search);
+    searchParams.set('sort_by', newSortBy);
+    history.push({ search: searchParams.toString() });
+  }
+
+  function handleStopsChange(e) {
+    const newStops = e.target.value;
+    setStops(newStops);
+
+    const searchParams = new URLSearchParams(location.search);
+    searchParams.set('stops', newStops);
+    history.push({ search: searchParams.toString() });
+  }
+
   const getFlightInfo = () => {
     let startDate;
     let endDate;
@@ -60,7 +88,7 @@ const FilterSidebar = ({ data = [], collapsed, setCollapsed }) => {
     }
   };
 
-  console.log("testing-location",window.location)
+  console.log("testing-location", window.location)
 
   // useEffect(()=>{
 
@@ -126,17 +154,17 @@ const FilterSidebar = ({ data = [], collapsed, setCollapsed }) => {
             <div className="sort-section">
               <span className="sort-heading">Sort by</span>
               <Radio.Group
-                onChange={(e) => 
-                  {
-                    history.push({
-                      pathname: window.location.pathname,
-                      search: `${window.location.search.length ? window.location.search+`&sort_by=${e.target.value}` : `sort_by=${e.target.value}`}`,
-                    });
-                  }
+                onChange={(e) => {
+                  handleSortByChange(e)
+                  // history.push({
+                  //   pathname: window.location.pathname,
+                  //   search: `${window.location.search.length ? window.location.search + `&sort_by=${e.target.value}` : `sort_by=${e.target.value}`}`,
+                  // });
+                }
                   // setSortBy(e.target.value)
                 }
                 defaultValue={'least-expensive'}
-                // value={sortBy}
+              // value={sortBy}
               >
                 <Space direction="vertical">
                   <Radio value={'least-expensive'}>Least expensive</Radio>
@@ -149,7 +177,7 @@ const FilterSidebar = ({ data = [], collapsed, setCollapsed }) => {
             <div className="sort-section">
               <span className="sort-heading">Stops</span>
               <Radio.Group
-                onChange={(e) => setStopsFilter(e.target.value)}
+                onChange={(e) => handleStopsChange(e)}
                 value={stopsFilter}
               >
                 <Space direction="vertical">

@@ -6,19 +6,24 @@ import { Row } from 'antd';
 import Sider from 'antd/es/layout/Sider';
 import { isEmpty } from 'ramda';
 import { useEffect, useState } from 'react';
-import { useHistory, useParams } from 'react-router';
 import FilterSidebar from '../FilterSideBar/FilterSidebar';
 import FlightDetailCard from '../FlightDetailCard/FlightDetailCard';
 import './FlightDetail.scss';
+import { useLocation, useHistory, useParams } from 'react-router-dom';
 
 const FlightDetail = () => {
   const [offersArray, setOffersArray] = useState<any>([]);
   const [loading, setLoading] = useState(false);
+  const [after, setAfter] = useState('');
+  const [before, setBefore] = useState('');
+
   const [collapsed, setCollapsed] = useState(
     window.innerWidth < 821 ? true : false,
   );
   const params = useParams();
   const history = useHistory();
+  const location = useLocation();
+
   // @ts-ignore
   const { id } = params;
   const getOfers = async (after?: any, before?: any) => {
@@ -40,8 +45,8 @@ const FlightDetail = () => {
       searchParams.split('=')[0] == 'after'
         ? getOfers(searchParams.split('=')[1], undefined)
         : searchParams.split('=')[0] == 'before'
-        ? getOfers(undefined, searchParams.split('=')[1])
-        : null;
+          ? getOfers(undefined, searchParams.split('=')[1])
+          : null;
     } else {
       getOfers(undefined, undefined);
     }
@@ -50,7 +55,23 @@ const FlightDetail = () => {
     setCollapsed((prevState) => !prevState);
   };
   console.log('offersArray', offersArray);
+  function handleNextClick() {
+    const newAfter = Math.random().toString(36).substr(2, 9);
+    setAfter(newAfter);
 
+    const searchParams = new URLSearchParams(location.search);
+    searchParams.set('after', newAfter);
+    history.push({ search: searchParams.toString() });
+  }
+
+  function handlePreviousClick() {
+    const newBefore = Math.random().toString(36).substr(2, 9);
+    setBefore(newBefore);
+
+    const searchParams = new URLSearchParams(location.search);
+    searchParams.set('before', newBefore);
+    history.push({ search: searchParams.toString() });
+  }
   return (
     <div className="main_page_width m-b-30 date-tabs overflow-unset">
       {loading ? (
@@ -81,28 +102,18 @@ const FlightDetail = () => {
                   return <FlightDetailCard data={offer}></FlightDetailCard>;
                 })}
               <div className="page-btns">
-                {offersArray?.offer?.meta?.before && (
+                {true && (
                   <span
                     className="page-navigate-btn previous-btn"
-                    onClick={() => {
-                      history.push({
-                        pathname: window.location.pathname,
-                        search: `?before=${offersArray?.offer?.meta?.before}`,
-                      });
-                    }}
+                    onClick={() => handlePreviousClick()}
                   >
                     Previous
                   </span>
                 )}
-                {offersArray?.offer?.meta?.after && (
+                {true && (
                   <span
                     className="page-navigate-btn next-btn"
-                    onClick={() => {
-                      history.push({
-                        pathname: window.location.pathname,
-                        search: `?after=${offersArray?.offer?.meta?.after}`,
-                      });
-                    }}
+                    onClick={() => handleNextClick()}
                   >
                     Next
                   </span>
