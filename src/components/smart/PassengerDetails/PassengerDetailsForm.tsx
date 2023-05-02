@@ -7,6 +7,8 @@ import { isError } from 'react-query';
 import { useDispatch } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
 import './PassengerDetailsForm.scss';
+import PhoneInput from 'react-phone-number-input';
+import 'react-phone-number-input/style.css';
 
 const { Panel } = Collapse;
 
@@ -21,6 +23,8 @@ const PassengerDetailsForm: FC<PassengerFormProps> = ({
   setSeatComponentData,
   setIsFormValidated,
 }) => {
+  const [phoneNumber, setPhoneNumber] = useState('');
+
   const [passengersFormData, setPassengersFormData] = useState({});
   const [showTooltip, setShowToolTip] = useState({
     seat: false,
@@ -325,9 +329,33 @@ const PassengerDetailsForm: FC<PassengerFormProps> = ({
           Contact Information
         </span>
         <div className="panels-section contact-form">
-          <div>
+          <Input
+            placeholder="Enter passenger Email"
+            type="email"
+            value={contactInfo.email}
+            onChange={(e) =>
+              setContactInfo({
+                ...contactInfo,
+                email: e.target.value,
+              })
+            }
+          />
+
+          {/* <Form.Item
+            name="email"
+            rules={[
+              {
+                type: 'email',
+                message: 'The input is not valid E-mail!',
+              },
+              {
+                required: true,
+                message: 'Please input your E-mail!',
+              },
+            ]}
+          >
             <Input
-              placeholder="email"
+              placeholder="Enter passenger Email"
               type="email"
               value={contactInfo.email}
               onChange={(e) =>
@@ -337,18 +365,24 @@ const PassengerDetailsForm: FC<PassengerFormProps> = ({
                 })
               }
             />
-          </div>
-          <div>
-            <Input
-              placeholder="enter passenger phone number"
-              type="text"
-              value={contactInfo.phone_number}
-              onChange={(e) =>
-                setContactInfo({
-                  ...contactInfo,
-                  phone_number: e.target.value,
-                })
-              }
+          </Form.Item> */}
+
+          {/* <Input
+            placeholder="enter passenger phone number"
+            type="text"
+            value={contactInfo.phone_number}
+            onChange={(e) =>
+              setContactInfo({
+                ...contactInfo,
+                phone_number: e.target.value,
+              })
+            }
+          /> */}
+          <div className="phone-input-container">
+            <PhoneInput
+              placeholder="Enter phone number"
+              value={phoneNumber}
+              onChange={setPhoneNumber}
             />
           </div>
         </div>
