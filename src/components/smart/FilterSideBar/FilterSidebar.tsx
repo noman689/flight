@@ -29,10 +29,20 @@ const FilterSidebar = ({ data = [], collapsed, setCollapsed }) => {
   const [stopsFilter, setStopsFilter] = useState(0);
 
   useEffect(() => {
+    // Parse the query params from the URL and set the state
     const searchParams = new URLSearchParams(location.search);
-    setSortBy(searchParams.get('sort_by') || '');
-    setStops(searchParams.get('stops') || '');
-  }, [location.search]);
+    const sortByParam = searchParams.get('sort_by') || 'least-expensive';
+    const stopsParam = searchParams.get('stops') || 'two-stops';
+    setSortBy(sortByParam);
+    setStops(stopsParam);
+
+    // If the "sort_by" or "stops" params were not present in the URL, add them with default values
+    if (!searchParams.has('sort_by') || !searchParams.has('stops')) {
+      searchParams.set('sort_by', sortByParam);
+      searchParams.set('stops', stopsParam);
+      history.push({ search: searchParams.toString() });
+    }
+  }, [location.search, history]);
 
   function handleSortByChange(e) {
     const newSortBy = e.target.value;
@@ -174,7 +184,8 @@ const FilterSidebar = ({ data = [], collapsed, setCollapsed }) => {
               <span className="sort-heading">Stops</span>
               <Radio.Group
                 onChange={(e) => handleStopsChange(e)}
-                value={stopsFilter}
+
+                defaultValue={'two-stops'}
               >
                 <Space direction="vertical">
                   <Radio value={'direct'}>Direct only</Radio>
