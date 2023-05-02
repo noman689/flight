@@ -29,14 +29,12 @@ const FilterSidebar = ({ data = [], collapsed, setCollapsed }) => {
   const [stopsFilter, setStopsFilter] = useState(0);
 
   useEffect(() => {
-    // Parse the query params from the URL and set the state
     const searchParams = new URLSearchParams(location.search);
     const sortByParam = searchParams.get('sort_by') || 'least-expensive';
     const stopsParam = searchParams.get('stops') || 'two-stops';
     setSortBy(sortByParam);
     setStops(stopsParam);
 
-    // If the "sort_by" or "stops" params were not present in the URL, add them with default values
     if (!searchParams.has('sort_by') || !searchParams.has('stops')) {
       searchParams.set('sort_by', sortByParam);
       searchParams.set('stops', stopsParam);
