@@ -156,10 +156,6 @@ const FilterSidebar = ({ data = [], collapsed, setCollapsed }) => {
               <Radio.Group
                 onChange={(e) => {
                   handleSortByChange(e)
-                  // history.push({
-                  //   pathname: window.location.pathname,
-                  //   search: `${window.location.search.length ? window.location.search + `&sort_by=${e.target.value}` : `sort_by=${e.target.value}`}`,
-                  // });
                 }
                   // setSortBy(e.target.value)
                 }

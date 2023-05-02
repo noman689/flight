@@ -102,7 +102,7 @@ const FlightDetail = () => {
                   return <FlightDetailCard data={offer}></FlightDetailCard>;
                 })}
               <div className="page-btns">
-                {true && (
+                {offersArray?.offer?.meta?.before && (
                   <span
                     className="page-navigate-btn previous-btn"
                     onClick={() => handlePreviousClick()}
@@ -110,7 +110,7 @@ const FlightDetail = () => {
                     Previous
                   </span>
                 )}
-                {true && (
+                {offersArray?.offer?.meta?.after && (
                   <span
                     className="page-navigate-btn next-btn"
                     onClick={() => handleNextClick()}
