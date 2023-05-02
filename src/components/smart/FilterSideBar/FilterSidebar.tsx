@@ -8,8 +8,11 @@ import planeIcon from '../../../assets/ticketBlack.svg';
 import './FilterSideBar.scss';
 import moment from 'moment';
 import { Radio, Space } from 'antd';
+import { useHistory } from 'react-router';
 
 const FilterSidebar = ({ data = [], collapsed, setCollapsed }) => {
+  console.log('FilterSidebar', data);
+  const history=useHistory()
   const [flightInfo, setFlightInfo] = useState({
     origin: '',
     destination: '',
@@ -19,31 +22,31 @@ const FilterSidebar = ({ data = [], collapsed, setCollapsed }) => {
     startDate: '',
     endDate: '',
   });
-  const [sortBy, setSortBy] = useState(1);
+  const [sortBy, setSortBy] = useState('least-expensive');
   const [stopsFilter, setStopsFilter] = useState(0);
   const getFlightInfo = () => {
-    const offerInfo = data.find((item) => item.slices[0].segments.length == 1);
     let startDate;
     let endDate;
-    if (offerInfo) {
-      const origin = offerInfo.slices[0].segments[0].origin.iata_city_code;
+    if (data[0]) {
+      const origin = data[0].slices[0].segments[0].origin.iata_city_code;
       const destination =
-        offerInfo.slices[0].segments[0].destination.iata_city_code;
-      const passengerCount = offerInfo.slices[0].segments[0].passengers.length;
+        data[0].slices[0].segments[data[0].slices[0].segments.length - 1]
+          .destination.iata_city_code;
+      const passengerCount = data[0].slices[0].segments[0].passengers.length;
       const cabinClass =
-        offerInfo.slices[0].segments[0].passengers[0].cabin_class;
-      const isReturnFlight = offerInfo.slices.length > 1;
+        data[0].slices[0].segments[0].passengers[0].cabin_class;
+      const isReturnFlight = data[0].slices.length > 1;
       if (isReturnFlight) {
-        startDate = offerInfo.slices[0].segments[0].departing_at;
+        startDate = data[0].slices[0].segments[0].departing_at;
         endDate =
-          offerInfo.slices[offerInfo.slices.length - 1].segments[
-            offerInfo.slices[0].segments.length - 1
-          ].arriving_at;
+          data[0].slices[data[0].slices.length - 1].segments[
+            data[0].slices[0].segments.length - 1
+          ]?.arriving_at;
       } else {
-        startDate = offerInfo.slices[0].segments[0].departing_at;
+        startDate = data[0].slices[0].segments[0].departing_at;
         endDate =
-          offerInfo.slices[0].segments[offerInfo.slices[0].segments.length - 1]
-            .arriving_at;
+          data[0].slices[0].segments[data[0].slices[0].segments.length - 1]
+            ?.arriving_at;
       }
       return {
         origin,
@@ -56,6 +59,12 @@ const FilterSidebar = ({ data = [], collapsed, setCollapsed }) => {
       };
     }
   };
+
+  console.log("testing-location",window.location)
+
+  // useEffect(()=>{
+
+  // },[sortBy,stopsFilter])
 
   useEffect(() => {
     const result = getFlightInfo();
@@ -117,14 +126,23 @@ const FilterSidebar = ({ data = [], collapsed, setCollapsed }) => {
             <div className="sort-section">
               <span className="sort-heading">Sort by</span>
               <Radio.Group
-                onChange={(e) => setSortBy(e.target.value)}
-                value={sortBy}
+                onChange={(e) => 
+                  {
+                    history.push({
+                      pathname: window.location.pathname,
+                      search: `${window.location.search.length ? window.location.search+`&sort_by=${e.target.value}` : `sort_by=${e.target.value}`}`,
+                    });
+                  }
+                  // setSortBy(e.target.value)
+                }
+                defaultValue={'least-expensive'}
+                // value={sortBy}
               >
                 <Space direction="vertical">
-                  <Radio value={1}>Least expensive</Radio>
-                  <Radio value={2}>Most Expensive</Radio>
-                  <Radio value={3}>Shortest duration</Radio>
-                  <Radio value={4}>Longest duration</Radio>
+                  <Radio value={'least-expensive'}>Least expensive</Radio>
+                  <Radio value={'most-expensive'}>Most Expensive</Radio>
+                  <Radio value={'shortest-duration'}>Shortest duration</Radio>
+                  <Radio value={'longest-duration'}>Longest duration</Radio>
                 </Space>
               </Radio.Group>
             </div>
@@ -135,9 +153,9 @@ const FilterSidebar = ({ data = [], collapsed, setCollapsed }) => {
                 value={stopsFilter}
               >
                 <Space direction="vertical">
-                  <Radio value={0}>Direct only</Radio>
-                  <Radio value={1}>1 stop at most</Radio>
-                  <Radio value={2}>2 stops at most</Radio>
+                  <Radio value={'direct'}>Direct only</Radio>
+                  <Radio value={'one-stop'}>1 stop at most</Radio>
+                  <Radio value={'two-stops'}>2 stops at most</Radio>
                 </Space>
               </Radio.Group>
             </div>

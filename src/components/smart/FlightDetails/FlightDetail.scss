@@ -18,6 +18,31 @@
   color: #bfc1d4;
   cursor: not-allowed;
 }
+.page-btns {
+  position: relative;
+  .page-navigate-btn {
+    position: absolute;
+    border: none;
+    border-radius: 5px;
+    color: #fffdfd;
+    background-color: #701644;
+    cursor: pointer;
+    transition: 1s cubic-bezier(0.25, 0.8, 0.25, 1);
+    padding: 8px;
+    width: 120px;
+    text-align: center;
+    margin: 0px 20px;
+  }
+  .next-btn {
+    top: 0;
+    right: 10px;
+  }
+  .previous-btn {
+    top: 0;
+    left: 10px;
+  }
+}
+
 @media (max-width: 821px) {
   .date-flicker {
     width: 450px;
@@ -45,16 +70,14 @@
   margin-left: 250px;
   overflow-x: hidden;
   max-height: 93vh;
-  margin-top: 20px
-
+  margin-top: 20px;
 }
 @media (max-width: 821px) {
-  .cards-section  {
+  .cards-section {
     margin-left: unset;
     max-height: unset;
     width: 100%;
   }
-  
 }
 .cards-section::-webkit-scrollbar {
   width: 4px; /* Width of the scrollbar */

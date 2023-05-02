@@ -6,7 +6,7 @@ import { Row } from 'antd';
 import Sider from 'antd/es/layout/Sider';
 import { isEmpty } from 'ramda';
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router';
+import { useHistory, useParams } from 'react-router';
 import FilterSidebar from '../FilterSideBar/FilterSidebar';
 import FlightDetailCard from '../FlightDetailCard/FlightDetailCard';
 import './FlightDetail.scss';
@@ -18,12 +18,13 @@ const FlightDetail = () => {
     window.innerWidth < 821 ? true : false,
   );
   const params = useParams();
+  const history = useHistory();
   // @ts-ignore
   const { id } = params;
-  const getOfers = async (after?: any,before?:any) => {
+  const getOfers = async (after?: any, before?: any) => {
     try {
       setLoading(true);
-      const { data } = await getFlightOffersAPI(id, after,before);
+      const { data } = await getFlightOffersAPI(id, undefined, undefined);
       setOffersArray(data);
 
       setLoading(false);
@@ -33,8 +34,18 @@ const FlightDetail = () => {
     }
   };
   useEffect(() => {
-    getOfers();
-  }, [id]);
+    const searchParams = window.location.href?.split('?')?.[1];
+    console.log('searchParams', searchParams);
+    if (searchParams?.length) {
+      searchParams.split('=')[0] == 'after'
+        ? getOfers(searchParams.split('=')[1], undefined)
+        : searchParams.split('=')[0] == 'before'
+        ? getOfers(undefined, searchParams.split('=')[1])
+        : null;
+    } else {
+      getOfers(undefined, undefined);
+    }
+  }, [id, window.location.href]);
   const toggle = () => {
     setCollapsed((prevState) => !prevState);
   };
@@ -44,7 +55,6 @@ const FlightDetail = () => {
     <div className="main_page_width m-b-30 date-tabs overflow-unset">
       {loading ? (
         <Row justify="center">
-          {/* <Spin /> */}
           <AnimatedLoader />
         </Row>
       ) : (
@@ -70,13 +80,32 @@ const FlightDetail = () => {
                 offersArray?.offer?.data?.map((offer) => {
                   return <FlightDetailCard data={offer}></FlightDetailCard>;
                 })}
-              <div>
+              <div className="page-btns">
+                {offersArray?.offer?.meta?.before && (
+                  <span
+                    className="page-navigate-btn previous-btn"
+                    onClick={() => {
+                      history.push({
+                        pathname: window.location.pathname,
+                        search: `?before=${offersArray?.offer?.meta?.before}`,
+                      });
+                    }}
+                  >
+                    Previous
+                  </span>
+                )}
                 {offersArray?.offer?.meta?.after && (
-                  <button
-                    onClick={() => getOfers(offersArray?.offer?.meta?.after,offersArray?.offer?.meta?.before)}
+                  <span
+                    className="page-navigate-btn next-btn"
+                    onClick={() => {
+                      history.push({
+                        pathname: window.location.pathname,
+                        search: `?after=${offersArray?.offer?.meta?.after}`,
+                      });
+                    }}
                   >
                     Next
-                  </button>
+                  </span>
                 )}
               </div>
             </div>
