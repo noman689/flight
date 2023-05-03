@@ -377,8 +377,13 @@ const PassengerDetailsForm: FC<PassengerFormProps> = ({
           <div className="phone-input-container">
             <PhoneInput
               placeholder="Enter phone number"
-              value={phoneNumber}
-              onChange={setPhoneNumber}
+              value={contactInfo.phone_number}
+              onChange={(e) =>
+                setContactInfo({
+                  ...contactInfo,
+                  phone_number: e,
+                })
+              }
             />
           </div>
         </div>

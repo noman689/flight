@@ -62,20 +62,24 @@ const PassengerDetailsPage: React.FC = () => {
           </div>
           {isFormValidated ? (
             <>
-              <div>
-                <SeatSelectionComp
-                  seatComponentData={seatComponentData}
-                  offerMeta={selectedOffer}
-                  setSelectedSeatsData={setSelectedSeatsData}
-                />
-              </div>
-              <div>
-                <PaymentMethod
-                  offerMeta={selectedOffer?.data}
-                  selectedSeatsData={selectedOfferAndSeatsData}
-                  passengersData={seatComponentData}
-                />
-              </div>
+              <Row gutter={[16, 16]}>
+                <Col xs={24} sm={24} md={24} lg={24}>
+                  <div>
+                    <SeatSelectionComp
+                      seatComponentData={seatComponentData}
+                      offerMeta={selectedOffer}
+                      setSelectedSeatsData={setSelectedSeatsData}
+                    />
+                  </div>
+                  <div>
+                    <PaymentMethod
+                      offerMeta={selectedOffer?.data}
+                      selectedSeatsData={selectedOfferAndSeatsData}
+                      passengersData={seatComponentData}
+                    />
+                  </div>
+                </Col>
+              </Row>
             </>
           ) : (
             <></>

@@ -121,7 +121,7 @@
   }
 }
 .seatBox {
-  width: 50%;
+  width: 55%;
   padding: 30px;
   background: #ffffff;
   border-radius: 8px;
@@ -129,11 +129,21 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  @media screen and (max-width: 990px) {
+    width: 80%;
+    align-self: center;
+  }
 }
 .f-col {
   flex-direction: column !important;
   align-items: flex-start !important;
   gap: 12px;
+  @media screen and (max-width: 990px) {
+    width: 80%;
+    display: flex;
+    align-self: center;
+    justify-content: center;
+  }
 }
 .single-item {
   display: flex;
