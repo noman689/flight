@@ -1,11 +1,7 @@
 import { ExclamationCircleOutlined } from '@ant-design/icons';
-import { passengersInfo } from '@client/store/app/action';
 import { timeOutFunc } from '@client/utils/helper';
 import { Form, Input, Button, Collapse, Row, Col, Radio, Tooltip } from 'antd';
 import { FC, useState } from 'react';
-import { isError } from 'react-query';
-import { useDispatch } from 'react-redux';
-import { Link, useHistory } from 'react-router-dom';
 import './PassengerDetailsForm.scss';
 import PhoneInput from 'react-phone-number-input';
 import 'react-phone-number-input/style.css';
@@ -318,8 +314,8 @@ const PassengerDetailsForm: FC<PassengerFormProps> = ({
       ) : (
         <></>
       )}
-      <span className="personal-info">Personal Information</span>
       <div className="passenger-details-form">
+        <span className="personal-info">Personal Information</span>
         <div className="panels-section">
           <Collapse bordered={false} defaultActiveKey={'1'}>
             {passengerForms}
