@@ -1,44 +1,38 @@
-.passenger-details-page-layout {
-  justify-content: space-evenly;
-  display: flex;
-  padding: 0px 50px;
-}
-
-.passengers-content-section {
-  display: flex;
-  flex-direction: column;
-  .passenger-info-section {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    align-content: center;
+.contentWrapper {
+  width: 100%;
+  padding: 0 80px;
+  @media screen and (max-width: 500px) {
+    padding: 0px 0px;
   }
 }
 .form-section {
-  width: 580px;
+  width: 80%;
+  min-width: 520px;
+  @media screen and (min-width: 1500px) {
+    max-width: 920px;
+    margin-left: auto;
+    margin-right: auto;
+  }
   @media screen and (max-width: 1074px) {
-    width: 100%;
     padding: 0px 20px;
-    margin-left: 30px;
     display: flex;
     justify-content: center;
   }
-  @media screen and (max-width: 400px) {
-    margin-left: 40px;
-    padding: 0px 20px;
-  }
 }
+
 .summary-section {
-  width: 460px;
+  width: 95%;
+  min-width: 480px;
   padding-right: 50px;
+  @media screen and (min-width: 1500px) {
+    max-width: 820px;
+  }
   @media screen and (max-width: 1074px) {
+    min-width: 480px;
     padding: 0px 20px;
-    width: 100%;
-    margin-left: 30px;
   }
   @media screen and (max-width: 400px) {
-    margin-left: 50px;
-    padding: 0px 20px;
+    min-width: 480px;
   }
 }
 .horizontal-timeline .ant-timeline-item-content {
