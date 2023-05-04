@@ -37,12 +37,12 @@ const PassengerDetailsPage: React.FC = () => {
     selectedOfferDetails();
   }, []);
   return (
-    <div className="passenger-details-page-layout">
+    <div className="contentWrapper">
       {loading ? (
         <Spin />
       ) : selectedOffer ? (
-        <div className="passengers-content-section">
-          <div className="passenger-info-section">
+        <div>
+          <div>
             <Row gutter={[16, 16]}>
               <Col xs={24} sm={24} md={24} lg={14}>
                 <div className="form-section">
