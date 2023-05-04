@@ -7,7 +7,7 @@ import Spin from '@client/components/presentational/Spin';
 import SeatSelectionComp from '../SeatSelection/SeatSelection';
 import PaymentMethod from '../PaymentMethod/PaymentMethod';
 import './PassengerDetailsPage.scss';
-
+import { Col, Row } from 'antd';
 
 const PassengerDetailsPage: React.FC = () => {
   const [selectedOffer, setSelectedOffer] = useState(null);
@@ -37,39 +37,49 @@ const PassengerDetailsPage: React.FC = () => {
     selectedOfferDetails();
   }, []);
   return (
-    <div className="passenger-details-page-layout main_page_width">
+    <div className="passenger-details-page-layout">
       {loading ? (
         <Spin />
       ) : selectedOffer ? (
         <div className="passengers-content-section">
-          <div className="passenger-info-section  ">
-            <div className="form-section">
-              <PassengerDetailsForm
-                passengerData={passengerData}
-                setSeatComponentData={setSeatComponentData}
-                setIsFormValidated={setIsFormValidated}
-              />
-            </div>
-            <div className="summary-section">
-              <FlightSummary summaryData={selectedOffer} fare={fare} />
-            </div>
+          <div className="passenger-info-section">
+            <Row gutter={[16, 16]}>
+              <Col xs={24} sm={24} md={24} lg={14}>
+                <div className="form-section">
+                  <PassengerDetailsForm
+                    passengerData={passengerData}
+                    setSeatComponentData={setSeatComponentData}
+                    setIsFormValidated={setIsFormValidated}
+                  />
+                </div>
+              </Col>
+              <Col xs={24} sm={24} md={24} lg={10}>
+                <div className="summary-section">
+                  <FlightSummary summaryData={selectedOffer} fare={fare} />
+                </div>
+              </Col>
+            </Row>
           </div>
           {isFormValidated ? (
             <>
-              <div>
-                <SeatSelectionComp
-                  seatComponentData={seatComponentData}
-                  offerMeta={selectedOffer}
-                  setSelectedSeatsData={setSelectedSeatsData}
-                />
-              </div>
-              <div>
-                <PaymentMethod
-                  offerMeta={selectedOffer?.data}
-                  selectedSeatsData={selectedOfferAndSeatsData}
-                  passengersData={seatComponentData}
-                />
-              </div>
+              <Row gutter={[16, 16]}>
+                <Col xs={24} sm={24} md={24} lg={24}>
+                  <div>
+                    <SeatSelectionComp
+                      seatComponentData={seatComponentData}
+                      offerMeta={selectedOffer}
+                      setSelectedSeatsData={setSelectedSeatsData}
+                    />
+                  </div>
+                  <div>
+                    <PaymentMethod
+                      offerMeta={selectedOffer?.data}
+                      selectedSeatsData={selectedOfferAndSeatsData}
+                      passengersData={seatComponentData}
+                    />
+                  </div>
+                </Col>
+              </Row>
             </>
           ) : (
             <></>

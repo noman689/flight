@@ -1,36 +1,44 @@
 .passenger-details-page-layout {
   justify-content: space-evenly;
   display: flex;
-  width: 100%;
-  margin: 20px 50px;
-  .form-section {
-    width: 50%;
-    margin-top: 17px;
-    @media screen and (max-width: 810px) {
-      width: 100%;
-    }
-  }
-  .summary-section {
-    width: 450px;
-    @media screen and (max-width: 810px) {
-      width: 100%;
-    }
-  }
-  @media screen and (max-width: 810px) {
-    flex-direction: column-reverse;
-    gap: 30px;
-  }
+  padding: 0px 50px;
 }
-.passengers-content-section{
+
+.passengers-content-section {
   display: flex;
   flex-direction: column;
-  width: 100%;
-  padding: 20px 120px;
-  .passenger-info-section{
+  .passenger-info-section {
     display: flex;
     justify-content: space-between;
-    align-items: flex-start;
+    align-items: center;
+    align-content: center;
+  }
+}
+.form-section {
+  width: 580px;
+  @media screen and (max-width: 1074px) {
     width: 100%;
+    padding: 0px 20px;
+    margin-left: 30px;
+    display: flex;
+    justify-content: center;
+  }
+  @media screen and (max-width: 400px) {
+    margin-left: 40px;
+    padding: 0px 20px;
+  }
+}
+.summary-section {
+  width: 460px;
+  padding-right: 50px;
+  @media screen and (max-width: 1074px) {
+    padding: 0px 20px;
+    width: 100%;
+    margin-left: 30px;
+  }
+  @media screen and (max-width: 400px) {
+    margin-left: 50px;
+    padding: 0px 20px;
   }
 }
 .horizontal-timeline .ant-timeline-item-content {
@@ -104,16 +112,16 @@
   gap: 16px;
   margin: 20px 0px;
 }
-.error-message{
+.error-message {
   font-size: 12px;
   font-family: unset;
   color: red;
-  svg{
+  svg {
     margin-bottom: 5px;
   }
 }
 .seatBox {
-  width: 50%;
+  width: 55%;
   padding: 30px;
   background: #ffffff;
   border-radius: 8px;
@@ -121,13 +129,23 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  @media screen and (max-width: 990px) {
+    width: 80%;
+    align-self: center;
+  }
 }
-.f-col{
+.f-col {
   flex-direction: column !important;
   align-items: flex-start !important;
   gap: 12px;
+  @media screen and (max-width: 990px) {
+    width: 80%;
+    display: flex;
+    align-self: center;
+    justify-content: center;
+  }
 }
-.single-item{
+.single-item {
   display: flex;
   width: 100%;
   justify-content: space-between;
@@ -136,7 +154,7 @@
   background: #efeff0;
   border-radius: 10px;
 }
-.pay-btn{
+.pay-btn {
   width: 100%;
   text-align: center;
   color: #ffffff;
@@ -145,13 +163,13 @@
   cursor: pointer;
   border-radius: 10px;
 }
-.conform-modal-content{
+.conform-modal-content {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 22px;
   margin-top: 12px;
-  .success-message{
+  .success-message {
     font-size: 22px;
     font-weight: 500;
     color: #8e2157;
