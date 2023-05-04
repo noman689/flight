@@ -12,7 +12,7 @@ import { useLocation, useHistory } from 'react-router-dom';
 
 const FilterSidebar = ({ data = [], collapsed, setCollapsed }) => {
   console.log('FilterSidebar', data);
-  const history = useHistory()
+  const history = useHistory();
   const location = useLocation();
 
   const [flightInfo, setFlightInfo] = useState({
@@ -24,16 +24,11 @@ const FilterSidebar = ({ data = [], collapsed, setCollapsed }) => {
     startDate: '',
     endDate: '',
   });
-  const [sortBy, setSortBy] = useState('');
-  const [stops, setStops] = useState('');
-  const [stopsFilter, setStopsFilter] = useState(0);
 
   useEffect(() => {
     const searchParams = new URLSearchParams(location.search);
     const sortByParam = searchParams.get('sort_by') || 'least-expensive';
     const stopsParam = searchParams.get('stops') || 'two-stops';
-    setSortBy(sortByParam);
-    setStops(stopsParam);
 
     if (!searchParams.has('sort_by') || !searchParams.has('stops')) {
       searchParams.set('sort_by', sortByParam);
@@ -43,20 +38,14 @@ const FilterSidebar = ({ data = [], collapsed, setCollapsed }) => {
   }, [location.search, history]);
 
   function handleSortByChange(e) {
-    const newSortBy = e.target.value;
-    setSortBy(newSortBy);
-
     const searchParams = new URLSearchParams(location.search);
-    searchParams.set('sort_by', newSortBy);
+    searchParams.set('sort_by', e.target.value);
     history.push({ search: searchParams.toString() });
   }
 
   function handleStopsChange(e) {
-    const newStops = e.target.value;
-    setStops(newStops);
-
     const searchParams = new URLSearchParams(location.search);
-    searchParams.set('stops', newStops);
+    searchParams.set('stops', e.target.value);
     history.push({ search: searchParams.toString() });
   }
 
@@ -95,12 +84,6 @@ const FilterSidebar = ({ data = [], collapsed, setCollapsed }) => {
       };
     }
   };
-
-  console.log("testing-location", window.location)
-
-  // useEffect(()=>{
-
-  // },[sortBy,stopsFilter])
 
   useEffect(() => {
     const result = getFlightInfo();
@@ -162,19 +145,20 @@ const FilterSidebar = ({ data = [], collapsed, setCollapsed }) => {
             <div className="sort-section">
               <span className="sort-heading">Sort by</span>
               <Radio.Group
-                onChange={(e) => {
-                  handleSortByChange(e)
-                }
+                onChange={
+                  (e) => {
+                    handleSortByChange(e);
+                  }
                   // setSortBy(e.target.value)
                 }
                 defaultValue={'least-expensive'}
-              // value={sortBy}
+                // value={sortBy}
               >
                 <Space direction="vertical">
                   <Radio value={'least-expensive'}>Least expensive</Radio>
                   <Radio value={'most-expensive'}>Most Expensive</Radio>
-                  <Radio value={'shortest-duration'}>Shortest duration</Radio>
-                  <Radio value={'longest-duration'}>Longest duration</Radio>
+                  {/* <Radio value={'shortest-duration'}>Shortest duration</Radio>
+                  <Radio value={'longest-duration'}>Longest duration</Radio> */}
                 </Space>
               </Radio.Group>
             </div>
@@ -182,7 +166,6 @@ const FilterSidebar = ({ data = [], collapsed, setCollapsed }) => {
               <span className="sort-heading">Stops</span>
               <Radio.Group
                 onChange={(e) => handleStopsChange(e)}
-
                 defaultValue={'two-stops'}
               >
                 <Space direction="vertical">

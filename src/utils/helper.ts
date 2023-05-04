@@ -46,3 +46,35 @@ export const getStops = (segment: any, showAirportName?: boolean) => {
 export const timeOutFunc = () => {
   setTimeout(() => {}, 1000);
 };
+
+export const sortOffer = (data, key) => {
+  if (key == 'least-expensive') {
+    return data.sort((a, b) =>
+      Number(a.total_amount) < Number(b.total_amount) ? -1 : 1,
+    );
+  }
+  if (key == 'most-expensive') {
+    return data.sort((a, b) =>
+      Number(a.total_amount) < Number(b.total_amount) ? 1 : -1,
+    );
+  }
+  return data;
+};
+
+export const filterOffers = (data, sortkey, filterKey) => {
+  let sortedData = sortOffer(data, sortkey);
+  let tempArray = [];
+  if (filterKey == 'direct') {
+    tempArray = sortedData.filter(
+      (item) => getStops(item.slices[0].segments).stopLength < 1,
+    );
+    console.log('tempArray', tempArray);
+  } else if (filterKey == 'one-stop') {
+    tempArray = sortedData.filter(
+      (item) => getStops(item.slices[0].segments).stopLength == 1,
+    );
+  } else {
+    tempArray = sortedData;
+  }
+  return tempArray;
+};

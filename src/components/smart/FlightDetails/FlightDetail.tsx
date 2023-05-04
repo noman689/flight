@@ -10,13 +10,24 @@ import FilterSidebar from '../FilterSideBar/FilterSidebar';
 import FlightDetailCard from '../FlightDetailCard/FlightDetailCard';
 import './FlightDetail.scss';
 import { useLocation, useHistory, useParams } from 'react-router-dom';
+import { filterOffers } from '@client/utils/helper';
+
+const filterOfferData = (data, loaction) => {
+  let tempArray = [];
+  if (data?.length) {
+    const searchParams = new URLSearchParams(loaction.search);
+    const sortFilter = searchParams.get('sort_by');
+    const stopFilter = searchParams.get('stops');
+    return filterOffers(data,sortFilter,stopFilter);
+  }
+  return tempArray;
+};
 
 const FlightDetail = () => {
   const [offersArray, setOffersArray] = useState<any>([]);
   const [loading, setLoading] = useState(false);
   const [after, setAfter] = useState('');
   const [before, setBefore] = useState('');
-
   const [collapsed, setCollapsed] = useState(
     window.innerWidth < 821 ? true : false,
   );
@@ -29,7 +40,7 @@ const FlightDetail = () => {
   const getOfers = async (after?: any, before?: any) => {
     try {
       setLoading(true);
-      const { data } = await getFlightOffersAPI(id, undefined, undefined);
+      const { data } = await getFlightOffersAPI(id, after, before);
       setOffersArray(data);
 
       setLoading(false);
@@ -39,37 +50,33 @@ const FlightDetail = () => {
     }
   };
   useEffect(() => {
-    const searchParams = window.location.href?.split('?')?.[1];
-    console.log('searchParams', searchParams);
-    if (searchParams?.length) {
-      searchParams.split('=')[0] == 'after'
-        ? getOfers(searchParams.split('=')[1], undefined)
-        : searchParams.split('=')[0] == 'before'
-          ? getOfers(undefined, searchParams.split('=')[1])
-          : null;
+    const searchParams = new URLSearchParams(location.search);
+    const after = searchParams.get('after') ?? undefined;
+    const before = searchParams.get('before') ?? undefined;
+    if (after || before) {
+    console.log("after",after)
+      getOfers(after, before);
     } else {
       getOfers(undefined, undefined);
     }
-  }, [id, window.location.href]);
+  }, [id, after, before]);
   const toggle = () => {
     setCollapsed((prevState) => !prevState);
   };
   console.log('offersArray', offersArray);
-  function handleNextClick() {
-    const newAfter = Math.random().toString(36).substr(2, 9);
-    setAfter(newAfter);
-
+  function handleNextClick(after_index) {
+    setAfter(after_index);
     const searchParams = new URLSearchParams(location.search);
-    searchParams.set('after', newAfter);
+    searchParams.delete('before');
+    searchParams.set('after', after_index);
     history.push({ search: searchParams.toString() });
   }
 
-  function handlePreviousClick() {
-    const newBefore = Math.random().toString(36).substr(2, 9);
-    setBefore(newBefore);
-
+  function handlePreviousClick(before_index) {
+    setBefore(before_index);
     const searchParams = new URLSearchParams(location.search);
-    searchParams.set('before', newBefore);
+    searchParams.delete('after');
+    searchParams.set('before', before_index);
     history.push({ search: searchParams.toString() });
   }
   return (
@@ -98,14 +105,18 @@ const FlightDetail = () => {
             />
             <div className="cards-section">
               {!isEmpty(offersArray?.offer?.data) &&
-                offersArray?.offer?.data?.map((offer) => {
-                  return <FlightDetailCard data={offer}></FlightDetailCard>;
-                })}
+                filterOfferData(offersArray?.offer?.data, location).map(
+                  (offer) => {
+                    return <FlightDetailCard data={offer}></FlightDetailCard>;
+                  },
+                )}
               <div className="page-btns">
                 {offersArray?.offer?.meta?.before && (
                   <span
                     className="page-navigate-btn previous-btn"
-                    onClick={() => handlePreviousClick()}
+                    onClick={() =>
+                      handlePreviousClick(offersArray?.offer?.meta?.before)
+                    }
                   >
                     Previous
                   </span>
@@ -113,7 +124,9 @@ const FlightDetail = () => {
                 {offersArray?.offer?.meta?.after && (
                   <span
                     className="page-navigate-btn next-btn"
-                    onClick={() => handleNextClick()}
+                    onClick={() =>
+                      handleNextClick(offersArray?.offer?.meta?.after)
+                    }
                   >
                     Next
                   </span>
