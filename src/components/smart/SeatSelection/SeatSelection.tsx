@@ -1,14 +1,16 @@
 import { useEffect, useState } from 'react';
 import { SeatSelection } from '@duffel/components';
 import { useParams } from 'react-router';
-import {
-  getSeatPlanAPI,
-} from '@client/services/searchFlightService';
+import { getSeatPlanAPI } from '@client/services/searchFlightService';
 import Spin from '@client/components/presentational/Spin';
 import './SeatSelection.scss';
 import { Modal } from 'antd';
 
-const SeatSelectionComp = ({ seatComponentData,setSelectedSeatsData,offerMeta }) => {
+const SeatSelectionComp = ({
+  seatComponentData,
+  setSelectedSeatsData,
+  offerMeta,
+}) => {
   const params = useParams();
   const [loading, setLoading] = useState(false);
   const [seatMap, setSeatMap] = useState(null);
@@ -26,6 +28,10 @@ const SeatSelectionComp = ({ seatComponentData,setSelectedSeatsData,offerMeta })
         setSeatMap(data?.offer);
         setPassengerData([...seatComponentData.seatPlanArray]);
         setLoading(false);
+        window.scrollTo({
+          top: document.documentElement.scrollHeight,
+          behavior: 'auto',
+        });
       } catch (error) {
         console.log('error', error);
         setLoading(false);
@@ -54,7 +60,7 @@ const SeatSelectionComp = ({ seatComponentData,setSelectedSeatsData,offerMeta })
         }
       }
       setSelectedSeatsInfo(tempArray);
-      setSelectedSeatsData(tempArray)
+      setSelectedSeatsData(tempArray);
     } catch (e) {
       console.log('error', e);
     }
@@ -62,7 +68,7 @@ const SeatSelectionComp = ({ seatComponentData,setSelectedSeatsData,offerMeta })
 
   const getSelectedSeatInfo = (data, key) => {
     const filteredItems = data?.filter((item) => item.flightIndex == key);
-    let totalAmount=0;
+    let totalAmount = 0;
     for (let i = 0; i < filteredItems.length; i++) {
       totalAmount += Number(filteredItems[i].amount);
     }
@@ -99,7 +105,10 @@ const SeatSelectionComp = ({ seatComponentData,setSelectedSeatsData,offerMeta })
                   <div className="seatBox">
                     <div>
                       <span className="about-flight">
-                        <img src={offerMeta?.data.owner.logo_symbol_url} width={30} />
+                        <img
+                          src={offerMeta?.data.owner.logo_symbol_url}
+                          width={30}
+                        />
                         {item.segments[0].origin.iata_city_code} to{' '}
                         {
                           item.segments[item.segments.length - 1].destination

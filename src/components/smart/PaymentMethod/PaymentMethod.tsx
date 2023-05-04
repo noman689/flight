@@ -121,7 +121,6 @@ const PaymentMethod = ({ offerMeta, selectedSeatsData, passengersData }) => {
 
   const handleConformCancel = () => {};
 
-  console.log('createdOrderDetails', createdOrderDetails);
   return (
     <>
       {contextHolder}
@@ -156,10 +155,10 @@ const PaymentMethod = ({ offerMeta, selectedSeatsData, passengersData }) => {
         width={'600px'}
         footer={null}
       >
-        {isPlacingOrder ? (
-          'Placing order.....'
-        ) : (
-          <Card title="Payment Info" bordered={false}>
+        <Card title="Payment Info" bordered={false}>
+          {isPlacingOrder ? (
+            'Placing order ....'
+          ) : (
             <CardPayment
               duffelPaymentIntentClientToken={
                 clientToken ||
@@ -168,8 +167,8 @@ const PaymentMethod = ({ offerMeta, selectedSeatsData, passengersData }) => {
               successfulPaymentHandler={successfulPaymentHandlerFn}
               errorPaymentHandler={errorPaymentHandlerFn}
             />
-          </Card>
-        )}
+          )}
+        </Card>
       </Modal>
       <div className="my-4 seatBox f-col">
         <div className="single-item">

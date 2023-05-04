@@ -60,8 +60,8 @@ const styles = StyleSheet.create({
   value: {
     color: '#4f4f4f',
     marginBottom: 15,
-    fontWeight:300,
-    fontSize:12
+    fontWeight: 300,
+    fontSize: 12,
   },
 
   simpleText: {
@@ -82,7 +82,7 @@ const styles = StyleSheet.create({
     borderBottomColor: 'gray',
     alignSelf: 'center',
   },
-  cell:{
+  cell: {
     width: '100%',
   },
   row: {
@@ -128,7 +128,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const FlightDetailsPdf: React.FC<FlightDetailsProps> = ({data}) => {
+const FlightDetailsPdf: React.FC<FlightDetailsProps> = ({ data }) => {
   // localStorage.setItem('details',JSON.stringify(details))
   return (
     <Document>
@@ -180,7 +180,9 @@ const FlightDetailsPdf: React.FC<FlightDetailsProps> = ({data}) => {
                                   {segment.destination.name}
                                 </Text>
                               </View>
-                              <View>
+                              </View>
+                              <View style={styles.row}>
+                                <View>
                                   <Text style={styles.label}>
                                     Departure Time
                                   </Text>
@@ -194,16 +196,16 @@ const FlightDetailsPdf: React.FC<FlightDetailsProps> = ({data}) => {
                                       'hh:mm A',
                                     )}
                                   </Text>
-                              </View>
-                              <View>
+                                </View>
+                                <View>
                                   <Text style={styles.label}>
                                     Departure Terminal
                                   </Text>
                                   <Text style={styles.value}>
                                     {segment.departure_terminal}
                                   </Text>
-                              </View>
-                              <View>
+                                </View>
+                                <View>
                                   <Text style={styles.label}>Arrival Time</Text>
                                   <Text style={styles.value}>
                                     {moment(segment.arriving_at).format(
@@ -215,16 +217,16 @@ const FlightDetailsPdf: React.FC<FlightDetailsProps> = ({data}) => {
                                       'hh:mm A',
                                     )}
                                   </Text>
-                              </View>
-                              <View>
+                                </View>
+                                <View>
                                   <Text style={styles.label}>
                                     Departure Terminal
                                   </Text>
                                   <Text style={styles.value}>
                                     {segment.departure_terminal}
                                   </Text>
+                                </View>
                               </View>
-                            </View>
                             <View style={styles.lineBreak} />
                             {/* <View style={styles.row}>
                       <View>

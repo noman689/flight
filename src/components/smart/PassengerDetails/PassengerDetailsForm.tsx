@@ -135,8 +135,6 @@ const PassengerDetailsForm: FC<PassengerFormProps> = ({
       const paersedData = parsedPassengerData();
       setSeatComponentData(paersedData);
       setIsFormValidated(true);
-      // localStorage.setItem('passengerData', JSON.stringify(paersedData));
-      // history.push(`/seat-selection/${offerId}`);
     }
   };
 
@@ -337,43 +335,6 @@ const PassengerDetailsForm: FC<PassengerFormProps> = ({
             }
           />
 
-          {/* <Form.Item
-            name="email"
-            rules={[
-              {
-                type: 'email',
-                message: 'The input is not valid E-mail!',
-              },
-              {
-                required: true,
-                message: 'Please input your E-mail!',
-              },
-            ]}
-          >
-            <Input
-              placeholder="Enter passenger Email"
-              type="email"
-              value={contactInfo.email}
-              onChange={(e) =>
-                setContactInfo({
-                  ...contactInfo,
-                  email: e.target.value,
-                })
-              }
-            />
-          </Form.Item> */}
-
-          {/* <Input
-            placeholder="enter passenger phone number"
-            type="text"
-            value={contactInfo.phone_number}
-            onChange={(e) =>
-              setContactInfo({
-                ...contactInfo,
-                phone_number: e.target.value,
-              })
-            }
-          /> */}
           <div className="phone-input-container">
             <PhoneInput
               placeholder="Enter phone number"
