@@ -12,6 +12,7 @@ import stopImage from '../../../assets/stop-svg.svg';
 import './FlightInfoModal.scss';
 
 const FlightInfoModal = ({ show, setShow, data }) => {
+  console.log(data);
   const getTimeLine = (payload) => {
     const stops = getStops(payload.segments, true).stops;
     let itemsArray = [];
@@ -30,7 +31,7 @@ const FlightInfoModal = ({ show, setShow, data }) => {
           <>
             <p>
               {payload.segments[i].origin.name}{' '}
-              {`(${payload.segments[i].origin.iata_code})`}
+              {`(${payload.segments[i].origin.iata_code}) (Terminal Number: ${payload.segments[i].origin_terminal})`}
             </p>
             <span>
               {moment(payload.segments[i].departing_at).format(
@@ -47,7 +48,7 @@ const FlightInfoModal = ({ show, setShow, data }) => {
           <>
             <p>
               {payload.segments[i].destination.name}{' '}
-              {`(${payload.segments[i].destination.iata_code})`}
+              {`(${payload.segments[i].destination.iata_code}) (Terminal Number: ${payload.segments[i].destination_terminal})`}
             </p>
             <span>
               {moment(payload.segments[i].arriving_at).format(
