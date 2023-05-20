@@ -111,7 +111,7 @@ const FilterSidebar = ({ data = [], collapsed, setCollapsed }) => {
             top: 0,
             bottom: 0,
             overflowY: 'auto',
-            marginTop: '20px',
+            marginTop: '71px',
             zIndex: 20,
           }}
           className="filter-sidebar"

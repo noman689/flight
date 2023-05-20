@@ -338,6 +338,8 @@ const PassengerDetailsForm: FC<PassengerFormProps> = ({
           <div className="phone-input-container">
             <PhoneInput
               placeholder="Enter phone number"
+              defaultCountry="GB"
+              international
               value={contactInfo.phone_number}
               onChange={(e) =>
                 setContactInfo({

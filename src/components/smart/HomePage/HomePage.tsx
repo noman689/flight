@@ -2,11 +2,12 @@ import React from 'react';
 import SearchFlightCard from '../BookingCard/BookingCard';
 import DestinationsFlicker from '../DestinationsFlicker/DestinationsFlicker';
 import DisplayCards from '../DisplayCards/DisplayCards';
-import './HomePage.scss'
+import './HomePage.scss';
+import Breadcrumbs from '../BreadCrums';
 
 const HomePage = () => {
   return (
-    <div className='content-section'>
+    <div className="content-section">
       <SearchFlightCard />
       {/* <DisplayCards /> */}
       {/* <DestinationsFlicker/> */}

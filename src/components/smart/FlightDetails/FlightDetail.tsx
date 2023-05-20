@@ -2,7 +2,7 @@ import { MenuOutlined } from '@ant-design/icons';
 import AnimatedLoader from '@client/components/presentational/AnimatedLoader/AnimatedLoader';
 import Spin from '@client/components/presentational/Spin';
 import { getFlightOffersAPI } from '@client/services/searchFlightService';
-import { Row } from 'antd';
+import { Breadcrumb, Row } from 'antd';
 import Sider from 'antd/es/layout/Sider';
 import { isEmpty } from 'ramda';
 import { useEffect, useState } from 'react';
@@ -11,6 +11,7 @@ import FlightDetailCard from '../FlightDetailCard/FlightDetailCard';
 import './FlightDetail.scss';
 import { useLocation, useHistory, useParams } from 'react-router-dom';
 import { filterOffers } from '@client/utils/helper';
+import Breadcrumbs from '../BreadCrums';
 
 const filterOfferData = (data, loaction) => {
   let tempArray = [];
@@ -18,7 +19,7 @@ const filterOfferData = (data, loaction) => {
     const searchParams = new URLSearchParams(loaction.search);
     const sortFilter = searchParams.get('sort_by');
     const stopFilter = searchParams.get('stops');
-    return filterOffers(data,sortFilter,stopFilter);
+    return filterOffers(data, sortFilter, stopFilter);
   }
   return tempArray;
 };
@@ -54,7 +55,7 @@ const FlightDetail = () => {
     const after = searchParams.get('after') ?? undefined;
     const before = searchParams.get('before') ?? undefined;
     if (after || before) {
-    console.log("after",after)
+      console.log('after', after);
       getOfers(after, before);
     } else {
       getOfers(undefined, undefined);
@@ -79,8 +80,10 @@ const FlightDetail = () => {
     searchParams.set('before', before_index);
     history.push({ search: searchParams.toString() });
   }
+
   return (
     <div className="main_page_width m-b-30 date-tabs overflow-unset">
+      {/* <Breadcrumbs /> */}
       {loading ? (
         <Row justify="center">
           <AnimatedLoader />

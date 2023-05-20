@@ -10,7 +10,6 @@ import {
   Popover,
   Radio,
   Slider,
-  DatePickerProps,
 } from 'antd';
 import { DownOutlined } from '@ant-design/icons';
 import './NewFlightSearchForm.scss';

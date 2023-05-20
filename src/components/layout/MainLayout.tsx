@@ -17,6 +17,7 @@ import FlightTicket from '../smart/FlightTicket/FlightTicket';
 import FlightTicketTest from '../smart/FlightTicketTest/FlightTicketTest';
 import { Switch } from 'react-router-dom/cjs/react-router-dom.min';
 import FlightDetailsPdf from '../smart/FlightTicketPdf/FlightTicketPdf';
+import Breadcrumbs from '../smart/BreadCrums';
 
 const { Content } = Layout;
 
@@ -27,6 +28,15 @@ const MainLayout = () => {
         {/* <HeaderComponent /> */}
         {/* <StickyNavBar /> */}
         <Content>
+          <div
+            style={{
+              top: 30,
+              left: 30,
+              position: 'absolute',
+            }}
+          >
+            <Breadcrumbs />
+          </div>
           <Switch>
             <Route exact path="/" component={HomePage} />
             <Route exact path="/flight-details/:id" component={FlightDetail} />
@@ -43,11 +53,7 @@ const MainLayout = () => {
             <Route exact path="/payment-method" component={PaymentMethod} />
 
             <Route exact path="/flight-ticket" component={FlightTicket} />
-            <Route
-              exact
-              path="/234"
-              component={FlightTicketTest}
-            />
+            <Route exact path="/234" component={FlightTicketTest} />
           </Switch>
         </Content>
         {/* <div style={{ marginTop: '50px' }}>
