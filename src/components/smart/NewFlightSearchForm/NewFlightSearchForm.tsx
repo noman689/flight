@@ -232,15 +232,15 @@ const NewFlightSearchForm = ({}: FlightSearchFormProps) => {
                       style={{ width: '100%' }}
                       placeholder="Search Departure City"
                       notFoundContent={null}
-                      onChange={(value) => setOriginCity(value)}
+                      // onChange={(value) => setOriginCity(value)}
                       onSearch={(value) => {
                         handleStudentSearch(value, 'origin');
                       }}
                       filterOption={false}
-                      value={originCity}
+                      // value={originCity}
                       loading={isSearching}
                     >
-                      {departureCities?.map((item, index) => {
+                      {departureCities?.filter((res)=>res.city_name!==null).map((item, index) => {
                         console.log('item', item);
                         return (
                           <Select.Option value={item.iata_code} key={index}>
@@ -278,7 +278,7 @@ const NewFlightSearchForm = ({}: FlightSearchFormProps) => {
                       value={destinationCity}
                       loading={isSearching}
                     >
-                      {destinationCities?.map((item, index) => {
+                      {destinationCities?.filter((res)=>res.city_name!==null).map((item, index) => {
                         return (
                           <Select.Option value={item.iata_code} key={index}>
                             {`${item.city_name} (${item.name})`}

@@ -83,7 +83,6 @@ const FlightDetail = () => {
 
   return (
     <div className="main_page_width m-b-30 date-tabs overflow-unset">
-      {/* <Breadcrumbs /> */}
       {loading ? (
         <Row justify="center">
           <AnimatedLoader />
@@ -107,12 +106,16 @@ const FlightDetail = () => {
               setCollapsed={setCollapsed}
             />
             <div className="cards-section">
-              {!isEmpty(offersArray?.offer?.data) &&
+              {offersArray?.offer?.data?.length &&
+              filterOfferData(offersArray?.offer?.data, location).length ? (
                 filterOfferData(offersArray?.offer?.data, location).map(
                   (offer) => {
                     return <FlightDetailCard data={offer}></FlightDetailCard>;
                   },
-                )}
+                )
+              ) : (
+                <FlightDetailCard data={null}></FlightDetailCard>
+              )}
               <div className="page-btns">
                 {offersArray?.offer?.meta?.before && (
                   <span
