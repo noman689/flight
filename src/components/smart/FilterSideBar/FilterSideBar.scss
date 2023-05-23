@@ -36,6 +36,18 @@
     }
   }
 }
+.edit-search-text {
+  display: flex;
+  justify-content: flex-end;
+  padding: 12px 8px;
+  cursor: pointer;
+  font-size: 12px;
+  color: #4b4b55;
+  align-items: center;
+  svg{
+    margin-right: 4px;
+  }
+}
 .ant-layout .ant-layout-sider {
   background: #f9f8fc !important;
 }

@@ -1,17 +1,13 @@
 import { MenuOutlined } from '@ant-design/icons';
 import AnimatedLoader from '@client/components/presentational/AnimatedLoader/AnimatedLoader';
-import Spin from '@client/components/presentational/Spin';
 import { getFlightOffersAPI } from '@client/services/searchFlightService';
-import { Breadcrumb, Row } from 'antd';
-import Sider from 'antd/es/layout/Sider';
-import { isEmpty } from 'ramda';
+import { Row } from 'antd';
 import { useEffect, useState } from 'react';
 import FilterSidebar from '../FilterSideBar/FilterSidebar';
 import FlightDetailCard from '../FlightDetailCard/FlightDetailCard';
-import './FlightDetail.scss';
 import { useLocation, useHistory, useParams } from 'react-router-dom';
 import { filterOffers } from '@client/utils/helper';
-import Breadcrumbs from '../BreadCrums';
+import './FlightDetail.scss';
 
 const filterOfferData = (data, loaction) => {
   let tempArray = [];
@@ -42,6 +38,7 @@ const FlightDetail = () => {
     try {
       setLoading(true);
       const { data } = await getFlightOffersAPI(id, after, before);
+      console.log("data",data)
       setOffersArray(data);
 
       setLoading(false);
@@ -55,7 +52,6 @@ const FlightDetail = () => {
     const after = searchParams.get('after') ?? undefined;
     const before = searchParams.get('before') ?? undefined;
     if (after || before) {
-      console.log('after', after);
       getOfers(after, before);
     } else {
       getOfers(undefined, undefined);
@@ -64,7 +60,6 @@ const FlightDetail = () => {
   const toggle = () => {
     setCollapsed((prevState) => !prevState);
   };
-  console.log('offersArray', offersArray);
   function handleNextClick(after_index) {
     setAfter(after_index);
     const searchParams = new URLSearchParams(location.search);

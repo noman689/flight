@@ -94,7 +94,7 @@ const SeatSelectionComp = ({
           onSubmit={onSubmitFn}
         />
       </Modal>
-      <div className="seat-component">
+      <div className="seat-component w-100">
         {loading ? (
           <Spin />
         ) : (
@@ -102,7 +102,7 @@ const SeatSelectionComp = ({
             {offerMeta?.data?.slices?.length &&
               offerMeta?.data.slices.map((item, index) => {
                 return (
-                  <div className="seatBox">
+                  <div className="seatBox w-100">
                     <div>
                       <span className="about-flight">
                         <img

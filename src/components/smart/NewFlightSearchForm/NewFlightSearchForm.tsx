@@ -28,6 +28,7 @@ import planeTakeOffImage from '../../../assets/takeoff-the-plane.svg';
 import planeLandingImage from '../../../assets/plane-landing.svg';
 interface FlightSearchFormProps {
   isStickyNav?: boolean;
+  initialValues?: any;
 }
 
 const marks: SliderMarks = {
@@ -41,7 +42,7 @@ const disabledDate: RangePickerProps['disabledDate'] = (current) => {
   return current && current < dayjs().endOf('day');
 };
 
-const NewFlightSearchForm = ({}: FlightSearchFormProps) => {
+const NewFlightSearchForm = ({ initialValues }: FlightSearchFormProps) => {
   const history = useHistory();
   const [form] = Form.useForm();
   const [isLoading, setIsLoading] = useState(false);
@@ -80,7 +81,7 @@ const NewFlightSearchForm = ({}: FlightSearchFormProps) => {
     { label: 'Qatar Airways', value: '6' },
   ];
 
-  console.log('rangeValues', rangeValues);
+  console.log('initialValues', initialValues);
 
   const onFinish = async (values) => {
     const passengers = [
@@ -117,6 +118,23 @@ const NewFlightSearchForm = ({}: FlightSearchFormProps) => {
   const handleOpenChange = (newOpen: boolean) => {
     setOpen(newOpen);
   };
+
+  useEffect(() => {
+    const setPassengersAbout = () => {
+      if (initialValues) {
+        const adultCount = initialValues.passengersData.filter(
+          (item) => item.type == 'adult',
+        );
+        const childCount = initialValues.passengersData.filter(
+          (item) => item.type == 'child',
+        );
+        setAdult(adultCount.length);
+        setChildren(childCount.length);
+        setTicketType(initialValues.isReturnFlight ? 'return' : 'oneWay');
+      }
+    };
+    setPassengersAbout();
+  }, []);
 
   // useEffect(() => {
   //   const getAllAirlines = async () => {
@@ -189,7 +207,15 @@ const NewFlightSearchForm = ({}: FlightSearchFormProps) => {
             form={form}
             layout="vertical"
             initialValues={{
-              cabin_class: 'economy',
+              cabin_class: initialValues?.cabin_class ?? 'economy',
+              origin: initialValues?.origin,
+              destination: initialValues?.destination,
+              departure_date: initialValues?.startDate
+                ? dayjs(initialValues?.startDate)
+                : null,
+              return_date: initialValues?.endDate
+                ? dayjs(initialValues?.endDate)
+                : null,
             }}
           >
             <Row className="MainRow">
@@ -207,9 +233,9 @@ const NewFlightSearchForm = ({}: FlightSearchFormProps) => {
                     <Radio value="return">
                       <span className="radioHeading">Return</span>
                     </Radio>
-                    <Radio value="multi-city">
+                    {/* <Radio value="multi-city">
                       <span className="radioHeading">Multi City</span>
-                    </Radio>
+                    </Radio> */}
                   </Radio.Group>
                 </div>
               </Col>
@@ -240,14 +266,16 @@ const NewFlightSearchForm = ({}: FlightSearchFormProps) => {
                       // value={originCity}
                       loading={isSearching}
                     >
-                      {departureCities?.filter((res)=>res.city_name!==null).map((item, index) => {
-                        console.log('item', item);
-                        return (
-                          <Select.Option value={item.iata_code} key={index}>
-                            {`${item.city_name} (${item.name})`}
-                          </Select.Option>
-                        );
-                      })}
+                      {departureCities
+                        ?.filter((res) => res.city_name !== null)
+                        .map((item, index) => {
+                          console.log('item', item);
+                          return (
+                            <Select.Option value={item.iata_code} key={index}>
+                              {`${item.city_name} (${item.name})`}
+                            </Select.Option>
+                          );
+                        })}
                     </Select>
                   </Form.Item>
                 </Col>
@@ -278,13 +306,15 @@ const NewFlightSearchForm = ({}: FlightSearchFormProps) => {
                       value={destinationCity}
                       loading={isSearching}
                     >
-                      {destinationCities?.filter((res)=>res.city_name!==null).map((item, index) => {
-                        return (
-                          <Select.Option value={item.iata_code} key={index}>
-                            {`${item.city_name} (${item.name})`}
-                          </Select.Option>
-                        );
-                      })}
+                      {destinationCities
+                        ?.filter((res) => res.city_name !== null)
+                        .map((item, index) => {
+                          return (
+                            <Select.Option value={item.iata_code} key={index}>
+                              {`${item.city_name} (${item.name})`}
+                            </Select.Option>
+                          );
+                        })}
                     </Select>
                   </Form.Item>
                 </Col>

@@ -103,7 +103,6 @@ const PaymentMethod = ({ offerMeta, selectedSeatsData, passengersData }) => {
         };
         const { data: order } = await createOrderAPI(payload);
         setCreatedOrderDetails(order?.offer?.data);
-        openNotification('Flight Booked Successfully');
         setIsPlacingOrder(false);
         setShowPaymentModal(false);
         setConformModal(true);
@@ -128,7 +127,10 @@ const PaymentMethod = ({ offerMeta, selectedSeatsData, passengersData }) => {
         open={showConformModal}
         footer={null}
         maskClosable={false}
-        onCancel={handleConformCancel}
+        onCancel={()=>history.push('/')}
+        closable={true}
+        afterClose={()=>history.push('/')}
+
       >
         <div className="conform-modal-content">
           <div className="success-message">
@@ -170,7 +172,7 @@ const PaymentMethod = ({ offerMeta, selectedSeatsData, passengersData }) => {
           )}
         </Card>
       </Modal>
-      <div className="my-4 seatBox f-col">
+      <div className="my-4 seatBox f-col w-100">
         <div className="single-item">
           <span>Total Price (.inc taxes)</span>
           <span>${offerMeta.total_amount}</span>
@@ -183,6 +185,12 @@ const PaymentMethod = ({ offerMeta, selectedSeatsData, passengersData }) => {
         ) : (
           <></>
         )}
+        <div className="single-item">
+          <span>Total Amount</span>
+          <span>
+            ${(Number(totalSeatCosts) + Number(offerMeta.total_amount)).toFixed(2)}
+          </span>
+        </div>
         <div onClick={getPaymentIntent} className="pay-btn">
           {loading ? <Spin /> : 'Pay'}
         </div>

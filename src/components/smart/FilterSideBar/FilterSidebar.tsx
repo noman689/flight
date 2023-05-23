@@ -7,13 +7,16 @@ import planeIcon from '../../../assets/ticketBlack.svg';
 
 import './FilterSideBar.scss';
 import moment from 'moment';
-import { Radio, Space } from 'antd';
+import { Modal, Radio, Space } from 'antd';
 import { useLocation, useHistory } from 'react-router-dom';
+import NewFlightSearchForm from '../NewFlightSearchForm/NewFlightSearchForm';
+import { EditOutlined } from '@ant-design/icons';
 
 const FilterSidebar = ({ data = [], collapsed, setCollapsed }) => {
   console.log('FilterSidebar', data);
   const history = useHistory();
   const location = useLocation();
+  const [showEditModal,setShowEditModal]=useState(false)
 
   const [flightInfo, setFlightInfo] = useState({
     origin: '',
@@ -58,6 +61,7 @@ const FilterSidebar = ({ data = [], collapsed, setCollapsed }) => {
         data[0].slices[0].segments[data[0].slices[0].segments.length - 1]
           .destination.iata_city_code;
       const passengerCount = data[0].slices[0].segments[0].passengers.length;
+      const passengersData = data[0].passengers;
       const cabinClass =
         data[0].slices[0].segments[0].passengers[0].cabin_class;
       const isReturnFlight = data[0].slices.length > 1;
@@ -81,6 +85,7 @@ const FilterSidebar = ({ data = [], collapsed, setCollapsed }) => {
         isReturnFlight,
         startDate,
         endDate,
+        passengersData,
       };
     }
   };
@@ -92,6 +97,15 @@ const FilterSidebar = ({ data = [], collapsed, setCollapsed }) => {
 
   return (
     <>
+      <Modal
+        open={showEditModal}
+        onCancel={() => setShowEditModal(false)}
+        footer={null}
+        closable={false}
+        width={'70%'}
+      >
+        <NewFlightSearchForm initialValues={flightInfo} />
+      </Modal>
       {!collapsed ? (
         <div
           className="sideBarOverlay"
@@ -117,6 +131,7 @@ const FilterSidebar = ({ data = [], collapsed, setCollapsed }) => {
           className="filter-sidebar"
         >
           <div className="about-info">
+            <div className='edit-search-text' onClick={() => setShowEditModal(true)}><EditOutlined/> Edit Search</div>
             <div className="flight-info">
               <span>{flightInfo?.origin}</span>
               <span>

@@ -63,15 +63,15 @@ const PassengerDetailsPage: React.FC = () => {
           {isFormValidated ? (
             <>
               <Row gutter={[16, 16]}>
-                <Col xs={24} sm={24} md={24} lg={24}>
-                  <div>
+                <Col xs={24} sm={24} md={24} lg={14}>
+                  <div className='w-80'>
                     <SeatSelectionComp
                       seatComponentData={seatComponentData}
                       offerMeta={selectedOffer}
                       setSelectedSeatsData={setSelectedSeatsData}
                     />
                   </div>
-                  <div>
+                  <div className='w-80'>
                     <PaymentMethod
                       offerMeta={selectedOffer?.data}
                       selectedSeatsData={selectedOfferAndSeatsData}
