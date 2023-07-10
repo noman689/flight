@@ -52,7 +52,7 @@ const PaymentMethod = ({ offerMeta, selectedSeatsData, passengersData }) => {
       const total_amount = calculateTotalAmount(offerMeta);
       const { data } = await paymentIntentAPI({
         total_amount: total_amount,
-        total_currency: 'USD',
+        total_currency: 'GBP',
       });
       setClientToken(data.offer.data.client_token);
       setClientId(data.offer.data.id);
@@ -91,7 +91,7 @@ const PaymentMethod = ({ offerMeta, selectedSeatsData, passengersData }) => {
           payments: [
             {
               type: 'balance',
-              currency: 'USD',
+              currency: 'GBP',
               amount: data.offer.data.net_amount,
             },
           ],
