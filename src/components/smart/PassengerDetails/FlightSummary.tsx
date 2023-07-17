@@ -60,7 +60,7 @@ const FlightSummary: React.FC<FlightSummaryProps> = ({ summaryData, fare }) => {
       <Divider />
       <Row justify="space-between">
         <div>Total Trip Price:</div>
-        <div className="card-bottom-title red-head">${fare}</div>
+        <div className="card-bottom-title red-head">£{fare}</div>
       </Row>
     </Card>
   );

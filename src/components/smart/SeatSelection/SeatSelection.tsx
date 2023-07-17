@@ -118,7 +118,7 @@ const SeatSelectionComp = ({
                       <span className="selected-seats-info">
                         {`${
                           getSelectedSeatInfo(selectedSeatsInfo, index).count
-                        } seats selected for $${
+                        } seats selected for £${
                           getSelectedSeatInfo(selectedSeatsInfo, index)
                             .totalAmount
                         }`}

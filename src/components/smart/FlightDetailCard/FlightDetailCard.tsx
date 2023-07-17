@@ -98,7 +98,7 @@ const FlightDetailCard = ({ data }) => {
             </Col>
             <Col xs={24} sm={24} md={24} lg={5} className="rightSection">
               <div className="alignitems">
-                <h6 className="fare">${data.total_amount}</h6>
+                <h6 className="fare">£{data.total_amount}</h6>
                 <p className="alignContent">
                   <CloudFilled size={7} />
                   {data.total_emissions_kg}g
