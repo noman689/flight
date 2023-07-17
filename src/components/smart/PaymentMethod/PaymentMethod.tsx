@@ -92,7 +92,7 @@ const PaymentMethod = ({ offerMeta, selectedSeatsData, passengersData }) => {
             {
               type: 'balance',
               currency: 'GBP',
-              amount: data.offer.data.net_amount,
+              amount: offerMeta.total_amount,
             },
           ],
           services: [...getServicesArray()],
