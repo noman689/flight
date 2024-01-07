@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useHistory } from 'react-router';
-import { CardPayment } from '@duffel/components';
+import { DuffelPayments } from '@duffel/components';
 import {
   confirmPaymentAPI,
   paymentIntentAPI,
@@ -18,7 +18,7 @@ const PaymentMethod = ({ offerMeta, selectedSeatsData, passengersData }) => {
   const [loading, setLoading] = useState(false);
   const history = useHistory();
   const [api, contextHolder] = notification.useNotification();
-  const [totalSeatCosts, setTotalSeatsCost] = useState(0);
+  const [totalCost, setTotalCost] = useState(0);
   const [showPaymentModal, setShowPaymentModal] = useState(false);
   const [isPlacingOrder, setIsPlacingOrder] = useState(false);
   const [showConformModal, setConformModal] = useState(false);
@@ -27,31 +27,15 @@ const PaymentMethod = ({ offerMeta, selectedSeatsData, passengersData }) => {
     const placement = 'topRight';
     api.error({
       message: `${alertMessage}`,
-      // description: `${alertDescription}`,
       placement,
     });
-  };
-
-  const getTotalSeatsCost = (data) => {
-    let total_seats_amount = 0;
-    for (let i = 0; i < data.length; i++) {
-      total_seats_amount += Number(data[i].amount);
-    }
-    return total_seats_amount;
-  };
-
-  const calculateTotalAmount = (offerData) => {
-    const totalChargedAmount =
-      (totalSeatCosts + Number(offerData.total_amount)) / (1 - 0.029);
-    return totalChargedAmount.toFixed(2).toString();
   };
 
   const getPaymentIntent = async () => {
     try {
       setLoading(true);
-      const total_amount = calculateTotalAmount(offerMeta);
       const { data } = await paymentIntentAPI({
-        total_amount: total_amount,
+        total_amount: Number(totalCost).toFixed(2),
         total_currency: 'GBP',
       });
       setClientToken(data.offer.data.client_token);
@@ -66,18 +50,19 @@ const PaymentMethod = ({ offerMeta, selectedSeatsData, passengersData }) => {
 
   const getServicesArray = () => {
     let serviceArray = [];
-    for (let i = 0; i < selectedSeatsData.length; i++) {
-      serviceArray.push({
-        quantity: 1,
-        id: selectedSeatsData[i].serviceId,
-      });
+    for (const element of selectedSeatsData) {
+      if (element.serviceId) {
+        serviceArray.push({
+          quantity: 1,
+          id: element.serviceId,
+        });
+      }
     }
     return serviceArray;
   };
 
   useEffect(() => {
-    const result = getTotalSeatsCost(selectedSeatsData);
-    setTotalSeatsCost(result);
+    setTotalCost(selectedSeatsData?.[0]?.amount);
   }, [selectedSeatsData]);
 
   const successfulPaymentHandlerFn = async () => {
@@ -92,10 +77,10 @@ const PaymentMethod = ({ offerMeta, selectedSeatsData, passengersData }) => {
             {
               type: 'balance',
               currency: 'GBP',
-              amount: offerMeta.total_amount,
+              amount: totalCost,
             },
           ],
-          services: [...getServicesArray()],
+          services: getServicesArray(),
           passengers: [...passengersData.passengerInfo],
           metadata: {
             payment_intent_id: clientId,
@@ -108,6 +93,7 @@ const PaymentMethod = ({ offerMeta, selectedSeatsData, passengersData }) => {
         setConformModal(true);
       }
     } catch (e) {
+      console.log('error', e);
       setIsPlacingOrder(false);
       openNotification(e);
     }
@@ -118,8 +104,6 @@ const PaymentMethod = ({ offerMeta, selectedSeatsData, passengersData }) => {
     // Show error page
   };
 
-  const handleConformCancel = () => {};
-
   return (
     <>
       {contextHolder}
@@ -127,10 +111,9 @@ const PaymentMethod = ({ offerMeta, selectedSeatsData, passengersData }) => {
         open={showConformModal}
         footer={null}
         maskClosable={false}
-        onCancel={()=>history.push('/')}
+        onCancel={() => history.push('/')}
         closable={true}
-        afterClose={()=>history.push('/')}
-
+        afterClose={() => history.push('/')}
       >
         <div className="conform-modal-content">
           <div className="success-message">
@@ -138,6 +121,7 @@ const PaymentMethod = ({ offerMeta, selectedSeatsData, passengersData }) => {
           </div>
           <div className="download-receipt-btn">
             <Button style={{ borderColor: '#701644' }}>
+              {/* @ts-ignore */}
               <PDFDownloadLink
                 document={<FlightTicketPdf data={createdOrderDetails} />}
                 fileName="e-ticket.pdf"
@@ -161,13 +145,13 @@ const PaymentMethod = ({ offerMeta, selectedSeatsData, passengersData }) => {
           {isPlacingOrder ? (
             'Placing order ....'
           ) : (
-            <CardPayment
-              duffelPaymentIntentClientToken={
+            <DuffelPayments
+              paymentIntentClientToken={
                 clientToken ||
                 'eyJjbGllbnRfc2VjcmV0IjoicGlfMUl5YTBiQW5rMVRkeXJvRE1iWkJPN0ZSX3NlY3JldF9TbGFrYnJjYnFHZGZha2VrcjdCNE5jZWVyIiwicHVibGlzaGFibGVfa2V5IjoicGtfbGl2ZV81MUl0Q3YwQW5rMUdkeXJvRFlFU3M3RnBTUEdrNG9kbDhneDF3Y1RBNVEzaUcyWEFWVEhxdFlKSVhWMUxoSU5GQUtFMjA1dFdmRGVIcXhwUVdnYkIzTkVFbzAwMmdVY1hzR0YifQ=='
               }
-              successfulPaymentHandler={successfulPaymentHandlerFn}
-              errorPaymentHandler={errorPaymentHandlerFn}
+              onSuccessfulPayment={successfulPaymentHandlerFn}
+              onFailedPayment={errorPaymentHandlerFn}
             />
           )}
         </Card>
@@ -177,10 +161,10 @@ const PaymentMethod = ({ offerMeta, selectedSeatsData, passengersData }) => {
           <span>Total Price (.inc taxes)</span>
           <span>£{offerMeta.total_amount}</span>
         </div>
-        {totalSeatCosts > 0 ? (
+        {totalCost > 0 ? (
           <div className="single-item">
             <span>Seats Costs</span>
-            <span>£{totalSeatCosts}</span>
+            <span>£{(totalCost - offerMeta.total_amount)?.toFixed(2)}</span>
           </div>
         ) : (
           <></>
@@ -188,7 +172,10 @@ const PaymentMethod = ({ offerMeta, selectedSeatsData, passengersData }) => {
         <div className="single-item">
           <span>Total Amount</span>
           <span>
-          £{(Number(totalSeatCosts) + Number(offerMeta.total_amount)).toFixed(2)}
+            £
+            {totalCost > 0
+              ? Number(totalCost).toFixed(2)
+              : offerMeta.total_amount}
           </span>
         </div>
         <div onClick={getPaymentIntent} className="pay-btn">

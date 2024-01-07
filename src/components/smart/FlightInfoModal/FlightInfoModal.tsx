@@ -12,7 +12,6 @@ import stopImage from '../../../assets/stop-svg.svg';
 import './FlightInfoModal.scss';
 
 const FlightInfoModal = ({ show, setShow, data }) => {
-  console.log(data);
   const getTimeLine = (payload) => {
     const stops = getStops(payload.segments, true).stops;
     let itemsArray = [];

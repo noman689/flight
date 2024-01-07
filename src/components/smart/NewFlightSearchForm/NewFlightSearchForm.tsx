@@ -81,7 +81,6 @@ const NewFlightSearchForm = ({ initialValues }: FlightSearchFormProps) => {
     { label: 'Qatar Airways', value: '6' },
   ];
 
-  console.log('initialValues', initialValues);
 
   const onFinish = async (values) => {
     const passengers = [
@@ -158,7 +157,6 @@ const NewFlightSearchForm = ({ initialValues }: FlightSearchFormProps) => {
       setIsSearching(false);
     } catch (error) {
       setIsSearching(false);
-      console.log('error', error);
     }
   };
 

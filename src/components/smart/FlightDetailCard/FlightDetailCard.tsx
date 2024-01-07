@@ -16,7 +16,6 @@ const FlightDetailCard = ({ data }) => {
     e.stopPropagation();
     history.push(`/offer-details/${data.id}`);
   };
-  console.log('data', data);
   return (
     <>
       <Col xs={24} sm={24} md={23} lg={24} className="flightDetails">

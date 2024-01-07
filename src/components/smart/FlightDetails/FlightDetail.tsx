@@ -38,7 +38,6 @@ const FlightDetail = () => {
     try {
       setLoading(true);
       const { data } = await getFlightOffersAPI(id, after, before);
-      console.log("data",data)
       setOffersArray(data);
 
       setLoading(false);

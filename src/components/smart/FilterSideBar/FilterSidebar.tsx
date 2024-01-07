@@ -13,7 +13,6 @@ import NewFlightSearchForm from '../NewFlightSearchForm/NewFlightSearchForm';
 import { EditOutlined } from '@ant-design/icons';
 
 const FilterSidebar = ({ data = [], collapsed, setCollapsed }) => {
-  console.log('FilterSidebar', data);
   const history = useHistory();
   const location = useLocation();
   const [showEditModal,setShowEditModal]=useState(false)
