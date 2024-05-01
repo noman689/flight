@@ -127,8 +127,7 @@ const FlightSearchForm = ({ isStickyNav = false }: FlightSearchFormProps) => {
   };
 
   return (
-    <>
-      <div className="flight-search-form">
+    <div className="flight-search-form">
         <div className="paddingLR">
           <Form onFinish={onFinish} form={form}>
             <Row
@@ -169,7 +168,7 @@ const FlightSearchForm = ({ isStickyNav = false }: FlightSearchFormProps) => {
                     {departureCities?.map((item, index) => {
                       return (
                         <Select.Option value={item.iata_code} key={index}>
-                          {item.city_name}
+                          {item.name}
                         </Select.Option>
                       );
                     })}
@@ -211,7 +210,7 @@ const FlightSearchForm = ({ isStickyNav = false }: FlightSearchFormProps) => {
                     {destinationCities?.map((item, index) => {
                       return (
                         <Select.Option value={item.iata_code} key={index}>
-                          {item.city_name}
+                          {item.name}
                         </Select.Option>
                       );
                     })}
@@ -476,7 +475,6 @@ const FlightSearchForm = ({ isStickyNav = false }: FlightSearchFormProps) => {
           </Form>
         </div>
       </div>
-    </>
   );
 };
 
