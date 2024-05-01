@@ -3,22 +3,24 @@ import {
   AUTH_FAILURE,
   SET_PROFILE,
   REMOVE_PROFILE,
-} from "./authActionTypes";
+} from './authActionTypes';
+import { AuthState } from './types';
 
-const initialState = {
+const initialState: AuthState = {
   isAuthenticated: false,
   user: {},
   users: [],
 };
 
-const authReducer = (state = initialState, action) => {
+const authReducer = (
+  state: AuthState = initialState,
+  action: any,
+): AuthState => {
   switch (action.type) {
-    case "SEARCH_USER_SUCCESS":
-      return { ...state, users: action.payload };
     case AUTH_SUCCESS:
       return { ...state, isAuthenticated: true };
     case AUTH_FAILURE:
-      return { ...state, isAuthenticated: false };
+      return { ...state, isAuthenticated: false, user: {} };
     case SET_PROFILE:
       return { ...state, user: action.payload };
     case REMOVE_PROFILE:

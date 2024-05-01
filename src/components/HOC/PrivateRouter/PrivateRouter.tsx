@@ -1,22 +1,27 @@
+import React from 'react';
+import { Route, Redirect, useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { Redirect, Route } from 'react-router-dom';
+import { AppState } from '@client/store/auth/types';
 
-const PrivateRoute = ({ children, ...rest }) => {
+const PrivateRoute = ({ component: Component, ...rest }) => {
   const isAuthenticated = useSelector(
-    (state: any) => state?.auth?.isAuthenticated,
+    (state: AppState) => state.app.isAuthenticated,
   );
+  const location = useLocation();
 
   return (
     <Route
       {...rest}
-      render={({ location }) =>
+      render={(props) =>
         isAuthenticated ? (
-          children
+          <Component {...props} />
         ) : (
           <Redirect
             to={{
               pathname: '/login',
-              state: { from: location },
+              state: {
+                props: location.pathname,
+              },
             }}
           />
         )
