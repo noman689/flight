@@ -9,6 +9,8 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
   );
   const location = useLocation();
 
+  console.log("isAuthenticated",isAuthenticated)
+
   return (
     <Route
       {...rest}

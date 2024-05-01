@@ -26,8 +26,9 @@ const PassengerDetailsForm: FC<PassengerFormProps> = ({
     seat: false,
     pay: false,
   });
+
   const [contactInfo, setContactInfo] = useState({
-    email: '',
+    email: JSON.parse(localStorage.getItem('user'))?.email,
     phone_number: '',
   });
   const verify = () => {

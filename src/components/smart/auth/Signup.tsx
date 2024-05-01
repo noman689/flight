@@ -1,13 +1,16 @@
-import React, { useState } from 'react';
-import { Form, Input, Button, Alert, Row, Col } from 'antd';
+import React, { useEffect, useState } from 'react';
+import { Form, Input, Button, Alert, Row, Col, Card } from 'antd';
 import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
 import { useHistory } from 'react-router';
+import { useDispatch } from 'react-redux';
+import { setAuthSuccess, setProfile } from '@client/store/auth/authActions';
 
 const Signup = () => {
   const history = useHistory();
   const [form] = Form.useForm();
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const dispatch = useDispatch();
 
   const handleSignup = (values: { email: any; password: any }) => {
     const { email, password } = values;
@@ -15,10 +18,8 @@ const Signup = () => {
     setLoading(true);
     createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
-        // Signed in
-        const user = userCredential.user;
-        console.log(user);
         setLoading(false);
+        history.push('/login');
       })
       .catch((error) => {
         const errorMessage = error.message;
@@ -27,14 +28,27 @@ const Signup = () => {
       });
   };
 
+  useEffect(()=>{
+    const user = localStorage.getItem("user")
+    if(user) {
+      dispatch(setAuthSuccess(JSON.parse(user)));
+      dispatch(setProfile(JSON.parse(user)));
+      history.push('/')
+    }
+    },[])
+
   return (
     <Row justify="center" align="middle" style={{ minHeight: '100vh' }}>
       <Col>
+      <Card style={{
+        width:'450px'
+      }}>
         <Form
           form={form}
           name="register"
           onFinish={handleSignup}
           scrollToFirstError
+          layout="vertical"
         >
           <Form.Item
             name="email"
@@ -111,6 +125,7 @@ const Signup = () => {
         >
           Already have an account? Log in
         </Button>
+        </Card>
       </Col>
     </Row>
   );
