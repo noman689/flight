@@ -1,7 +1,8 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useState, useEffect } from 'react';
 import './HeaderFlightDetails.scss';
-import { useNavigate } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
+
 import { Divider } from 'antd';
 // @ts-ignore
 import back from '../../../assets/backbutton.svg';
@@ -16,10 +17,10 @@ import search from '../../../assets/search.svg';
 // @ts-ignore
 import avatar from '../../../assets/avatar.svg';
 const HeaderFlightDetails: React.FC<any> = () => {
-  const navigate = useNavigate();
+  const history = useHistory();
 
   const handleGoBack = () => {
-    navigate(-1);
+    history.goBack();
   };
   return (
     <>

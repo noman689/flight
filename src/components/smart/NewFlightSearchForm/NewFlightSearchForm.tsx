@@ -267,7 +267,6 @@ const NewFlightSearchForm = ({ initialValues }: FlightSearchFormProps) => {
                       {departureCities
                         ?.filter((res) => res.city_name !== null)
                         .map((item, index) => {
-                          console.log('item', item);
                           return (
                             <Select.Option value={item.iata_code} key={index}>
                               {`${item.city_name} (${item.name})`}
