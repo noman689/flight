@@ -16,8 +16,8 @@ const App: React.FC = () => {
   if(user) {
     dispatch(setAuthSuccess(JSON.parse(user)));
     dispatch(setProfile(JSON.parse(user)));
-    setIsLoaded(true)
   }
+  setIsLoaded(true)
   },[])
 
   return (
