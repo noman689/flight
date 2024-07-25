@@ -21,12 +21,16 @@ const App: React.FC = () => {
   setIsLoaded(true)
   },[])
 
-  return (
+ return (
     <>
-    {
-      isloaded && 
-      <div className="mainDivColor">{<MainLayout />}</div>
-    }
+      {isloaded &&
+        <div className="mainDivColor">
+          <header>
+            <img src={logo} alt="Logo" id="logo" />
+          </header>
+          <MainLayout />
+        </div>
+      }
     </>
   );
 };
