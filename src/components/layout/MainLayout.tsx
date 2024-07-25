@@ -44,11 +44,9 @@ const MainLayout = () => {
       }
     });
   }, [dispatch]);
-return (
-    <div className="header">
+
       <img src={"https://cdn.sablootlo.pk/wp-content/uploads/2024/06/35438751_Artboard-1-e1717853912858.png"} width="10" height="5" />
-      <p className="name">heading name</p>
-      <div className="header-right">);
+     
   return (
     <Layout className="bg-cloud">
       <Router>
