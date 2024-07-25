@@ -4,6 +4,7 @@ import "@egjs/react-flicking/dist/flicking.css";
 import './App.scss';
 import { useDispatch } from 'react-redux';
 import { setAuthSuccess, setProfile } from './store/auth/authActions';
+import logo from './src/assets/blue-globe-airplane-flight-swoosh-symbol-design-vector-25662574.jpg'
 
 const App: React.FC = () => {
 
