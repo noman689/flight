@@ -10,7 +10,7 @@ const Breadcrumbs: React.FC<BreadcrumbsProps> = ({ separator }) => {
   return (
     <Breadcrumb separator={separator}>
       <Breadcrumb.Item>
-        <Link to={'/'}>New</Link>
+        <Link to={'/'}>Home</Link>
       </Breadcrumb.Item>
     </Breadcrumb>
   );
