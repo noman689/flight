@@ -60,9 +60,6 @@ const MainLayout = () => {
           >
             <Breadcrumbs />
           </div>
-          <div>
-            <img src="https://cdn.sablootlo.pk/wp-content/uploads/2024/06/35438751_Artboard-1-e1717853912858.png" width="10" height="5" />
-          </div>
           <Switch>
             <Route exact path="/home" component={HomePage} />
             <Route exact path="/login" component={Login} />
