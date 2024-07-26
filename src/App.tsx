@@ -23,12 +23,10 @@ const App: React.FC = () => {
 
  return (
     <>
-      {isloaded &&
-        <div className="mainDivColor">
-         
-          <MainLayout />
-        </div>
-      }
+    {
+      isloaded && 
+      <div className="mainDivColor">{<MainLayout />}</div>
+    }
     </>
   );
 };
